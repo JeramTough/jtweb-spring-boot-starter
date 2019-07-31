@@ -1,4 +1,5 @@
 rootProject.name = 'jtweb-springboot-common'
 include 'swagger-api-response'
 include 'jtweb'
+include 'test'
 

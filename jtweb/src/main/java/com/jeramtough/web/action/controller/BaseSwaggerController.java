@@ -22,7 +22,7 @@ public abstract class BaseSwaggerController {
         apiResponsesHandler.parseingApiResponseAnnotations(this.getClass());
     }
 
-    RestfulApiResponse getSuccessfulApiResponse(Object responseBody) {
+    public RestfulApiResponse getSuccessfulApiResponse(Object responseBody) {
         return apiResponsesHandler.getSuccessfulApiResponse(responseBody);
     }
 

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/jtweb" />
             <option value="$PROJECT_DIR$/swagger-api-response" />
+            <option value="$PROJECT_DIR$/test" />
           </set>
         </option>
         <option name="useQualifiedModuleNames" value="true" />

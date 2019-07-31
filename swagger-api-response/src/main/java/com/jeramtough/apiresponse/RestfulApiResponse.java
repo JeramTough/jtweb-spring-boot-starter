@@ -36,15 +36,7 @@ public class RestfulApiResponse {
         this.responseBody = responseBody;
     }
 
-    public Boolean isSuccessful() {
-        return isSuccessful;
-    }
-
     public Boolean getIsSuccessful() {
-        return isSuccessful;
-    }
-
-    public Boolean getSuccessful() {
         return isSuccessful;
     }
 

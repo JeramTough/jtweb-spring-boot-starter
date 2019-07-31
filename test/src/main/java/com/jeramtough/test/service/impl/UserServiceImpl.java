@@ -1,6 +1,8 @@
 package com.jeramtough.test.service.impl;
 
-import com.jeramtough.apiresponse.ApiResponseException;
+import com.jeramtough.apiresponse.BeanValidator;
+import com.jeramtough.apiresponse.exception.ApiResponseException;
+import com.jeramtough.test.dto.LoginDTO;
 import com.jeramtough.test.dto.Who;
 import com.jeramtough.test.service.UserService;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,16 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException();
         }
         return who.toString();
+    }
+
+    @Override
+    public Who login(LoginDTO loginDTO) {
+
+        BeanValidator.verifyDto(loginDTO);
+
+        Who who = new Who();
+        who.setName("weibw@hwagain.com");
+        return who;
     }
 
 }

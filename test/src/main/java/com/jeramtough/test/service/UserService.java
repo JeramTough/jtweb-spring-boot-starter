@@ -1,5 +1,6 @@
 package com.jeramtough.test.service;
 
+import com.jeramtough.test.dto.LoginDTO;
 import com.jeramtough.test.dto.Who;
 
 /**
@@ -10,4 +11,5 @@ public interface UserService {
 
     String getUserInfo(Who who);
 
+    Who login(LoginDTO loginDTO);
 }

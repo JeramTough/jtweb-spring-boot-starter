@@ -1,4 +1,4 @@
-package com.jeramtough.apiresponse;
+package com.jeramtough.apiresponse.bean;
 
 /**
  * Created on 2019/7/26 11:26

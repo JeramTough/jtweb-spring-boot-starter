@@ -1,7 +1,8 @@
 package com.jeramtough.web.action.controller;
 
-import com.jeramtough.apiresponse.ApiResponsesHandler;
-import com.jeramtough.apiresponse.RestfulApiResponse;
+import com.jeramtough.apiresponse.ApiResponseFactory;
+import com.jeramtough.apiresponse.ApiResponsesAnnotationHandler;
+import com.jeramtough.apiresponse.bean.RestfulApiResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -15,15 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public abstract class BaseSwaggerController {
 
-    private ApiResponsesHandler apiResponsesHandler;
 
     public BaseSwaggerController() {
-        apiResponsesHandler = ApiResponsesHandler.getInstance();
-        apiResponsesHandler.parseingApiResponseAnnotations(this.getClass());
+        ApiResponsesAnnotationHandler.getInstance().parseingApiResponseAnnotations(
+                this.getClass());
     }
 
     public RestfulApiResponse getSuccessfulApiResponse(Object responseBody) {
-        return apiResponsesHandler.getSuccessfulApiResponse(responseBody);
+        return ApiResponseFactory.getSuccessfulApiResponse(responseBody);
     }
 
 
@@ -33,17 +33,8 @@ public abstract class BaseSwaggerController {
                                                  Exception e) {
 
         RestfulApiResponse failedApiResponse =
-                apiResponsesHandler.getFailedResponse(e);
-
-
-        if (failedApiResponse == null) {
-            e.printStackTrace();
-            failedApiResponse = exceptionHandled(request, response, e);
-            if (failedApiResponse == null) {
-                return apiResponsesHandler.getDefaultFailedResponse();
-            }
-        }
-        return failedApiResponse;
+                ApiResponseFactory.getFailedResponse(e);
+        return exceptionHandled(request, response, failedApiResponse, e);
     }
 
     /**
@@ -51,8 +42,9 @@ public abstract class BaseSwaggerController {
      */
     protected RestfulApiResponse exceptionHandled(HttpServletRequest request,
                                                   HttpServletResponse response,
+                                                  RestfulApiResponse failedApiResponse,
                                                   Exception e) {
-        return null;
+        return failedApiResponse;
     }
 
 

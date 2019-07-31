@@ -1,12 +1,17 @@
 package com.jeramtough.test.action.controller;
 
-import com.jeramtough.apiresponse.RestfulApiResponse;
+import com.jeramtough.apiresponse.bean.RestfulApiResponse;
+import com.jeramtough.jtlog.facade.L;
+import com.jeramtough.test.dto.LoginDTO;
 import com.jeramtough.test.dto.Who;
 import com.jeramtough.test.service.UserService;
 import com.jeramtough.web.action.controller.BaseSwaggerController;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created on 2019/7/25 11:36
@@ -40,7 +45,27 @@ public class TestController extends BaseSwaggerController {
     @ResponseBody
     public RestfulApiResponse getInfoByWho(
             @RequestBody Who who) {
+
         return getSuccessfulApiResponse(userService.getUserInfo(who));
     }
 
+
+    @ApiOperation(value = "登陆", notes = "通过名字和日期获取某人信息")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ApiResponses(value = {@ApiResponse(code = 555, message = "传递参数【%s%s】校验失败，因为【%s】")})
+    @ResponseBody
+    public RestfulApiResponse login(
+            @RequestBody LoginDTO loginDTO) {
+
+        return getSuccessfulApiResponse(userService.login(loginDTO));
+    }
+
+    @Override
+    protected RestfulApiResponse exceptionHandled(HttpServletRequest request,
+                                                  HttpServletResponse response,
+                                                  RestfulApiResponse failedApiResponse,
+                                                  Exception e) {
+        L.error(e);
+        return super.exceptionHandled(request, response, failedApiResponse, e);
+    }
 }

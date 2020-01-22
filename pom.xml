@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jeramtough</groupId>
+    <artifactId>spring-boot-starter-jtweb</artifactId>
+    <version>1.0.4-SNAPSHOT</version>
+
+    <properties>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <fileEncoding>UTF-8</fileEncoding>
+
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--SpringBoot版本-->
+        <SPRING_BOOT_START_VERSION>2.1.6.RELEASE</SPRING_BOOT_START_VERSION>
+        <!--JSON解析-fastjson版本-->
+        <FASTJSON_VERSION>1.2.62</FASTJSON_VERSION>
+        <!--Bean映射-orika版本-->
+        <ORIKA_VERSION>1.5.4</ORIKA_VERSION>
+        <!--Bean校验框架-->
+        <HIBERNATE_VALIDATOR_VERSION>6.1.0.Final</HIBERNATE_VALIDATOR_VERSION>
+
+        <!--springfox-swagger框架-->
+        <SPRING_FOX_SWAGGER_VERSION>2.9.2</SPRING_FOX_SWAGGER_VERSION>
+
+        <!--jtlog-->
+        <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
+
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>jcenter-snapshots</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${SPRING_BOOT_START_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${HIBERNATE_VALIDATOR_VERSION}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${FASTJSON_VERSION}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core -->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>${ORIKA_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-data-rest</artifactId>
+            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeramtough</groupId>
+            <artifactId>jtlog</artifactId>
+            <version>${JTLOG_VERSION}</version>
+        </dependency>
+
+
+    </dependencies>
+
+</project>

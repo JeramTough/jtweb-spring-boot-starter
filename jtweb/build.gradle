@@ -1,8 +1,0 @@
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:' + SPRING_BOOT_START_VERSION
-    implementation group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '9.0.22'
-
-    compile group: 'com.alibaba', name: 'fastjson', version: FASTJSON_VERSION
-    compile group: 'ma.glasnost.orika', name: 'orika-core', version: ORIKA_VERSION
-    compile project(':swagger-api-response')
-}

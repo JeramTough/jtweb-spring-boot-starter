@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>spring-boot-starter-jtweb</artifactId>
-    <version>1.0.6-LOCAL</version>
+    <version>1.1.0-LOCAL</version>
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
@@ -32,6 +32,9 @@
         <!--springfox-swagger框架-->
         <SPRING_FOX_SWAGGER_VERSION>2.9.2</SPRING_FOX_SWAGGER_VERSION>
 
+        <!--google-guava-->
+        <GUAVA_VERSION>28.0-jre</GUAVA_VERSION>
+
         <!--jtlog-->
         <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
 
@@ -40,13 +43,13 @@
 
     </properties>
 
-   <!-- <repositories>
+    <repositories>
         <repository>
             <id>jcenter-snapshots</id>
             <name>jcenter</name>
             <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
         </repository>
-    </repositories>-->
+    </repositories>
 
 
     <dependencies>
@@ -117,6 +120,12 @@
             <groupId>com.jeramtough</groupId>
             <artifactId>jtcomponent</artifactId>
             <version>${JTCOMPONENT_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${GUAVA_VERSION}</version>
         </dependency>
 
 

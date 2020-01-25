@@ -6,7 +6,8 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>spring-boot-starter-jtweb</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.6-LOCAL</version>
+    <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
         <!-- 文件拷贝时的编码 -->
@@ -34,15 +35,18 @@
         <!--jtlog-->
         <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
 
+        <!--jtcomponent-->
+        <JTCOMPONENT_VERSION>1.2.7-SNAPSHOT</JTCOMPONENT_VERSION>
+
     </properties>
 
-    <repositories>
+   <!-- <repositories>
         <repository>
             <id>jcenter-snapshots</id>
             <name>jcenter</name>
             <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
 
     <dependencies>
@@ -107,6 +111,12 @@
             <groupId>com.jeramtough</groupId>
             <artifactId>jtlog</artifactId>
             <version>${JTLOG_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeramtough</groupId>
+            <artifactId>jtcomponent</artifactId>
+            <version>${JTCOMPONENT_VERSION}</version>
         </dependency>
 
 

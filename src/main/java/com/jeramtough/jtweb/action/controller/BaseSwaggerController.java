@@ -1,5 +1,6 @@
 package com.jeramtough.jtweb.action.controller;
 
+import com.jeramtough.jtcomponent.task.response.ReturnResponse;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponseFactory;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponsesAnnotationHandler;
 import com.jeramtough.jtweb.component.apiresponse.bean.RestfulApiResponse;
@@ -24,6 +25,10 @@ public abstract class BaseSwaggerController {
 
     public RestfulApiResponse getSuccessfulApiResponse(Object responseBody) {
         return ApiResponseFactory.getSuccessfulApiResponse(responseBody);
+    }
+
+    public RestfulApiResponse getSuccessfulApiResponse(ReturnResponse returnResponse) {
+        return ApiResponseFactory.getSuccessfulApiResponse(returnResponse.getReturn());
     }
 
 

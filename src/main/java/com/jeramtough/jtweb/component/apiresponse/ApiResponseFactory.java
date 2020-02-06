@@ -14,7 +14,7 @@ public class ApiResponseFactory {
         RestfulApiResponse restfulApiResponse = new RestfulApiResponse();
         restfulApiResponse.setResponseBody(responseBody);
         restfulApiResponse.setStatusCode(
-                ApiResponsesAnnotationHandler.DEFALUT_SUCCESSFUL_CODE);
+                ApiResponsesAnnotationHandler.DEFAULT_SUCCESSFUL_CODE);
         restfulApiResponse.setSuccessful(true);
         return restfulApiResponse;
     }
@@ -22,8 +22,8 @@ public class ApiResponseFactory {
     public static RestfulApiResponse getDefaultFailedResponse() {
         RestfulApiResponse restfulApiResponse = new RestfulApiResponse();
         restfulApiResponse.setResponseBody(
-                ApiResponsesAnnotationHandler.DEFALUT_FAILED_MESSAGE);
-        restfulApiResponse.setStatusCode(ApiResponsesAnnotationHandler.DEFALUT_FAILED_CODE);
+                ApiResponsesAnnotationHandler.DEFAULT_FAILED_MESSAGE);
+        restfulApiResponse.setStatusCode(ApiResponsesAnnotationHandler.DEFAULT_FAILED_CODE);
         restfulApiResponse.setSuccessful(false);
         return restfulApiResponse;
     }

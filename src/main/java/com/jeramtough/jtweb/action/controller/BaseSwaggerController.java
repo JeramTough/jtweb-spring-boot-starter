@@ -4,6 +4,8 @@ import com.jeramtough.jtcomponent.task.response.ReturnResponse;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponseFactory;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponsesAnnotationHandler;
 import com.jeramtough.jtweb.component.apiresponse.bean.RestfulApiResponse;
+import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -19,7 +21,7 @@ public abstract class BaseSwaggerController {
 
 
     public BaseSwaggerController() {
-        ApiResponsesAnnotationHandler.getInstance().parseingApiResponseAnnotations(
+        ApiResponsesAnnotationHandler.getInstance().parsingApiResponseAnnotations(
                 this.getClass());
     }
 
@@ -36,6 +38,9 @@ public abstract class BaseSwaggerController {
     public final RestfulApiResponse errorHandler(HttpServletRequest request,
                                                  HttpServletResponse response,
                                                  Exception e) {
+        if (!(e instanceof ApiResponseException)) {
+            e.printStackTrace();
+        }
 
         RestfulApiResponse failedApiResponse =
                 ApiResponseFactory.getFailedResponse(e);

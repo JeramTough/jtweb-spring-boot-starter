@@ -25,9 +25,16 @@ public class BeanValidator {
                 validator.validate(checkedDTO);
         for (ConstraintViolation<Object> constraintViolation : constraintViolations) {
             //拿到数据校验信息
-            FailureReason failureReason = JSON.parseObject(constraintViolation.getMessage(),
-                    FailureReason.class);
-            throw new ApiResponseException(failureReason);
+            String failedMessage = constraintViolation.getMessage();
+            if (com.jeramtough.jtcomponent.utils.ValidationUtil.isNumber(failedMessage)) {
+                throw new ApiResponseException(Integer.parseInt(failedMessage));
+            }
+            else {
+                FailureReason failureReason = JSON.parseObject(
+                        constraintViolation.getMessage(),
+                        FailureReason.class);
+                throw new ApiResponseException(failureReason);
+            }
         }
     }
 

@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>spring-boot-starter-jtweb</artifactId>
-    <version>1.1.0-LOCAL</version>
+    <version>1.1.6-LOCAL</version>
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
@@ -39,7 +39,7 @@
         <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.2.7-SNAPSHOT</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.2.8-SNAPSHOT</JTCOMPONENT_VERSION>
 
     </properties>
 

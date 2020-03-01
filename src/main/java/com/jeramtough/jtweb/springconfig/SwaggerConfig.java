@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -23,8 +24,6 @@ import java.time.LocalDate;
  */
 @Configuration
 @EnableSwagger2
-@Import({springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration.class,
-        springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration.class})
 public class SwaggerConfig {
 
 
@@ -64,7 +63,7 @@ public class SwaggerConfig {
                 if (input.findControllerAnnotation(Api.class).isPresent()) {
                     return true;
                 }
-                return true;
+                return false;
             }
         };
         return selector;

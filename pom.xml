@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>spring-boot-starter-jtweb</artifactId>
-    <version>1.1.6-LOCAL</version>
+    <version>1.2.0-LOCAL</version>
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
@@ -40,6 +40,11 @@
 
         <!--jtcomponent-->
         <JTCOMPONENT_VERSION>1.2.8-SNAPSHOT</JTCOMPONENT_VERSION>
+
+        <!--swagger_bootstrap_ui-->
+        <SWAGGER_BOOTSTRAP_UI_VERSION>
+            1.9.6
+        </SWAGGER_BOOTSTRAP_UI_VERSION>
 
     </properties>
 
@@ -92,23 +97,23 @@
             <version>${SPRING_FOX_SWAGGER_VERSION}</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-data-rest</artifactId>
-            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-        </dependency>
+        <!--  <dependency>
+              <groupId>io.springfox</groupId>
+              <artifactId>springfox-data-rest</artifactId>
+              <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+          </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-        </dependency>
+          <dependency>
+              <groupId>io.springfox</groupId>
+              <artifactId>springfox-bean-validators</artifactId>
+              <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+          </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-        </dependency>
+          <dependency>
+              <groupId>io.springfox</groupId>
+              <artifactId>springfox-swagger-ui</artifactId>
+              <version>${SPRING_FOX_SWAGGER_VERSION}</version>
+          </dependency>-->
 
         <dependency>
             <groupId>com.jeramtough</groupId>
@@ -126,6 +131,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${GUAVA_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${SWAGGER_BOOTSTRAP_UI_VERSION}</version>
         </dependency>
 
 

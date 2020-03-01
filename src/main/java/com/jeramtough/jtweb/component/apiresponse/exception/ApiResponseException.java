@@ -16,6 +16,10 @@ public class ApiResponseException extends RuntimeException {
         this(new FailureReason(code, null));
     }
 
+    public ApiResponseException(Integer code, String... placeholders) {
+        this(new FailureReason(code, placeholders));
+    }
+
     public ApiResponseException(FailureReason failureReason) {
         super("The API response code is " + failureReason.getCode());
 

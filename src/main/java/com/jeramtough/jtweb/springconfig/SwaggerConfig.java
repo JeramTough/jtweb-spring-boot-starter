@@ -1,22 +1,30 @@
 package com.jeramtough.jtweb.springconfig;
 
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import com.google.common.base.Predicate;
 import io.swagger.annotations.Api;
+import ma.glasnost.orika.MapperFacade;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 2019/7/25 11:38
@@ -24,10 +32,12 @@ import java.time.LocalDate;
  */
 @Configuration
 @EnableSwagger2
+@EnableSwaggerBootstrapUI
 public class SwaggerConfig {
 
 
     @Bean
+    @ConditionalOnMissingBean(Docket.class)
     public Docket petApi() {
         //指定规范，这里是SWAGGER_2
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
@@ -41,6 +51,13 @@ public class SwaggerConfig {
                 //这里配合@ComponentScan一起使用，又再次细化了匹配规则(当然，我们也可以只选择@ComponentScan、paths()方法当中的一中)
                 .build();
 
+        //添加head参数
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<Parameter>();
+        tokenPar.name("Authorization").description("授权凭证").modelRef(
+                new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        docket.globalOperationParameters(pars);
 
         //这里不过就是用“/”
         docket.pathMapping("/");
@@ -90,7 +107,8 @@ public class SwaggerConfig {
 
 
     @Bean
-    UiConfiguration uiConfig() {
+    @ConditionalOnMissingBean(UiConfiguration.class)
+    public UiConfiguration uiConfig() {
         return UiConfigurationBuilder.builder()
                                      .deepLinking(true)
                                      .displayOperationId(false)

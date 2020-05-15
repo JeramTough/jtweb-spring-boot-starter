@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jeramtough</groupId>
-    <artifactId>spring-boot-starter-jtweb</artifactId>
-    <version>1.2.0-LOCAL</version>
+    <artifactId>jtweb-spring-boot-starter</artifactId>
+    <version>1.2.8-LOCAL</version>
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
@@ -39,12 +39,10 @@
         <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.2.8-SNAPSHOT</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.3.0-RELEASE</JTCOMPONENT_VERSION>
 
         <!--swagger_bootstrap_ui-->
-        <SWAGGER_BOOTSTRAP_UI_VERSION>
-            1.9.6
-        </SWAGGER_BOOTSTRAP_UI_VERSION>
+        <SWAGGER_BOOTSTRAP_UI_VERSION>1.9.6</SWAGGER_BOOTSTRAP_UI_VERSION>
 
     </properties>
 
@@ -63,6 +61,13 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.2.0</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>${SPRING_BOOT_START_VERSION}</version>
         </dependency>
 
         <dependency>

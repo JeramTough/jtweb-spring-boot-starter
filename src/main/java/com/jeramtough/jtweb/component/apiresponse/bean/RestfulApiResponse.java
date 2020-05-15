@@ -1,10 +1,14 @@
 package com.jeramtough.jtweb.component.apiresponse.bean;
 
+import java.io.Serializable;
+
 /**
  * Created on 2019/7/26 11:26
  * by @author WeiBoWen
  */
-public class RestfulApiResponse {
+public class RestfulApiResponse implements Serializable {
+
+    private static final long serialVersionUID = -4471070654995612511L;
 
     private Boolean isSuccessful;
 

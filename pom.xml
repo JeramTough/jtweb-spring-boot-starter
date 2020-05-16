@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>1.2.8-LOCAL</version>
+    <version>2.1.14.9-LOCAL</version>
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
@@ -21,7 +21,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--SpringBoot版本-->
-        <SPRING_BOOT_START_VERSION>2.1.6.RELEASE</SPRING_BOOT_START_VERSION>
+        <SPRING_BOOT_STARTER_VERSION>2.1.14.RELEASE</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
         <FASTJSON_VERSION>1.2.62</FASTJSON_VERSION>
         <!--Bean映射-orika版本-->
@@ -67,13 +67,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>${SPRING_BOOT_START_VERSION}</version>
+            <version>${SPRING_BOOT_STARTER_VERSION}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${SPRING_BOOT_START_VERSION}</version>
+            <version>${SPRING_BOOT_STARTER_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${SPRING_BOOT_STARTER_VERSION}</version>
         </dependency>
 
         <dependency>

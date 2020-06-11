@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.jeramtough.jtweb.springconfig.SpringConfig,\
 com.jeramtough.jtweb.springconfig.JsonConfig,\
 com.jeramtough.jtweb.springconfig.OrikaConfig,\
-com.jeramtough.jtweb.springconfig.SwaggerConfig
+com.jeramtough.jtweb.springconfig.SwaggerConfig,\
+com.jeramtough.jtweb.springconfig.MybatisPlusConfig

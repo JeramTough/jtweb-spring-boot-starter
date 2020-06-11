@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.component.apiresponse;
 
-import com.jeramtough.jtweb.component.apiresponse.bean.RestfulApiResponse;
+import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 
 /**
@@ -10,25 +10,25 @@ import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException
 public class ApiResponseFactory {
 
 
-    public static RestfulApiResponse getSuccessfulApiResponse(Object responseBody) {
-        RestfulApiResponse restfulApiResponse = new RestfulApiResponse();
-        restfulApiResponse.setResponseBody(responseBody);
-        restfulApiResponse.setStatusCode(
+    public static <T> CommonApiResponse<T> getSuccessfulApiResponse(T responseBody) {
+        CommonApiResponse<T> commonApiResponse = new CommonApiResponse<>();
+        commonApiResponse.setResponseBody(responseBody);
+        commonApiResponse.setStatusCode(
                 ApiResponsesAnnotationHandler.DEFAULT_SUCCESSFUL_CODE);
-        restfulApiResponse.setSuccessful(true);
-        return restfulApiResponse;
+        commonApiResponse.setSuccessful(true);
+        return commonApiResponse;
     }
 
-    public static RestfulApiResponse getDefaultFailedResponse() {
-        RestfulApiResponse restfulApiResponse = new RestfulApiResponse();
-        restfulApiResponse.setResponseBody(
+    public static CommonApiResponse<String> getDefaultFailedResponse() {
+        CommonApiResponse<String> commonApiResponse = new CommonApiResponse<>();
+        commonApiResponse.setResponseBody(
                 ApiResponsesAnnotationHandler.DEFAULT_FAILED_MESSAGE);
-        restfulApiResponse.setStatusCode(ApiResponsesAnnotationHandler.DEFAULT_FAILED_CODE);
-        restfulApiResponse.setSuccessful(false);
-        return restfulApiResponse;
+        commonApiResponse.setStatusCode(ApiResponsesAnnotationHandler.DEFAULT_FAILED_CODE);
+        commonApiResponse.setSuccessful(false);
+        return commonApiResponse;
     }
 
-    public static RestfulApiResponse getFailedResponse(Exception e) {
+    public static CommonApiResponse<String> getFailedResponse(Exception e) {
         if (e instanceof ApiResponseException) {
             ApiResponseException apiResponseException = (ApiResponseException) e;
             return getFailedResponse(apiResponseException);
@@ -38,18 +38,18 @@ public class ApiResponseFactory {
         }
     }
 
-    public static RestfulApiResponse getFailedResponse(ApiResponseException e) {
+    public static CommonApiResponse<String> getFailedResponse(ApiResponseException e) {
         String failedMessage =
                 ApiResponsesAnnotationHandler.getInstance().getFailedMessage(
                         e.getFailureReason().getCode());
-        RestfulApiResponse restfulApiResponse = new RestfulApiResponse();
-        restfulApiResponse.setStatusCode(e.getFailureReason().getCode());
+        CommonApiResponse<String> commonApiResponse = new CommonApiResponse<>();
+        commonApiResponse.setStatusCode(e.getFailureReason().getCode());
 
         failedMessage = String.format(failedMessage, e.getFailureReason().getPlaceholders());
 
-        restfulApiResponse.setResponseBody(failedMessage);
-        restfulApiResponse.setSuccessful(false);
-        return restfulApiResponse;
+        commonApiResponse.setResponseBody(failedMessage);
+        commonApiResponse.setSuccessful(false);
+        return commonApiResponse;
     }
 
 }

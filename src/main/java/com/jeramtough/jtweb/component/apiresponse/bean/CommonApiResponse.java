@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created on 2019/7/26 11:26
  * by @author WeiBoWen
  */
-public class RestfulApiResponse implements Serializable {
+public class CommonApiResponse<T> implements Serializable {
 
     private static final long serialVersionUID = -4471070654995612511L;
 
@@ -14,15 +14,16 @@ public class RestfulApiResponse implements Serializable {
 
     private Integer statusCode;
 
-    private Object responseBody;
+    private T responseBody;
 
-    public RestfulApiResponse() {
+    public CommonApiResponse() {
     }
 
-    public RestfulApiResponse(Integer statusCode, Object responseBody) {
+    public CommonApiResponse(Integer statusCode, T responseBody) {
         this.statusCode = statusCode;
         this.responseBody = responseBody;
     }
+
 
     public Integer getStatusCode() {
         return statusCode;
@@ -32,11 +33,11 @@ public class RestfulApiResponse implements Serializable {
         this.statusCode = statusCode;
     }
 
-    public Object getResponseBody() {
+    public T getResponseBody() {
         return responseBody;
     }
 
-    public void setResponseBody(Object responseBody) {
+    public void setResponseBody(T responseBody) {
         this.responseBody = responseBody;
     }
 
@@ -55,7 +56,7 @@ public class RestfulApiResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "RestfulApiResponse{" +
+        return "CommonApiResponse{" +
                 "isSuccessful=" + isSuccessful +
                 ", statusCode=" + statusCode +
                 ", responseBody=" + responseBody +

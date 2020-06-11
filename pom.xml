@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.1.14.3-LOCAL</version>
+    <version>2.1.14.6-LOCAL</version>
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
@@ -44,6 +44,9 @@
 
         <!--swagger_bootstrap_ui-->
         <SWAGGER_BOOTSTRAP_UI_VERSION>1.9.6</SWAGGER_BOOTSTRAP_UI_VERSION>
+
+        <!--commons-lang3-->
+        <COMMONS_LANG3_VERSION>3.9</COMMONS_LANG3_VERSION>
 
     </properties>
 
@@ -94,6 +97,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${FASTJSON_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${COMMONS_LANG3_VERSION}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core -->

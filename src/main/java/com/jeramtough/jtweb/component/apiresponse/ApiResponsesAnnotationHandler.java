@@ -1,7 +1,9 @@
 package com.jeramtough.jtweb.component.apiresponse;
 
 import com.jeramtough.jtlog.annotation.LogConfiguration;
+import com.jeramtough.jtlog.level.LogLevel;
 import com.jeramtough.jtlog.with.WithLogger;
+import com.jeramtough.jtweb.model.error.ErrorCodePrefix;
 import io.swagger.annotations.ApiResponses;
 
 import javax.validation.constraints.NotNull;
@@ -14,22 +16,21 @@ import java.util.Objects;
  * Created on 2019/7/29 14:52
  * by @author WeiBoWen
  */
-@LogConfiguration(wrapCount = 0)
+@LogConfiguration(wrapCount = 0, minVisibleLevel = LogLevel.INFO)
 public class ApiResponsesAnnotationHandler implements WithLogger {
-    private static ApiResponsesAnnotationHandler ourInstance = new ApiResponsesAnnotationHandler();
+    private static final ApiResponsesAnnotationHandler OUR_INSTANCE = new ApiResponsesAnnotationHandler();
 
-    public static final int DEFAULT_FAILED_CODE = 0;
-    public static final int DEFAULT_SUCCESSFUL_CODE = 666;
+    public static final int DEFAULT_FAILED_CODE = ErrorCodePrefix.S.get();
+    public static final int DEFAULT_SUCCESSFUL_CODE = ErrorCodePrefix.SUCCESS.get();
 
-    public static final String DEFAULT_FAILED_MESSAGE = "System has happened unexpected " +
+    public static final String DEFAULT_FAILED_MESSAGE = "The System has happened unexpected " +
             "error, " +
             "please contact the administrator.\n 系统发生不可预测的错误，请联系专门的系统管理人员";
 
-    private Map<Integer, String> failedResponseMessageMap;
-    private int maxCode = 0;
+    private final Map<Integer, String> failedResponseMessageMap;
 
     public static ApiResponsesAnnotationHandler getInstance() {
-        return ourInstance;
+        return OUR_INSTANCE;
     }
 
     private ApiResponsesAnnotationHandler() {
@@ -38,16 +39,15 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
         failedResponseMessageMap.put(DEFAULT_FAILED_CODE, DEFAULT_FAILED_MESSAGE);
     }
 
-    public void parsingApiResponseAnnotations(Class clazz) {
+    public void parsingApiResponseAnnotations(Class<?> clazz) {
 
         if (clazz.getSuperclass() != null) {
             parsingApiResponseAnnotations(clazz.getSuperclass());
         }
 
-        getLogger().verbose("Parsing the controller[" + clazz.getSimpleName() + "]");
+        getLogger().info("Parsing the controller[" + clazz.getSimpleName() + "]");
 
-        ApiResponses baseApiResponsesAnnotation = (ApiResponses) clazz.getAnnotation(
-                ApiResponses.class);
+        ApiResponses baseApiResponsesAnnotation = clazz.getAnnotation(ApiResponses.class);
 
         parseApiResponsesAnnotation(baseApiResponsesAnnotation);
 
@@ -57,7 +57,7 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
             parseApiResponsesAnnotation(apiResponsesAnnotation);
         }
 
-        getLogger().verbose("maxCode[%d]", maxCode);
+        getLogger().info("Parsing the controller[" + clazz.getSimpleName() + "] completely!");
     }
 
     public @NotNull String getFailedMessage(int code) {
@@ -81,9 +81,8 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
 
     private void addFailedResponse(int code, String failedMessage) {
         if (!failedResponseMessageMap.containsKey(code)) {
-            maxCode = Math.max(maxCode, code);
             failedResponseMessageMap.put(code, failedMessage);
-            getLogger().verbose(
+            getLogger().debug(
                     "The code【" + code + "】 map failed message[" + failedMessage + "]");
         }
     }

@@ -17,12 +17,12 @@ import java.io.PrintWriter;
  */
 public interface BaseSwaggerFilter {
 
-    default CommonApiResponse getSuccessfulApiResponse(Object responseBody) {
+    default <T> CommonApiResponse<T> getSuccessfulApiResponse(T responseBody) {
         return ApiResponseFactory.getSuccessfulApiResponse(responseBody);
     }
 
-    default CommonApiResponse getFailedApiResponse(ApiResponseException e) {
-        CommonApiResponse failedApiResponse =
+    default CommonApiResponse<String> getFailedApiResponse(ApiResponseException e) {
+        CommonApiResponse<String> failedApiResponse =
                 ApiResponseFactory.getFailedResponse(e);
         return failedApiResponse;
     }

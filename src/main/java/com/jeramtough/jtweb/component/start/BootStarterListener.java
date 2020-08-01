@@ -32,11 +32,8 @@ public class BootStarterListener {
                 applicationReadyEvent.getApplicationContext().getBean(
                         ServletContext.class).getContextPath();
 
-        if (serverNamespace == null || serverNamespace.length() == 0) {
+        if (serverNamespace == null ) {
             serverNamespace = "";
-        }
-        else {
-            serverNamespace = "/" + serverNamespace;
         }
 
         L.info("swagger: http://127.0.0.1:%d%s/doc.html?cache=1&lang=zh",

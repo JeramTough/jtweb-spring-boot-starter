@@ -6,6 +6,8 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 
+import javax.servlet.ServletContext;
+
 /**
  * <pre>
  * Created on 2020/5/16 17:14
@@ -20,15 +22,17 @@ public class BootStarterListener {
     @EventListener
     public void onApplicationEvent(WebServerInitializedEvent webServerInitializedEvent) {
         port = webServerInitializedEvent.getWebServer().getPort();
-        serverNamespace =
-                webServerInitializedEvent.getApplicationContext().getServerNamespace();
     }
 
     @EventListener
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         L.info("The project has launched successfully! ");
 
-        if (serverNamespace == null) {
+        serverNamespace =
+                applicationReadyEvent.getApplicationContext().getBean(
+                        ServletContext.class).getContextPath();
+
+        if (serverNamespace == null || serverNamespace.length() == 0) {
             serverNamespace = "";
         }
         else {

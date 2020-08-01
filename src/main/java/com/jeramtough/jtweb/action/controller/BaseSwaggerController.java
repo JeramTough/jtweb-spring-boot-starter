@@ -1,6 +1,5 @@
 package com.jeramtough.jtweb.action.controller;
 
-import com.jeramtough.jtcomponent.task.response.ReturnResponse;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponseFactory;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponsesAnnotationHandler;
 import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
@@ -24,35 +23,38 @@ public abstract class BaseSwaggerController {
                 this.getClass());
     }
 
-    public CommonApiResponse getSuccessfulApiResponse(Object responseBody) {
+    public <T> CommonApiResponse<T> getSuccessfulApiResponse(T responseBody) {
         return ApiResponseFactory.getSuccessfulApiResponse(responseBody);
     }
 
-    public CommonApiResponse getSuccessfulApiResponse(ReturnResponse returnResponse) {
-        return ApiResponseFactory.getSuccessfulApiResponse(returnResponse.getReturn());
-    }
 
-
+    /**
+     *
+     * @param request {@link HttpServletRequest}
+     * @param response {@link HttpServletResponse}
+     * @param e API异常
+     * @return 相应对象
+     */
     @ExceptionHandler(value = Exception.class)//指定拦截的异常
-    public final CommonApiResponse errorHandler(HttpServletRequest request,
-                                                HttpServletResponse response,
-                                                Exception e) {
+    public final CommonApiResponse<String> errorHandler(HttpServletRequest request,
+                                                        HttpServletResponse response,
+                                                        Exception e) {
         if (!(e instanceof ApiResponseException)) {
             e.printStackTrace();
         }
 
-        CommonApiResponse failedApiResponse =
+        CommonApiResponse<String> failedApiResponse =
                 ApiResponseFactory.getFailedResponse(e);
-        return exceptionHandled(request, response, failedApiResponse, e);
+        return handleException(request, response, failedApiResponse, e);
     }
 
     /**
-     * 处理非正常情况的异常
+     * 如果需要自定义处理的异常响应的钩子方法
      */
-    protected CommonApiResponse exceptionHandled(HttpServletRequest request,
-                                                 HttpServletResponse response,
-                                                 CommonApiResponse failedApiResponse,
-                                                 Exception e) {
+    protected CommonApiResponse<String> handleException(HttpServletRequest request,
+                                                        HttpServletResponse response,
+                                                        CommonApiResponse<String> failedApiResponse,
+                                                        Exception e) {
         return failedApiResponse;
     }
 

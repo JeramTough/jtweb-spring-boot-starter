@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.1.14.8-LOCAL</version>
+    <version>2.1.14.12-LOCAL</version>
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
@@ -185,41 +185,26 @@
             <version>${ORIKA_VERSION}</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-        </dependency>
-
-        <!--  <dependency>
-              <groupId>io.springfox</groupId>
-              <artifactId>springfox-data-rest</artifactId>
-              <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-          </dependency>
-
-          <dependency>
-              <groupId>io.springfox</groupId>
-              <artifactId>springfox-bean-validators</artifactId>
-              <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-          </dependency>
-
-          <dependency>
-              <groupId>io.springfox</groupId>
-              <artifactId>springfox-swagger-ui</artifactId>
-              <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-          </dependency>-->
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${GUAVA_VERSION}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${SWAGGER_BOOTSTRAP_UI_VERSION}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <!--在引用时请在maven中央仓库搜索最新版本号-->
+            <version>2.0.4</version>
         </dependency>
+
+
 
 
     </dependencies>

@@ -11,6 +11,7 @@ import com.jeramtough.jtweb.service.BaseDtoService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,8 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     private WebApplicationContext wc;
     private MapperFacade mapperFacade;
 
-    public BaseDtoServiceImpl(WebApplicationContext wc,
-                              MapperFacade mapperFacade) {
+    public BaseDtoServiceImpl(WebApplicationContext wc) {
         this.wc = wc;
-        this.mapperFacade = mapperFacade;
     }
 
     public WebApplicationContext getWC() {
@@ -37,6 +36,13 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     public MapperFacade getMapperFacade() {
+        if (mapperFacade == null) {
+            synchronized (this) {
+                if (mapperFacade == null) {
+                    mapperFacade = getWC().getBean(MapperFacade.class);
+                }
+            }
+        }
         return mapperFacade;
     }
 
@@ -84,6 +90,10 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
         return pageDto;
     }
 
-    protected abstract D toDto(T t);
+    protected D toDto(T t) {
+        Class<D> clazz =
+                (Class<D>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return getMapperFacade().map(t, clazz);
+    }
 
 }

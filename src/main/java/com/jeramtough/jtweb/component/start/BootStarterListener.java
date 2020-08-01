@@ -26,7 +26,6 @@ public class BootStarterListener {
 
     @EventListener
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-
         L.info("The project has launched successfully! ");
 
         if (serverNamespace == null) {

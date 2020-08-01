@@ -5,7 +5,7 @@ import com.jeramtough.demo.dto.Who;
 import com.jeramtough.demo.service.UserService;
 import com.jeramtough.jtlog.facade.L;
 import com.jeramtough.jtweb.action.controller.BaseSwaggerController;
-import com.jeramtough.jtweb.component.apiresponse.bean.RestfulApiResponse;
+import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,7 @@ public class TestController extends BaseSwaggerController {
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 999, message = "发生某些异常")})
     @ResponseBody
-    public RestfulApiResponse getInfoByWho(
+    public CommonApiResponse<String> getInfoByWho(
             @RequestBody Who who) {
 
         return getSuccessfulApiResponse(userService.getUserInfo(who));
@@ -54,18 +54,20 @@ public class TestController extends BaseSwaggerController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 555, message = "传递参数【%s%s】校验失败，因为【%s】")})
     @ResponseBody
-    public RestfulApiResponse login(
+    public CommonApiResponse<Who> login(
             @RequestBody LoginDTO loginDTO) {
 
         return getSuccessfulApiResponse(userService.login(loginDTO));
     }
 
     @Override
-    protected RestfulApiResponse exceptionHandled(HttpServletRequest request,
-                                                  HttpServletResponse response,
-                                                  RestfulApiResponse failedApiResponse,
-                                                  Exception e) {
+    protected CommonApiResponse<String> handleException(HttpServletRequest request,
+                                                        HttpServletResponse response,
+                                                        CommonApiResponse<String> failedApiResponse,
+                                                        Exception e) {
         L.error(e);
-        return super.exceptionHandled(request, response, failedApiResponse, e);
+        return super.handleException(request, response, failedApiResponse, e);
     }
+
+  
 }

@@ -8,6 +8,5 @@ import org.springframework.context.annotation.Configuration;
  * by @author WeiBoWen
  */
 @Configuration
-@ComponentScan(basePackages = "com.jeramtough.jtweb.springconfig")
 public class SpringConfig {
 }

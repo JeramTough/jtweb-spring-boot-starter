@@ -2,6 +2,9 @@ package com.jeramtough.jtweb.component.apiresponse;
 
 import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
+import com.jeramtough.jtweb.exception.NotRegisteredException;
+
+import java.util.Objects;
 
 /**
  * Created on 2019/7/31 15:56
@@ -42,10 +45,12 @@ public class ApiResponseFactory {
         String failedMessage =
                 ApiResponsesAnnotationHandler.getInstance().getFailedMessage(
                         e.getFailureReason().getCode());
+
         CommonApiResponse<String> commonApiResponse = new CommonApiResponse<>();
         commonApiResponse.setStatusCode(e.getFailureReason().getCode());
 
-        failedMessage = String.format(failedMessage, e.getFailureReason().getPlaceholders());
+        failedMessage = String.format(failedMessage,
+                e.getFailureReason().getPlaceholders().toArray(new Object[0]));
 
         commonApiResponse.setResponseBody(failedMessage);
         commonApiResponse.setSuccessful(false);

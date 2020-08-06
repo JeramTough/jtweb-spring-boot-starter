@@ -21,7 +21,7 @@ import java.util.concurrent.*;
  */
 public class CodeGeneratorAgent {
 
-    private GeneratorConfigAdapter configAdapter;
+    private final GeneratorConfigAdapter configAdapter;
     private JtAutoGenerator codeAutoGenerator;
     private InjectionConfig injectionConfig;
     private CountDownLatch countDownLatch;
@@ -135,35 +135,41 @@ public class CodeGeneratorAgent {
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     public void startGenerating() {
-        List<TableInfo> tableInfoList = codeAutoGenerator.getTableInfoList();
-        Set<String> businessPrefixSet = new HashSet<>();
-        for (TableInfo tableInfo : tableInfoList) {
-            String tableName = tableInfo.getName();
-            String businessPrefix = tableName.split("_")[0];
-            businessPrefixSet.add(businessPrefix);
-        }
 
-        countDownLatch = new CountDownLatch(businessPrefixSet.size());
-        ExecutorService executor = new ThreadPoolExecutor(1, Integer.MAX_VALUE,
-                60L, TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>());
+        if (configAdapter.hasBusinessPrefix()) {
+            List<TableInfo> tableInfoList = codeAutoGenerator.getTableInfoList();
+            Set<String> businessPrefixSet = new HashSet<>();
+            for (TableInfo tableInfo : tableInfoList) {
+                String tableName = tableInfo.getName();
+                String businessPrefix = tableName.split("_")[0];
+                businessPrefixSet.add(businessPrefix);
+            }
+
+            countDownLatch = new CountDownLatch(businessPrefixSet.size());
+            ExecutorService executor = new ThreadPoolExecutor(1, Integer.MAX_VALUE,
+                    60L, TimeUnit.SECONDS,
+                    new LinkedBlockingQueue<Runnable>());
 //        executor = Executors.newSingleThreadExecutor();
-        for (String prefix : businessPrefixSet) {
-            executor.execute(() -> {
-                System.out.println(countDownLatch.getCount());
-                generating(prefix);
-            });
-        }
+            for (String prefix : businessPrefixSet) {
+                executor.execute(() -> {
+                    System.out.println(countDownLatch.getCount());
+                    generating(prefix);
+                });
+            }
 
-        try {
-            executor.shutdown();
-            countDownLatch.await();
+            try {
+                executor.shutdown();
+                countDownLatch.await();
+                codeAutoGenerator.open();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            generating();
             codeAutoGenerator.open();
         }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
     }
 
     //******************
@@ -212,6 +218,43 @@ public class CodeGeneratorAgent {
 
         codeAutoGenerator.execute();
         countDownLatch.countDown();
+    }
+
+    private void generating() {
+        // 包配置
+        PackageConfig packageConfig = new PackageConfig();
+//        packageConfig.setModuleName(businessName);
+        packageConfig.setParent(
+                configAdapter.getParentPackageName() + "." + configAdapter.getProjectName());
+
+        packageConfig.setController(
+                "action.controller");
+        packageConfig.setMapper("dao.mapper");
+        packageConfig.setXml("dao.mapper.xml");
+        packageConfig.setEntity("model.entity");
+        codeAutoGenerator.setPackageInfo(packageConfig);
+
+        injectionConfig.setFileCreate(
+                new IFileCreate() {
+                    @Override
+                    public boolean isCreate(ConfigBuilder configBuilder, FileType fileType,
+                                            String filePath) {
+
+                        if (filePath != null) {
+                            // 判断自定义文件夹是否需要创建
+                            synchronized (CodeGeneratorAgent.this) {
+                                checkDir(filePath);
+                            }
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                }
+        );
+
+        codeAutoGenerator.execute();
     }
 
 

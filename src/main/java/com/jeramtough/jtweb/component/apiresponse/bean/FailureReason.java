@@ -1,5 +1,7 @@
 package com.jeramtough.jtweb.component.apiresponse.bean;
 
+import java.util.List;
+
 /**
  * Created on 2019/7/31 15:30
  * by @author WeiBoWen
@@ -7,9 +9,9 @@ package com.jeramtough.jtweb.component.apiresponse.bean;
 public class FailureReason {
 
     private int code;
-    private String[] placeholders;
+    private List<String> placeholders;
 
-    public FailureReason(int code, String[] placeholders) {
+    public FailureReason(int code, List<String> placeholders) {
         this.code = code;
         this.placeholders = placeholders;
     }
@@ -25,11 +27,11 @@ public class FailureReason {
         this.code = code;
     }
 
-    public String[] getPlaceholders() {
+    public List<String> getPlaceholders() {
         return placeholders;
     }
 
-    public void setPlaceholders(String[] placeholders) {
+    public void setPlaceholders(List<String> placeholders) {
         this.placeholders = placeholders;
     }
 }

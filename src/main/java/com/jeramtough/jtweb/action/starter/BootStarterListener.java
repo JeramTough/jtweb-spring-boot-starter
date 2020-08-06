@@ -1,9 +1,8 @@
-package com.jeramtough.jtweb.component.start;
+package com.jeramtough.jtweb.action.starter;
 
 import com.jeramtough.jtlog.facade.L;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 
 import javax.servlet.ServletContext;

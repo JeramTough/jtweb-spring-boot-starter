@@ -3,6 +3,7 @@ package com.jeramtough.jtweb.component.apiresponse;
 import com.jeramtough.jtlog.annotation.LogConfiguration;
 import com.jeramtough.jtlog.level.LogLevel;
 import com.jeramtough.jtlog.with.WithLogger;
+import com.jeramtough.jtweb.exception.NotRegisteredException;
 import com.jeramtough.jtweb.model.error.ErrorCodePrefix;
 import io.swagger.annotations.ApiResponses;
 
@@ -10,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created on 2019/7/29 14:52
@@ -27,16 +27,16 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
             "error, " +
             "please contact the administrator.\n 系统发生不可预测的错误，请联系专门的系统管理人员";
 
-    private final Map<Integer, String> failedResponseMessageMap;
+    private final Map<Integer, String> failedResponseMessageTemplateMap;
 
     public static ApiResponsesAnnotationHandler getInstance() {
         return OUR_INSTANCE;
     }
 
     private ApiResponsesAnnotationHandler() {
-        failedResponseMessageMap = new HashMap<>(20);
+        failedResponseMessageTemplateMap = new HashMap<>(20);
 
-        failedResponseMessageMap.put(DEFAULT_FAILED_CODE, DEFAULT_FAILED_MESSAGE);
+        failedResponseMessageTemplateMap.put(DEFAULT_FAILED_CODE, DEFAULT_FAILED_MESSAGE);
     }
 
     public void parsingApiResponseAnnotations(Class<?> clazz) {
@@ -45,7 +45,7 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
             parsingApiResponseAnnotations(clazz.getSuperclass());
         }
 
-        getLogger().info("Parsing the controller[" + clazz.getSimpleName() + "]");
+        getLogger().verbose("Parsing the controller[" + clazz.getSimpleName() + "]");
 
         ApiResponses baseApiResponsesAnnotation = clazz.getAnnotation(ApiResponses.class);
 
@@ -57,11 +57,15 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
             parseApiResponsesAnnotation(apiResponsesAnnotation);
         }
 
-        getLogger().info("Parsing the controller[" + clazz.getSimpleName() + "] completely!");
+        getLogger().verbose(
+                "Parsing the controller[" + clazz.getSimpleName() + "] completely!");
     }
 
     public @NotNull String getFailedMessage(int code) {
-        return Objects.requireNonNull(failedResponseMessageMap.get(code));
+        if (!failedResponseMessageTemplateMap.containsKey(code)) {
+            throw new NotRegisteredException(code);
+        }
+        return failedResponseMessageTemplateMap.get(code);
     }
 
 
@@ -80,8 +84,8 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
 
 
     private void addFailedResponse(int code, String failedMessage) {
-        if (!failedResponseMessageMap.containsKey(code)) {
-            failedResponseMessageMap.put(code, failedMessage);
+        if (!failedResponseMessageTemplateMap.containsKey(code)) {
+            failedResponseMessageTemplateMap.put(code, failedMessage);
             getLogger().debug(
                     "The code【" + code + "】 map failed message[" + failedMessage + "]");
         }

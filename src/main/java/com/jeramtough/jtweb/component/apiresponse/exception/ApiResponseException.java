@@ -3,6 +3,8 @@ package com.jeramtough.jtweb.component.apiresponse.exception;
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created on 2019/7/29 15:09
@@ -17,7 +19,7 @@ public class ApiResponseException extends RuntimeException {
     }
 
     public ApiResponseException(Integer code, String... placeholders) {
-        this(new FailureReason(code, placeholders));
+        this(new FailureReason(code, Arrays.asList(placeholders)));
     }
 
     public ApiResponseException(FailureReason failureReason) {
@@ -25,7 +27,7 @@ public class ApiResponseException extends RuntimeException {
 
         this.failureReason = failureReason;
         if (failureReason.getPlaceholders() == null) {
-            failureReason.setPlaceholders(new String[]{});
+            failureReason.setPlaceholders(new ArrayList<>());
         }
     }
 

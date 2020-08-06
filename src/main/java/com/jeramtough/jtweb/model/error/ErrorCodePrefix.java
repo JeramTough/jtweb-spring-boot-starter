@@ -40,4 +40,12 @@ public enum ErrorCodePrefix {
     public int get() {
         return prefix;
     }
+
+    public int number() {
+        return prefix;
+    }
+
+    public int prefix() {
+        return prefix;
+    }
 }

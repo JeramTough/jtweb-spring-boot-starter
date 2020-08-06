@@ -9,13 +9,13 @@ import jtdatabase.codegenerator.core.CodeGeneratorAgent;
  * by @author JeramTough
  * </pre>
  */
-public class GeneratorMain {
+public class GeneratorMainForRandl2 {
 
     public static void main(String[] args) {
         CodeGeneratorAgent codeGeneratorAgent = new CodeGeneratorAgent(new GeneratorConfigAdapter() {
             @Override
             public String getProjectName() {
-                return "models";
+                return "randl2";
             }
 
             @Override
@@ -51,12 +51,12 @@ public class GeneratorMain {
 
             @Override
             public boolean hasBusinessPrefix() {
-                return true;
+                return false;
             }
 
             @Override
             public String getParentPackageName() {
-                return "com.jeramtough.msyheadnews.common";
+                return "com.jeramtough";
             }
         });
 

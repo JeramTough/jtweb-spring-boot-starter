@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.jeramtough.jtlog.facade.L;
 import jtdatabase.codegenerator.adapter.GeneratorConfigAdapter;
 
 import java.io.File;
@@ -86,7 +87,7 @@ public class CodeGeneratorAgent {
         //指定自定义模板路径, 位置：/resources/templates/entity2.java.ftl(或者是.vm)
         //注意不要带上.ftl(或者是.vm), 会根据使用的模板引擎自动识别
         TemplateConfig templateConfig = new TemplateConfig()
-                .setEntity("/templates/entity.java");
+                .setEntity("/templates/entity1.java");
         templateConfig.setController("/templates/controller.java");
 
         //配置自定义模板
@@ -101,10 +102,18 @@ public class CodeGeneratorAgent {
 
             @Override
             public void initTableMap(TableInfo tableInfo) {
-                for (TableField tableField : tableInfo.getFields()) {
-                    String comment = tableField.getComment();
-                    comment = comment.replace("\r\n", " # ");
-                    tableField.setComment(comment);
+                if (tableInfo == null) {
+                    L.arrive();
+                }
+                if (tableInfo.getFields() != null) {
+                    for (TableField tableField : tableInfo.getFields()) {
+                        //把注释的回车换成#号
+                        String comment = tableField.getComment();
+                        if (comment != null) {
+                            comment = comment.replace("\r\n", " # ");
+                            tableField.setComment(comment);
+                        }
+                    }
                 }
             }
         };
@@ -115,7 +124,7 @@ public class CodeGeneratorAgent {
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
         // 自定义配置会被优先输出
-        focList.add(new FileOutConfig("/templates/dto.java.vm") {
+        focList.add(new FileOutConfig("/templates/dto1.java.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 Map<String, String> pathInfoMap =
@@ -177,16 +186,25 @@ public class CodeGeneratorAgent {
     private void generating(String businessName) {
         // 包配置
         PackageConfig packageConfig = new PackageConfig();
-//        packageConfig.setModuleName(businessName);
+        //根据业务名分成模块，适合微服务架构
         packageConfig.setParent(
                 configAdapter.getParentPackageName() + "." + configAdapter.getProjectName() +
                         "." + businessName);
-
         packageConfig.setController(
                 "action.controller");
         packageConfig.setMapper("dao.mapper");
         packageConfig.setXml("dao.mapper.xml");
         packageConfig.setEntity("model.entity");
+
+        //根据业务名内分包
+        /*packageConfig.setParent(
+                configAdapter.getParentPackageName() + "." + configAdapter.getProjectName());
+        packageConfig.setController(
+                "action.controller."+businessName);
+        packageConfig.setMapper("dao.mapper."+businessName);
+        packageConfig.setXml("dao.mapper.xml."+businessName);
+        packageConfig.setEntity("model.entity."+businessName);*/
+
         codeAutoGenerator.setPackageInfo(packageConfig);
 
         injectionConfig.setFileCreate(

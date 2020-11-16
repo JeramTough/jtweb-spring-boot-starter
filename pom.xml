@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.1.14.23-LOCAL</version>
+    <version>2.1.14.33-LOCAL</version>
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
@@ -40,7 +40,7 @@
         <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.3.0-RELEASE</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.4.6-SNAPSHOT</JTCOMPONENT_VERSION>
 
         <!--swagger_bootstrap_ui-->
         <SWAGGER_BOOTSTRAP_UI_VERSION>1.9.6</SWAGGER_BOOTSTRAP_UI_VERSION>
@@ -55,12 +55,30 @@
         <MYSQL_JDBC_VERSION>5.1.48</MYSQL_JDBC_VERSION>
 
         <!--mybatis-plus-boot-starter-->
-        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.3.1</MYBATIS_PLUS_BOOT_STARTER_VERSION>
+        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.0</MYBATIS_PLUS_BOOT_STARTER_VERSION>
 
+        <!--p6spy-数据库sql打印-->
+        <P6SPY_VERSION>3.9.1</P6SPY_VERSION>
     </properties>
 
 
     <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <name>sonatype maven</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>jcenter-snapshots</id>
             <name>jcenter</name>
@@ -78,6 +96,13 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.2.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--Microsoft SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>6.4.0.jre8</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
@@ -154,11 +179,18 @@
             <version>${JTCOMPONENT_VERSION}</version>
         </dependency>
 
-        <!--other-->
+
+       <!-- dao层相关-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${MYBATIS_PLUS_BOOT_STARTER_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>${P6SPY_VERSION}</version>
         </dependency>
 
         <dependency>
@@ -167,6 +199,7 @@
             <version>${MYSQL_JDBC_VERSION}</version>
         </dependency>
 
+        <!--other-->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -203,9 +236,6 @@
             <!--在引用时请在maven中央仓库搜索最新版本号-->
             <version>2.0.4</version>
         </dependency>
-
-
-
 
     </dependencies>
 

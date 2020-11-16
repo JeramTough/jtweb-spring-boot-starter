@@ -3,7 +3,7 @@ package com.jeramtough.jtweb.component.apiresponse;
 import com.jeramtough.jtlog.annotation.LogConfiguration;
 import com.jeramtough.jtlog.level.LogLevel;
 import com.jeramtough.jtlog.with.WithLogger;
-import com.jeramtough.jtweb.exception.NotRegisteredException;
+import com.jeramtough.jtweb.exception.CodeNotRegiserException;
 import com.jeramtough.jtweb.model.error.ErrorCodePrefix;
 import io.swagger.annotations.ApiResponses;
 
@@ -63,7 +63,9 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
 
     public @NotNull String getFailedMessage(int code) {
         if (!failedResponseMessageTemplateMap.containsKey(code)) {
-            throw new NotRegisteredException(code);
+            CodeNotRegiserException codeNotRegiserException = new CodeNotRegiserException(code);
+            codeNotRegiserException.printStackTrace();
+            throw codeNotRegiserException;
         }
         return failedResponseMessageTemplateMap.get(code);
     }

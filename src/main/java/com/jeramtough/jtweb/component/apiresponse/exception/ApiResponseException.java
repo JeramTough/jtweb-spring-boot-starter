@@ -3,6 +3,7 @@ package com.jeramtough.jtweb.component.apiresponse.exception;
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,7 +11,7 @@ import java.util.Arrays;
  * Created on 2019/7/29 15:09
  * by @author WeiBoWen
  */
-public class ApiResponseException extends RuntimeException {
+public class ApiResponseException extends RuntimeException implements Serializable {
 
     private FailureReason failureReason;
 

@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.1.14.33-LOCAL</version>
+    <version>2.1.14.38-LOCAL</version>
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
@@ -40,7 +40,7 @@
         <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.4.6-SNAPSHOT</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.5.1-SNAPSHOT</JTCOMPONENT_VERSION>
 
         <!--swagger_bootstrap_ui-->
         <SWAGGER_BOOTSTRAP_UI_VERSION>1.9.6</SWAGGER_BOOTSTRAP_UI_VERSION>
@@ -153,6 +153,13 @@
             <version>${SPRING_BOOT_STARTER_VERSION}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${SPRING_BOOT_STARTER_VERSION}</version>
+        </dependency>
+
+
         <!--ali-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -180,7 +187,7 @@
         </dependency>
 
 
-       <!-- dao层相关-->
+        <!-- dao层相关-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>

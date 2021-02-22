@@ -2,6 +2,7 @@ package com.jeramtough.jtweb.component.apiresponse.exception;
 
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * by @author WeiBoWen
  * </pre>
  */
-public class ApiResponseBeanException extends ApiResponseException {
+public class ApiResponseBeanException extends ApiResponseException implements Serializable {
 
     private String fieldName;
 

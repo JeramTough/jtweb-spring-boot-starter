@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * </pre>
  */
 @Configuration
-@MapperScan("com.baomidou.mybatisplus.samples.quickstart.mapper")
 @EnableTransactionManagement
 public class MybatisPlusConfig {
 
@@ -31,5 +30,7 @@ public class MybatisPlusConfig {
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
         return paginationInterceptor;
     }
+
+
 
 }

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
+import com.jeramtough.jtweb.component.apiresponse.error.ErrorCode;
+import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseBeanException;
 import com.jeramtough.jtweb.component.validation.constraints.NotBlankButNull;
 import org.apache.commons.lang3.ClassUtils;
@@ -36,16 +38,16 @@ public class BeanValidator {
             //拿到数据校验信息
             String failedMessage = constraintViolation.getMessage();
             //拿到校验的注释
-            Annotation validatorAnnotation=constraintViolation.getConstraintDescriptor().getAnnotation();
+            Annotation validatorAnnotation = constraintViolation.getConstraintDescriptor().getAnnotation();
 
             //是否自动设置为null
-            if (validatorAnnotation instanceof NotBlankButNull){
-                NotBlankButNull notBlankButNull= (NotBlankButNull) validatorAnnotation;
-                if (notBlankButNull.isSetNullAuto()){
+            if (validatorAnnotation instanceof NotBlankButNull) {
+                NotBlankButNull notBlankButNull = (NotBlankButNull) validatorAnnotation;
+                if (notBlankButNull.isSetNullAuto()) {
                     try {
-                        Field field= checkedObject.getClass().getDeclaredField(fieldName);
+                        Field field = checkedObject.getClass().getDeclaredField(fieldName);
                         field.setAccessible(true);
-                        field.set(checkedObject,null);
+                        field.set(checkedObject, null);
                         continue;
                     }
                     catch (NoSuchFieldException | IllegalAccessException e) {
@@ -67,7 +69,10 @@ public class BeanValidator {
             }
 
             if (codeClass == null) {
-                throw new IllegalStateException("被校验的参数没有Payload.Error.C 注释属性");
+                //抛出普通的ApiException
+                failedMessage = String.format("%s传参校验失败！%s", fieldName,
+                        failedMessage == null ? "" : failedMessage);
+                throw new ApiException(ErrorCode.U, failedMessage);
             }
 
             try {

@@ -18,6 +18,8 @@ public class CommonApiResponse<T> implements Serializable {
 
     private T responseBody;
 
+    private String message;
+
     public CommonApiResponse() {
     }
 
@@ -47,15 +49,18 @@ public class CommonApiResponse<T> implements Serializable {
         return isSuccessful;
     }
 
-    public void setSuccessful(Boolean successful) {
-        isSuccessful = successful;
+    public Boolean isSuccessful() {
+        return isSuccessful;
+    }
+
+    public void setSuccessful(Boolean isSuccessful) {
+        this.isSuccessful = isSuccessful;
     }
 
 
-    public void setIsSuccessful(Boolean successful) {
-        isSuccessful = successful;
+    public void setIsSuccessful(Boolean isSuccessful) {
+        this.isSuccessful = isSuccessful;
     }
-
 
 
     public Long getTimestamp() {
@@ -64,6 +69,14 @@ public class CommonApiResponse<T> implements Serializable {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
@@ -75,5 +88,6 @@ public class CommonApiResponse<T> implements Serializable {
                 ", responseBody=" + responseBody +
                 '}';
     }
+
 
 }

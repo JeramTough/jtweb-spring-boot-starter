@@ -3,6 +3,7 @@ package com.jeramtough.jtweb.service.impl;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.jeramtough.jtcomponent.utils.StringUtil;
 import com.jeramtough.jtweb.component.business.ToDtoProcess;
 import com.jeramtough.jtweb.component.validation.BeanValidator;
@@ -15,6 +16,7 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -58,7 +60,7 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     @Override
     public boolean save(T entity) {
         BeanValidator.verifyParams(entity);
-        return false;
+        return super.save(entity);
     }
 
     @Override
@@ -92,6 +94,14 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
         for (T t : tList) {
             dList.add(toDto(t));
         }
+        return dList;
+    }
+
+    public List<D> getDtoListForAsyn(List<T> tList) {
+        List<D> dList = tList
+                .parallelStream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
         return dList;
     }
 

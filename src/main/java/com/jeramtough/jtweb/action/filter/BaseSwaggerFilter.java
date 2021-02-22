@@ -21,6 +21,12 @@ public interface BaseSwaggerFilter {
         return ApiResponseFactory.getSuccessfulApiResponse(responseBody);
     }
 
+    default CommonApiResponse<String> getFailedApiResponse(Exception e) {
+        CommonApiResponse<String> failedApiResponse =
+                ApiResponseFactory.getFailedResponse(e);
+        return failedApiResponse;
+    }
+
     default CommonApiResponse<String> getFailedApiResponse(ApiResponseException e) {
         CommonApiResponse<String> failedApiResponse =
                 ApiResponseFactory.getFailedResponse(e);
@@ -28,8 +34,8 @@ public interface BaseSwaggerFilter {
     }
 
 
-    default void returnRestfulApiResponse(CommonApiResponse commonApiResponse,
-                                          HttpServletResponse httpServletResponse) {
+    default void returnCommonApiResponse(CommonApiResponse commonApiResponse,
+                                         HttpServletResponse httpServletResponse) {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = httpServletResponse.getWriter()) {

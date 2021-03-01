@@ -57,14 +57,14 @@ public class RequestMappingAspect extends BaseLogAspect implements WithLogger {
     @Around("logPointCut()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        Method aspectMethod = getAspectMethod(joinPoint);
-        if (aspectMethod == null) {
-            getLogger().warn("获取切面方法失败！");
+        if (getOptLoggerConfig().isAble() == null || !getOptLoggerConfig().isAble()) {
+            getLogger().debug("isAble=false,操作日志切面不记录日志");
             return joinPoint.proceed();
         }
 
-        if (getOptLoggerConfig().isAble() == null || !getOptLoggerConfig().isAble()) {
-            getLogger().debug("isAble=false,操作日志切面不记录日志");
+        Method aspectMethod = getAspectMethod(joinPoint);
+        if (aspectMethod == null) {
+            getLogger().warn("获取切面方法失败！");
             return joinPoint.proceed();
         }
 
@@ -124,7 +124,7 @@ public class RequestMappingAspect extends BaseLogAspect implements WithLogger {
             method = joinPoint.getTarget().getClass().getDeclaredMethod(javaMethodName, argsClass);
         }
         catch (NoSuchMethodException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         //拿名字匹配

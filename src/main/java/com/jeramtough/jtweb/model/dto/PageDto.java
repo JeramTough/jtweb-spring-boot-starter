@@ -1,5 +1,6 @@
 package com.jeramtough.jtweb.model.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,9 @@ import java.util.List;
  * by @author JeramTough
  * </pre>
  */
-public class PageDto<T> {
+public class PageDto<T> implements Serializable {
+
+    private static final long serialVersionUID = 7653183466891188047L;
 
     private Long index;
 

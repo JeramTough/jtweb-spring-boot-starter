@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @ApiModel(value="OauthScopeDetails对象", description="")
 public class OauthScopeDetailsDto implements Serializable{
@@ -31,9 +31,6 @@ public class OauthScopeDetailsDto implements Serializable{
 
     @ApiModelProperty(value = "描述")
     private String description;
-
-    @ApiModelProperty(value = "域命名")
-    private String scope;
 
     @ApiModelProperty(value = "是否需要请求用户批准")
     private Integer isRequired;
@@ -71,14 +68,6 @@ public class OauthScopeDetailsDto implements Serializable{
         this.description = description;
     }
 
-    public String getScope() {
-        return scope;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
     public Integer getIsRequired() {
         return isRequired;
     }
@@ -94,7 +83,6 @@ public class OauthScopeDetailsDto implements Serializable{
         ", resourceId=" + resourceId +
         ", scopeExpression=" + scopeExpression +
         ", description=" + description +
-        ", scope=" + scope +
         ", isRequired=" + isRequired +
         "}";
     }

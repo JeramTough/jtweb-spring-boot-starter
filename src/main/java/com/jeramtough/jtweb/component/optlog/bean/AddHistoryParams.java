@@ -36,6 +36,8 @@ public class AddHistoryParams implements Serializable {
 
     private String expandInfo;
 
+    private String requestUrl;
+
 
     public Long getUserId() {
         return userId;
@@ -123,5 +125,13 @@ public class AddHistoryParams implements Serializable {
 
     public void setExpandInfo(String expandInfo) {
         this.expandInfo = expandInfo;
+    }
+
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
     }
 }

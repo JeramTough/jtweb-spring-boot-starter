@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 public interface RandlUserService extends IService<RandlUser> {
 

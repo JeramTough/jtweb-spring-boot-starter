@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @ApiModel(value="RandlPersonalInfo对象", description="")
 public class RandlPersonalInfoDto implements Serializable{

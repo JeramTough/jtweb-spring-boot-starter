@@ -3,6 +3,7 @@ package com.jeramtough.jtweb.model.params;
 import io.swagger.annotations.ApiParam;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -10,7 +11,9 @@ import javax.validation.constraints.NotNull;
  * by @author JeramTough
  * </pre>
  */
-public class QueryByPageParams{
+public class QueryByPageParams implements Serializable {
+
+    private static final long serialVersionUID = -7842849962531285279L;
 
     @NotNull(message = "{'code':667,'placeholders':['获取数据','第几页']}")
     @ApiParam(value = "第几页", required = true, example = "1")

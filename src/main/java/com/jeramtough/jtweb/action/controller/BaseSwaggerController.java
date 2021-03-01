@@ -7,6 +7,7 @@ import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
 import com.jeramtough.jtweb.component.apiresponse.error.ErrorCode;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
+import com.jeramtough.jtweb.component.optlog.annotation.IgnoreOptLog;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 

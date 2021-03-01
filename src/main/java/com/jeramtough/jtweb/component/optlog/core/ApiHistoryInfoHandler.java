@@ -23,20 +23,26 @@ import javax.servlet.http.HttpSession;
 @Scope("request")
 public class ApiHistoryInfoHandler {
 
-    private final HttpServletRequest httpServletRequest;
-    private final HttpServletResponse httpServletResponse;
+    private HttpServletRequest httpServletRequest;
+    private HttpServletResponse httpServletResponse;
     private final HttpSession httpSession;
     private final OptLoggerConfig loggerConfig;
 
     @Autowired
-    public ApiHistoryInfoHandler(HttpServletRequest httpServletRequest,
-                                 HttpServletResponse httpServletResponse,
-                                 HttpSession httpSession,
+    public ApiHistoryInfoHandler(HttpSession httpSession,
                                  OptLoggerConfig loggerConfig) {
-        this.httpServletRequest = httpServletRequest;
-        this.httpServletResponse = httpServletResponse;
         this.httpSession = httpSession;
         this.loggerConfig = loggerConfig;
+    }
+
+    @Autowired
+    public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+        this.httpServletRequest = httpServletRequest;
+    }
+
+    @Autowired
+    public void setHttpServletResponse(HttpServletResponse httpServletResponse) {
+        this.httpServletResponse = httpServletResponse;
     }
 
     public AddHistoryParams newAddHistoryParams(InterfaceDetail interfaceDetail, Object[] args, Object resp,
@@ -51,11 +57,18 @@ public class ApiHistoryInfoHandler {
             params.setArgsForObject(args);
         }
 
-        params.setCreateTime(DateTimeUtil.getCurrentDateTime());
-        params.setIp(IpAddrUtil.getIpAddr(httpServletRequest));
-        String requestMethod = httpServletRequest.getMethod();
-        params.setRequestMethod(requestMethod);
-        params.setUserId(loggerConfig.getUserId(httpServletRequest));
+        if (httpServletRequest != null) {
+            String requestMethod = httpServletRequest.getMethod();
+            params.setRequestMethod(requestMethod);
+
+            String requestUrl = httpServletRequest.getRequestURL().toString();
+            params.setRequestUrl(requestUrl);
+
+            params.setCreateTime(DateTimeUtil.getCurrentDateTime());
+            params.setIp(IpAddrUtil.getIpAddr(httpServletRequest));
+            params.setUserId(loggerConfig.getUserId(httpServletRequest));
+        }
+
         params.setIsCompleted(isCompleted);
         params.setExpandInfo(loggerConfig.getExpandInfo());
         params.setInterfaceDetail(interfaceDetail);

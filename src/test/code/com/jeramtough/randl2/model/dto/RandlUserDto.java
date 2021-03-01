@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @ApiModel(value="RandlUser对象", description="RandL系统的用户表")
 public class RandlUserDto implements Serializable{

@@ -46,7 +46,7 @@ public class DefaultLogSaver implements LogSaver, WithLogger {
                     @Override
                     public void run() {
                         try {
-                            getLogger().info("准备进入日志记录渠道【" + logChannel.getClass().getSimpleName() + "】");
+                            getLogger().verbose("准备进入日志记录渠道【" + logChannel.getClass().getSimpleName() + "】");
 
                             String respStr;
                             if (params != null) {

@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @ApiModel(value="RandlModuleApiMap对象", description="")
 public class RandlModuleApiMap implements Serializable {

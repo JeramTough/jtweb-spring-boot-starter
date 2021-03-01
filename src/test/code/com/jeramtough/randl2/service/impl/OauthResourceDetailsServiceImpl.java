@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @Service
 public class OauthResourceDetailsServiceImpl extends ServiceImpl<OauthResourceDetailsMapper, OauthResourceDetails> implements OauthResourceDetailsService {

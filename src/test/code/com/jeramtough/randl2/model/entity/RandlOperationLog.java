@@ -3,6 +3,7 @@ package com.jeramtough.randl2.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+import java.sql.Blob;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @ApiModel(value="RandlOperationLog对象", description="")
 public class RandlOperationLog implements Serializable {
@@ -52,24 +53,39 @@ public class RandlOperationLog implements Serializable {
     private String apiDescription;
 
   /**
-   * 操作内容
-   */
-    private String content;
-
-  /**
    * 日志记录创建时间
    */
     private LocalDateTime createTime;
 
   /**
-   * 接口标签 使用英文,逗号分隔
+   * API模块
    */
-    private String tags;
+    private String apiModule;
 
   /**
-   * 执行是否成功
+   * 执行是否完成，0:未完成，1:完成
    */
-    private Integer result;
+    private Boolean result;
+
+  /**
+   * 请求url
+   */
+    private String requestUrl;
+
+  /**
+   * java方法
+   */
+    private String javaMethod;
+
+  /**
+   * 请求参数
+   */
+    private Blob requestArgs;
+
+  /**
+   * 相应内容
+   */
+    private Blob responseBody;
 
 
     public Long getFid() {
@@ -120,14 +136,6 @@ public class RandlOperationLog implements Serializable {
         this.apiDescription = apiDescription;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -136,20 +144,52 @@ public class RandlOperationLog implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getTags() {
-        return tags;
+    public String getApiModule() {
+        return apiModule;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setApiModule(String apiModule) {
+        this.apiModule = apiModule;
     }
 
-    public Integer getResult() {
+    public Boolean getResult() {
         return result;
     }
 
-    public void setResult(Integer result) {
+    public void setResult(Boolean result) {
         this.result = result;
+    }
+
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
+    }
+
+    public String getJavaMethod() {
+        return javaMethod;
+    }
+
+    public void setJavaMethod(String javaMethod) {
+        this.javaMethod = javaMethod;
+    }
+
+    public Blob getRequestArgs() {
+        return requestArgs;
+    }
+
+    public void setRequestArgs(Blob requestArgs) {
+        this.requestArgs = requestArgs;
+    }
+
+    public Blob getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(Blob responseBody) {
+        this.responseBody = responseBody;
     }
 
     @Override
@@ -161,10 +201,13 @@ public class RandlOperationLog implements Serializable {
         ", adminName=" + adminName +
         ", apiName=" + apiName +
         ", apiDescription=" + apiDescription +
-        ", content=" + content +
         ", createTime=" + createTime +
-        ", tags=" + tags +
+        ", apiModule=" + apiModule +
         ", result=" + result +
+        ", requestUrl=" + requestUrl +
+        ", javaMethod=" + javaMethod +
+        ", requestArgs=" + requestArgs +
+        ", responseBody=" + responseBody +
         "}";
     }
 }

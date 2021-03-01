@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
  */
 public class QueryByPageExtendedParamd<T> extends QueryByPageParams{
 
+    private static final long serialVersionUID = -8101986446815976208L;
+
     @NotNull(message = "{'code':667,'placeholders':['获取数据','每页大小']}")
     @ApiParam(value = "每页的大小", required = true, example = "10")
     private T extendedParams;

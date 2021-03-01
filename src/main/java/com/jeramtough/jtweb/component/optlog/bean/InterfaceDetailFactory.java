@@ -49,7 +49,13 @@ public class InterfaceDetailFactory {
             interfaceDetail.setMethodArgsClasses(argsClasses);
         }
 
-        IgnoreOptLog ignoreOptLogAnnotation = aspectMethod.getDeclaredAnnotation(IgnoreOptLog.class);
+        //先拿类的注释，如果方法有在用方法的代替
+        IgnoreOptLog ignoreOptLogAnnotation =
+                joinPoint.getTarget().getClass().getDeclaredAnnotation(IgnoreOptLog.class);
+        if (aspectMethod.getDeclaredAnnotation(IgnoreOptLog.class) != null) {
+            ignoreOptLogAnnotation = aspectMethod.getDeclaredAnnotation(IgnoreOptLog.class);
+        }
+
         if (ignoreOptLogAnnotation == null) {
             interfaceDetail.setIgnoreMethod(false);
             interfaceDetail.setIgnoreArgs(false);

@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * by @author WeiBoWen
  * </pre>
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface IgnoreOptLog {

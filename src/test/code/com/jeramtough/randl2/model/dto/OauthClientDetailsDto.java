@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author JeramTough
- * @since 2021-02-12
+ * @since 2021-02-22
  */
 @ApiModel(value="OauthClientDetails对象", description="")
 public class OauthClientDetailsDto implements Serializable{
@@ -31,14 +31,9 @@ public class OauthClientDetailsDto implements Serializable{
 
     private String clientSecret;
 
-    @ApiModelProperty(value = "申请的域Id")
-    private String scopeIds;
-
     private String authorizedGrantTypes;
 
     private String webServerRedirectUris;
-
-    private String authorities;
 
     private Long accessTokenValidity;
 
@@ -87,14 +82,6 @@ public class OauthClientDetailsDto implements Serializable{
         this.clientSecret = clientSecret;
     }
 
-    public String getScopeIds() {
-        return scopeIds;
-    }
-
-    public void setScopeIds(String scopeIds) {
-        this.scopeIds = scopeIds;
-    }
-
     public String getAuthorizedGrantTypes() {
         return authorizedGrantTypes;
     }
@@ -109,14 +96,6 @@ public class OauthClientDetailsDto implements Serializable{
 
     public void setWebServerRedirectUris(String webServerRedirectUris) {
         this.webServerRedirectUris = webServerRedirectUris;
-    }
-
-    public String getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(String authorities) {
-        this.authorities = authorities;
     }
 
     public Long getAccessTokenValidity() {
@@ -151,10 +130,8 @@ public class OauthClientDetailsDto implements Serializable{
         ", clientId=" + clientId +
         ", resourceIds=" + resourceIds +
         ", clientSecret=" + clientSecret +
-        ", scopeIds=" + scopeIds +
         ", authorizedGrantTypes=" + authorizedGrantTypes +
         ", webServerRedirectUris=" + webServerRedirectUris +
-        ", authorities=" + authorities +
         ", accessTokenValidity=" + accessTokenValidity +
         ", refreshTokenValidity=" + refreshTokenValidity +
         ", autoApprove=" + autoApprove +

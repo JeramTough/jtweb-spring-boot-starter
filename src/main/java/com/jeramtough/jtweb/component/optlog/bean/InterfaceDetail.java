@@ -1,5 +1,8 @@
 package com.jeramtough.jtweb.component.optlog.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -19,11 +22,17 @@ public class InterfaceDetail implements Serializable {
 
     private ApiTypeEnum apiTypeEnum;
 
-    private Boolean isIgnoreMethod;
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private transient Boolean isIgnoreMethod;
 
-    private Boolean isIgnoreArgs;
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private transient Boolean isIgnoreArgs;
 
-    private Boolean isIgnoreResponse;
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private transient Boolean isIgnoreResponse;
 
     private String apiDescription;
 
@@ -62,11 +71,24 @@ public class InterfaceDetail implements Serializable {
         return isIgnoreMethod;
     }
 
-    public void setIgnoreMethod(Boolean ignoreMethod) {
-        isIgnoreMethod = ignoreMethod;
+    public Boolean getIsIgnoreMethod() {
+        return isIgnoreMethod;
     }
 
+    public void setIgnoreMethod(Boolean isIgnoreMethod) {
+        this.isIgnoreMethod = isIgnoreMethod;
+    }
+
+    public void setIsIgnoreMethod(Boolean isIgnoreMethod) {
+        this.isIgnoreMethod = isIgnoreMethod;
+    }
+
+
     public Boolean getIgnoreArgs() {
+        return isIgnoreArgs;
+    }
+
+    public Boolean getIsIgnoreArgs() {
         return isIgnoreArgs;
     }
 
@@ -74,6 +96,12 @@ public class InterfaceDetail implements Serializable {
         isIgnoreArgs = ignoreArgs;
     }
 
+    public void setIsIgnoreArgs(Boolean ignoreArgs) {
+        isIgnoreArgs = ignoreArgs;
+    }
+
+
+    @JsonIgnore
     public Boolean getIgnoreResponse() {
         return isIgnoreResponse;
     }

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author WeiJieHui
- * @since 2020-12-22
+ * @since 2021-03-07
  */
 public interface SmTeacherScoreService extends IService<SmTeacherScore> {
 

@@ -1,11 +1,12 @@
 package com.jeramtough.jtweb.component.optlog.core;
 
 import com.jeramtough.jtcomponent.utils.DateTimeUtil;
-import com.jeramtough.jtweb.util.IpAddrUtil;
 import com.jeramtough.jtweb.component.optlog.bean.AddHistoryParams;
 import com.jeramtough.jtweb.component.optlog.bean.InterfaceDetail;
 import com.jeramtough.jtweb.component.optlog.config.OptLoggerConfig;
+import com.jeramtough.jtweb.util.IpAddrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,9 @@ import javax.servlet.http.HttpSession;
  * by @author WeiBoWen
  * </pre>
  */
+@Lazy
 @Component
-@Scope("request")
+@Scope("prototype")
 public class ApiHistoryInfoHandler {
 
     private HttpServletRequest httpServletRequest;
@@ -47,6 +49,23 @@ public class ApiHistoryInfoHandler {
 
     public AddHistoryParams newAddHistoryParams(InterfaceDetail interfaceDetail, Object[] args, Object resp,
                                                 boolean isCompleted) {
+        return this.newAddHistoryParams(interfaceDetail, args, resp, isCompleted, null);
+    }
+
+    public AddHistoryParams newAddHistoryParams(InterfaceDetail interfaceDetail, Object[] args,
+                                                Throwable throwable) {
+        try {
+            Exception exception = (Exception) throwable;
+            return this.newAddHistoryParams(interfaceDetail, args, null, false, exception);
+        }
+        catch (Exception e) {
+            String failMessage = throwable.getMessage();
+            return this.newAddHistoryParams(interfaceDetail, args, failMessage, false, null);
+        }
+    }
+
+    public AddHistoryParams newAddHistoryParams(InterfaceDetail interfaceDetail, Object[] args, Object resp,
+                                                boolean isCompleted, Exception exception) {
         AddHistoryParams params = new AddHistoryParams();
 
         if (!interfaceDetail.getIgnoreResponse()) {
@@ -66,15 +85,20 @@ public class ApiHistoryInfoHandler {
 
             params.setCreateTime(DateTimeUtil.getCurrentDateTime());
             params.setIp(IpAddrUtil.getIpAddr(httpServletRequest));
-            params.setUserId(loggerConfig.getUserId(httpServletRequest));
         }
 
         params.setIsCompleted(isCompleted);
+
+        if (exception != null) {
+            params.setIsCompleted(false);
+            params.setRespForObject(null);
+            params.setException(exception);
+        }
+
         params.setExpandInfo(loggerConfig.getExpandInfo());
         params.setInterfaceDetail(interfaceDetail);
         return params;
     }
-
 
     public HttpServletRequest getHttpServletRequest() {
         return httpServletRequest;

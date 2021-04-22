@@ -1,5 +1,7 @@
 package com.jeramtough.studentmanager.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,13 +12,14 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiJieHui
- * @since 2020-12-22
+ * @since 2021-03-07
  */
 @ApiModel(value="SmTeacherScore对象", description="")
 public class SmTeacherScore implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+    @TableId(value = "fid", type = IdType.AUTO)
     private Long fid;
 
     private Long teacherId;
@@ -29,6 +32,10 @@ public class SmTeacherScore implements Serializable {
     private Long scheduleId;
 
     private String comment;
+
+    private Long studentId;
+
+    private Long courseId;
 
 
     public Long getFid() {
@@ -71,6 +78,22 @@ public class SmTeacherScore implements Serializable {
         this.comment = comment;
     }
 
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public String toString() {
         return "SmTeacherScore{" +
@@ -79,6 +102,8 @@ public class SmTeacherScore implements Serializable {
         ", score=" + score +
         ", scheduleId=" + scheduleId +
         ", comment=" + comment +
+        ", studentId=" + studentId +
+        ", courseId=" + courseId +
         "}";
     }
 }

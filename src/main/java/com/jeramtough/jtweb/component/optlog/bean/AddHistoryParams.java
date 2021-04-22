@@ -1,6 +1,9 @@
 package com.jeramtough.jtweb.component.optlog.bean;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -11,21 +14,23 @@ public class AddHistoryParams implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long userId;
-
     private String ip;
 
     private String createTime;
 
     private String args;
 
-    private Object[] argsForObject;
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private transient Object[] argsForObject;
 
     private String requestMethod;
 
     private String response;
 
-    private Object respForObject;
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private transient  Object respForObject;
 
     private InterfaceDetail interfaceDetail;
 
@@ -38,14 +43,12 @@ public class AddHistoryParams implements Serializable {
 
     private String requestUrl;
 
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    /**
+     * 不一定有值，只有出异常时才不为空
+     */
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private transient Exception exception;
 
     public String getIp() {
         return ip;
@@ -87,18 +90,22 @@ public class AddHistoryParams implements Serializable {
         this.response = response;
     }
 
+    @JsonIgnore
     public Object[] getArgsForObject() {
         return argsForObject;
     }
 
+    @JsonIgnore
     public void setArgsForObject(Object[] argsForObject) {
         this.argsForObject = argsForObject;
     }
 
+    @JsonIgnore
     public Object getRespForObject() {
         return respForObject;
     }
 
+    @JsonIgnore
     public void setRespForObject(Object respForObject) {
         this.respForObject = respForObject;
     }
@@ -133,5 +140,13 @@ public class AddHistoryParams implements Serializable {
 
     public void setRequestUrl(String requestUrl) {
         this.requestUrl = requestUrl;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
     }
 }

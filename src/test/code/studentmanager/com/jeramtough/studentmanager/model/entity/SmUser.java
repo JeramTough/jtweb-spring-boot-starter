@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiJieHui
- * @since 2020-12-22
+ * @since 2021-03-07
  */
 @ApiModel(value="SmUser对象", description="")
 public class SmUser implements Serializable {

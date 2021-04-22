@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Objects;
 
 /**
@@ -26,8 +27,8 @@ public class InterfaceDetailFactory {
         String apiDescription = null;
         if (apiOperationAnnotation != null) {
             apiDescription = apiOperationAnnotation.notes();
-            if (StringUtils.isEmpty(apiDescription)) {
-                apiOperationAnnotation.value();
+            if (!StringUtils.isEmpty(apiDescription)) {
+                apiDescription=apiOperationAnnotation.value();
             }
         }
         interfaceDetail.setApiDescription(apiDescription);
@@ -41,10 +42,14 @@ public class InterfaceDetailFactory {
         }
         interfaceDetail.setApiModuleTag(apiModuleTag);
 
-        if (joinPoint.getArgs() != null) {
-            String[] argsClasses = new String[joinPoint.getArgs().length];
-            for (int i = 0; i < joinPoint.getArgs().length; i++) {
-                argsClasses[i] = joinPoint.getArgs()[i].getClass().getSimpleName();
+        Parameter[] parameters = aspectMethod.getParameters();
+        if (parameters != null) {
+            String[] argsClasses = new String[parameters.length];
+            for (int i = 0; i < parameters.length; i++) {
+                if (parameters[i] != null) {
+                    Parameter parameter = parameters[i];
+                    argsClasses[i] = parameter.getType().getSimpleName();
+                }
             }
             interfaceDetail.setMethodArgsClasses(argsClasses);
         }

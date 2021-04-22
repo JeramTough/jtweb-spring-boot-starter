@@ -16,7 +16,11 @@ public class ApiResponseException extends RuntimeException implements Serializab
     private FailureReason failureReason;
 
     public ApiResponseException(Integer code) {
-        this(new FailureReason(code, null));
+        this(new FailureReason(code));
+    }
+
+    public ApiResponseException(Integer code, Exception exception) {
+        this(new FailureReason(code, exception));
     }
 
     public ApiResponseException(Integer code, String... placeholders) {

@@ -20,7 +20,7 @@ public class GeneratorMainForRandl2 {
 
             @Override
             public String getOutputDir() {
-                return "E:\\Codes\\IdeaCodes\\spring-boot-starter-jtweb2\\src\\test\\code";
+                return "E:\\Codes\\IdeaCodes\\spring-boot-starter-jtweb2\\src\\test\\code\\randl2";
             }
 
             @Override

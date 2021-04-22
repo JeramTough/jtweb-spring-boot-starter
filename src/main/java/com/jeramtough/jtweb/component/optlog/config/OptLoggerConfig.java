@@ -1,6 +1,7 @@
 package com.jeramtough.jtweb.component.optlog.config;
 
 import com.jeramtough.jtweb.component.optlog.channel.LogChannel;
+import com.jeramtough.jtweb.component.optlog.filter.OptLogFilter;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +12,6 @@ import javax.servlet.http.HttpServletRequest;
  * </pre>
  */
 public interface OptLoggerConfig {
-
-    /**
-     * 能提供UserId就提供，不能提供就返回null
-     */
-    Long getUserId(HttpServletRequest request);
 
     /**
      * 得到拓展信息，每次日志记录都会获取
@@ -32,5 +28,7 @@ public interface OptLoggerConfig {
      * 日志保存渠道，比如 HttpLogChannel
      */
     LogChannel[] logChanels();
+
+    OptLogFilter[] optLogFilters();
 
 }

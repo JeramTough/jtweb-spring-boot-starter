@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * <pre>
@@ -35,11 +33,23 @@ public class DefaultLogSaver implements LogSaver, WithLogger {
         this.loggerConfig = loggerConfig;
         executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
                 60L, TimeUnit.SECONDS,
-                new SynchronousQueue<Runnable>());
+                new SynchronousQueue<>(), (ThreadFactory) Thread::new);
     }
 
     @Override
     public void save(final AddHistoryParams params) {
+        //先通过过滤器过滤
+        if (loggerConfig.optLogFilters() != null) {
+            boolean isFilter = Arrays.asList(loggerConfig.optLogFilters())
+                                     .parallelStream()
+                                     .anyMatch(optLogFilter -> !optLogFilter.filter(params));
+            if (isFilter) {
+                return;
+            }
+        }
+
+        //再往渠道里发消息
+
         if (loggerConfig.logChanels() != null) {
             for (final LogChannel logChannel : loggerConfig.logChanels()) {
                 executorService.submit(new Runnable() {

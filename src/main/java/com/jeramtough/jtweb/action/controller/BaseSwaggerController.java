@@ -8,6 +8,10 @@ import com.jeramtough.jtweb.component.apiresponse.error.ErrorCode;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.component.optlog.annotation.IgnoreOptLog;
+import com.jeramtough.jtweb.model.error.ErrorS;
+import com.jeramtough.jtweb.model.error.ErrorU;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -20,6 +24,28 @@ import java.io.PrintWriter;
  * Created on 2019/7/26 14:35
  * by @author WeiBoWen
  */
+@ApiResponses({
+        @ApiResponse(code = ErrorU.CODE_1.C, message = ErrorU.CODE_1.M),
+        @ApiResponse(code = ErrorU.CODE_2.C, message = ErrorU.CODE_2.M),
+        @ApiResponse(code = ErrorU.CODE_3.C, message = ErrorU.CODE_3.M),
+        @ApiResponse(code = ErrorU.CODE_4.C, message = ErrorU.CODE_4.M),
+        @ApiResponse(code = ErrorU.CODE_5.C, message = ErrorU.CODE_5.M),
+        @ApiResponse(code = ErrorU.CODE_6.C, message = ErrorU.CODE_6.M),
+        @ApiResponse(code = ErrorU.CODE_7.C, message = ErrorU.CODE_7.M),
+        @ApiResponse(code = ErrorU.CODE_8.C, message = ErrorU.CODE_8.M),
+        @ApiResponse(code = ErrorU.CODE_9.C, message = ErrorU.CODE_9.M),
+        @ApiResponse(code = ErrorU.CODE_10.C, message = ErrorU.CODE_10.M),
+        @ApiResponse(code = ErrorU.CODE_11.C, message = ErrorU.CODE_11.M),
+        @ApiResponse(code = ErrorU.CODE_12.C, message = ErrorU.CODE_12.M),
+        @ApiResponse(code = ErrorU.CODE_13.C, message = ErrorU.CODE_13.M),
+
+        @ApiResponse(code = ErrorS.CODE_1.C, message = ErrorS.CODE_1.M),
+        @ApiResponse(code = ErrorS.CODE_2.C, message = ErrorS.CODE_2.M),
+        @ApiResponse(code = ErrorS.CODE_3.C, message = ErrorS.CODE_3.M),
+        @ApiResponse(code = ErrorS.CODE_4.C, message = ErrorS.CODE_4.M),
+        @ApiResponse(code = ErrorS.CODE_5.C, message = ErrorS.CODE_5.M),
+        @ApiResponse(code = ErrorS.CODE_6.C, message = ErrorS.CODE_6.M),
+})
 @ControllerAdvice
 public abstract class BaseSwaggerController {
 

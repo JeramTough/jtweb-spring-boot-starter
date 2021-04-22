@@ -2,6 +2,7 @@ package com.jeramtough.jtweb.service.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.jeramtough.jtcomponent.utils.StringUtil;
@@ -30,12 +31,24 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     private WebApplicationContext wc;
     private MapperFacade mapperFacade;
 
+    /**
+     * Dto的class
+     */
+    private final Class<D> dClass = (Class<D>) ReflectionKit.getSuperClassGenericType(this.getClass(), 2);
+
     public BaseDtoServiceImpl(WebApplicationContext wc) {
         this.wc = wc;
     }
 
-    protected abstract D toDto(T t);
+    protected D toDto(T t) {
+        D d = getMapperFacade().map(t, dClass);
+        return d;
+    }
 
+    /**
+     * 抛弃不再使用
+     */
+    @Deprecated
     protected D toDto1(T t, Class<D> dClass) {
         D d = getMapperFacade().map(t, dClass);
         return d;

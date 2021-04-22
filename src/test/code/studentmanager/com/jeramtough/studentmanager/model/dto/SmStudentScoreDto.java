@@ -1,5 +1,7 @@
 package com.jeramtough.studentmanager.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,13 +12,14 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiJieHui
- * @since 2020-12-22
+ * @since 2021-03-07
  */
 @ApiModel(value="SmStudentScore对象", description="")
 public class SmStudentScoreDto implements Serializable{
 
     private static final long serialVersionUID=1L;
 
+    @TableId(value = "fid", type = IdType.AUTO)
     private Long fid;
 
     private Long scheduleId;
@@ -26,8 +29,13 @@ public class SmStudentScoreDto implements Serializable{
 
     private Long studentId;
 
-    @ApiModelProperty(value = "建议")
-    private String comment;
+    private Integer lateCount;
+
+    private Integer leaveCount;
+
+    private Integer truantCount;
+
+    private Integer vacateCount;
 
 
     public Long getFid() {
@@ -62,12 +70,36 @@ public class SmStudentScoreDto implements Serializable{
         this.studentId = studentId;
     }
 
-    public String getComment() {
-        return comment;
+    public Integer getLateCount() {
+        return lateCount;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setLateCount(Integer lateCount) {
+        this.lateCount = lateCount;
+    }
+
+    public Integer getLeaveCount() {
+        return leaveCount;
+    }
+
+    public void setLeaveCount(Integer leaveCount) {
+        this.leaveCount = leaveCount;
+    }
+
+    public Integer getTruantCount() {
+        return truantCount;
+    }
+
+    public void setTruantCount(Integer truantCount) {
+        this.truantCount = truantCount;
+    }
+
+    public Integer getVacateCount() {
+        return vacateCount;
+    }
+
+    public void setVacateCount(Integer vacateCount) {
+        this.vacateCount = vacateCount;
     }
 
     @Override
@@ -77,7 +109,10 @@ public class SmStudentScoreDto implements Serializable{
         ", scheduleId=" + scheduleId +
         ", score=" + score +
         ", studentId=" + studentId +
-        ", comment=" + comment +
+        ", lateCount=" + lateCount +
+        ", leaveCount=" + leaveCount +
+        ", truantCount=" + truantCount +
+        ", vacateCount=" + vacateCount +
         "}";
     }
 }

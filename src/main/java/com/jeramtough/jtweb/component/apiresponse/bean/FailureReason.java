@@ -10,10 +10,20 @@ public class FailureReason {
 
     private int code;
     private List<String> placeholders;
+    private Exception exception;
+
+    public FailureReason(int code) {
+        this.code = code;
+    }
 
     public FailureReason(int code, List<String> placeholders) {
         this.code = code;
         this.placeholders = placeholders;
+    }
+
+    public FailureReason(int code, Exception exception) {
+        this.code = code;
+        this.exception = exception;
     }
 
     public FailureReason() {
@@ -33,5 +43,13 @@ public class FailureReason {
 
     public void setPlaceholders(List<String> placeholders) {
         this.placeholders = placeholders;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
     }
 }

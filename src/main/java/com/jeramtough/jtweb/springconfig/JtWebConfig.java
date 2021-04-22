@@ -3,13 +3,9 @@ package com.jeramtough.jtweb.springconfig;
 import com.jeramtough.jtweb.component.optlog.channel.LogChannel;
 import com.jeramtough.jtweb.component.optlog.config.OptLoggerConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
@@ -21,19 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 @Configuration
 @ComponentScan(basePackages = {
         "com.jeramtough.jtweb.action.aspect",
-        "com.jeramtough.jtweb.component.optlog",
 })
-public class JtWebConfig extends WebMvcConfigurationSupport {
+public class JtWebConfig {
 
 
-    @Bean("defaultOptLoggerConfig")
+    /*@Bean("defaultOptLoggerConfig")
     @ConditionalOnMissingBean(OptLoggerConfig.class)
     public OptLoggerConfig optLoggerConfig() {
         return new OptLoggerConfig() {
-            @Override
-            public Long getUserId(HttpServletRequest request) {
-                return null;
-            }
 
             @Override
             public String getExpandInfo() {
@@ -50,6 +41,7 @@ public class JtWebConfig extends WebMvcConfigurationSupport {
                 return new LogChannel[0];
             }
         };
-    }
+
+    }*/
 
 }

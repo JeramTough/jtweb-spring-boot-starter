@@ -6,7 +6,8 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.1.14.38-LOCAL</version>
+    <version>2.3.7.44-SNAPSHOT</version>
+    <!--<version>2.1.14.38-LOCAL</version>-->
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
@@ -22,7 +23,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--SpringBoot版本-->
-        <SPRING_BOOT_STARTER_VERSION>2.1.14.RELEASE</SPRING_BOOT_STARTER_VERSION>
+        <SPRING_BOOT_STARTER_VERSION>2.3.7.RELEASE</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
         <FASTJSON_VERSION>1.2.70</FASTJSON_VERSION>
         <!--Bean映射-orika版本-->
@@ -37,10 +38,11 @@
         <GUAVA_VERSION>28.0-jre</GUAVA_VERSION>
 
         <!--jtlog-->
-        <JTLOG_VERSION>1.7.3-RELEASE</JTLOG_VERSION>
+        <JTLOG_VERSION>1.8.1-LOCAL</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.5.1-SNAPSHOT</JTCOMPONENT_VERSION>
+        <!--<JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
+        <JTCOMPONENT_VERSION>1.5.3-SNAPSHOT</JTCOMPONENT_VERSION>
 
         <!--swagger_bootstrap_ui-->
         <SWAGGER_BOOTSTRAP_UI_VERSION>1.9.6</SWAGGER_BOOTSTRAP_UI_VERSION>
@@ -55,15 +57,18 @@
         <MYSQL_JDBC_VERSION>5.1.48</MYSQL_JDBC_VERSION>
 
         <!--mybatis-plus-boot-starter-->
-        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.0</MYBATIS_PLUS_BOOT_STARTER_VERSION>
-
+        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.2</MYBATIS_PLUS_BOOT_STARTER_VERSION>
+        <MYBATIS_PLUS_GENERATOR_VERSION>3.4.1</MYBATIS_PLUS_GENERATOR_VERSION>
         <!--p6spy-数据库sql打印-->
         <P6SPY_VERSION>3.9.1</P6SPY_VERSION>
+
+        <!--hutool-->
+        <HUTOOL_VERSION>5.5.9</HUTOOL_VERSION>
     </properties>
 
 
     <repositories>
-        <repository>
+        <!--<repository>
             <id>alimaven</id>
             <name>aliyun maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
@@ -83,8 +88,33 @@
             <id>jcenter-snapshots</id>
             <name>jcenter</name>
             <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+        </repository>-->
+
+        <repository>
+            <id>nexus-ssd</id>
+            <name>Nexus ssd</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+        </repository>
+        <repository>
+            <id>nexus-ssd-snapshots</id>
+            <name>Nexus ssd snapshot</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
         </repository>
     </repositories>
+
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-ssd</id>
+            <name>Nexus ssd</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-ssd-snapshots</id>
+            <name>Nexus ssd snapshot</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 
     <dependencies>
@@ -103,13 +133,22 @@
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>6.4.0.jre8</version>
+            <scope>test</scope>
         </dependency>
+        <!--虚谷数据库-->
+        <dependency>
+            <groupId>net.ssd</groupId>
+            <artifactId>xvgujdbc</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>${MYBATIS_PLUS_BOOT_STARTER_VERSION}</version>
+            <version>${MYBATIS_PLUS_GENERATOR_VERSION}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -244,6 +283,50 @@
             <version>2.0.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${HUTOOL_VERSION}</version>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <!--skip test-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!--打包jar包时，注释也一起打包-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

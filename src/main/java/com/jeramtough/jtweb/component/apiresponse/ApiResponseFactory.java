@@ -7,6 +7,7 @@ import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseBeanExcep
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created on 2019/7/31 15:56
@@ -83,6 +84,22 @@ public class ApiResponseFactory {
         String failedMessage =
                 ApiResponsesAnnotationHandler.getInstance().getFailedMessage(
                         e.getFailureReason().getCode());
+
+        if (failedMessage.contains("[%t]")) {
+            List<String> placeholderList = e.getFailureReason().getPlaceholders();
+            if (placeholderList.size() >= 2) {
+                int code = e.getCode();
+                String fieldName = placeholderList.get(0);
+                String[] placeholders = new String[placeholderList.size() - 1];
+                for (int i = 1; i < placeholderList.size(); i++) {
+                    placeholders[i - 1] = placeholderList.get(i);
+                }
+                ApiResponseBeanException apiResponseBeanException =
+                        new ApiResponseBeanException(code, fieldName, placeholders);
+                return getFailedResponse(apiResponseBeanException);
+
+            }
+        }
 
         CommonApiResponse<String> commonApiResponse = new CommonApiResponse<>();
         commonApiResponse.setStatusCode(e.getFailureReason().getCode());

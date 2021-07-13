@@ -40,6 +40,8 @@ public class InterfaceDetail implements Serializable {
 
     private String[] methodArgsClasses;
 
+    private String test;
+
     InterfaceDetail() {
     }
 

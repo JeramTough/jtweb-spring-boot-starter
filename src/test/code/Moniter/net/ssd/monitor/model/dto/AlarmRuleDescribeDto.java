@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2020-12-23
+ * @since 2021-04-27
  */
 @ApiModel(value="AlarmRuleDescribe对象", description="规则描述表 定义了该规则的行为")
 public class AlarmRuleDescribeDto implements Serializable{
@@ -23,15 +23,15 @@ public class AlarmRuleDescribeDto implements Serializable{
     private Integer id;
 
     @ApiModelProperty(value = "规则描述")
-    private String describe;
+    private String ruleDescribe;
 
     @ApiModelProperty(value = "周期（毫秒）	如CPU 使用率大于90%  20秒则设置 20000")
     private Integer cycle;
 
-    @ApiModelProperty(value = "所属的告警规则id")
+    @ApiModelProperty(value = "所属的告警规则id，这张表不符合三范式规则我也没办法")
     private Integer alarmRuleId;
 
-    @ApiModelProperty(value = "规则描述id	100. 宕机/离线	101. CPU使用率	102. 内存使用率	103. 硬盘使用率	104. 网络速率	200. API请求异常	300. 应用程序状态异常	400. 数据推送异常	500. 采集解析异常")
+    @ApiModelProperty(value = "规则描述id	100. 宕机/离线	101. CPU使用率	102. 内存使用率	103. 硬盘使用率	104. 网络速率	200. API请求异常	300. 应用程序状态异常	400. 数据推送异常	500. 采集解析异常	700. 流域监控降水量")
     private Integer describeId;
 
     @ApiModelProperty(value = "阈值")
@@ -52,12 +52,12 @@ public class AlarmRuleDescribeDto implements Serializable{
         this.id = id;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getRuleDescribe() {
+        return ruleDescribe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setRuleDescribe(String ruleDescribe) {
+        this.ruleDescribe = ruleDescribe;
     }
 
     public Integer getCycle() {
@@ -112,7 +112,7 @@ public class AlarmRuleDescribeDto implements Serializable{
     public String toString() {
         return "AlarmRuleDescribe{" +
         "id=" + id +
-        ", describe=" + describe +
+        ", ruleDescribe=" + ruleDescribe +
         ", cycle=" + cycle +
         ", alarmRuleId=" + alarmRuleId +
         ", describeId=" + describeId +

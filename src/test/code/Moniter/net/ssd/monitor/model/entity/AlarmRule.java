@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2020-12-23
+ * @since 2021-04-27
  */
 @ApiModel(value="AlarmRule对象", description="告警规则表 ， 定义该规则信息")
 public class AlarmRule implements Serializable {
@@ -28,7 +28,7 @@ public class AlarmRule implements Serializable {
     private String name;
 
   /**
-   * 类别 1硬件监控 
+   * 类别 1硬件监控,2api监控告警，3应用程序监控告警，4数据推送监控告警，5采集解析监控告警,6数据源监控告警 
    */
     private Integer type;
 
@@ -66,6 +66,11 @@ public class AlarmRule implements Serializable {
    * 通知渠道id列表，逗号隔开
    */
     private String constactsIds;
+
+  /**
+   * 自定义拓展信息
+   */
+    private String customInfo;
 
 
     public Integer getId() {
@@ -148,6 +153,14 @@ public class AlarmRule implements Serializable {
         this.constactsIds = constactsIds;
     }
 
+    public String getCustomInfo() {
+        return customInfo;
+    }
+
+    public void setCustomInfo(String customInfo) {
+        this.customInfo = customInfo;
+    }
+
     @Override
     public String toString() {
         return "AlarmRule{" +
@@ -161,6 +174,7 @@ public class AlarmRule implements Serializable {
         ", alarmNotifyEndtime=" + alarmNotifyEndtime +
         ", serverIds=" + serverIds +
         ", constactsIds=" + constactsIds +
+        ", customInfo=" + customInfo +
         "}";
     }
 }

@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2020-12-23
+ * @since 2021-04-27
  */
 @ApiModel(value="MonitorServer对象", description="")
 public class MonitorServer implements Serializable {

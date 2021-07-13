@@ -6,7 +6,9 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.3.7.44-SNAPSHOT</version>
+    <version>2.3.7.45-LOCAL</version>
+    <!--<version>2.3.7.44-SNAPSHOT</version>-->
+    <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-LOCAL</version>-->
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
@@ -38,10 +40,10 @@
         <GUAVA_VERSION>28.0-jre</GUAVA_VERSION>
 
         <!--jtlog-->
-        <JTLOG_VERSION>1.8.1-LOCAL</JTLOG_VERSION>
+        <JTLOG_VERSION>1.8.1-SNAPSHOT</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <!--<JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
+       <!-- <JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
         <JTCOMPONENT_VERSION>1.5.3-SNAPSHOT</JTCOMPONENT_VERSION>
 
         <!--swagger_bootstrap_ui-->
@@ -63,12 +65,12 @@
         <P6SPY_VERSION>3.9.1</P6SPY_VERSION>
 
         <!--hutool-->
-        <HUTOOL_VERSION>5.5.9</HUTOOL_VERSION>
+        <HUTOOL_VERSION>5.6.5</HUTOOL_VERSION>
     </properties>
 
 
     <repositories>
-        <!--<repository>
+        <repository>
             <id>alimaven</id>
             <name>aliyun maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
@@ -88,9 +90,9 @@
             <id>jcenter-snapshots</id>
             <name>jcenter</name>
             <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-        </repository>-->
+        </repository>
 
-        <repository>
+       <!-- <repository>
             <id>nexus-ssd</id>
             <name>Nexus ssd</name>
             <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
@@ -99,7 +101,7 @@
             <id>nexus-ssd-snapshots</id>
             <name>Nexus ssd snapshot</name>
             <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
-        </repository>
+        </repository>-->
     </repositories>
 
 
@@ -288,6 +290,14 @@
             <artifactId>hutool-all</artifactId>
             <version>${HUTOOL_VERSION}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/wsdl4j/wsdl4j -->
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
 
     </dependencies>
 

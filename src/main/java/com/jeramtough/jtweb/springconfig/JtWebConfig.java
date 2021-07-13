@@ -1,9 +1,5 @@
 package com.jeramtough.jtweb.springconfig;
 
-import com.jeramtough.jtweb.component.optlog.channel.LogChannel;
-import com.jeramtough.jtweb.component.optlog.config.OptLoggerConfig;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 

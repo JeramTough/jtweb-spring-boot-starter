@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2020-12-23
+ * @since 2021-04-27
  */
 @ApiModel(value="AlarmRule对象", description="告警规则表 ， 定义该规则信息")
 public class AlarmRuleDto implements Serializable{
@@ -25,7 +25,7 @@ public class AlarmRuleDto implements Serializable{
     @ApiModelProperty(value = "规则名")
     private String name;
 
-    @ApiModelProperty(value = "类别 1硬件监控 ")
+    @ApiModelProperty(value = "类别 1硬件监控,2api监控告警，3应用程序监控告警，4数据推送监控告警，5采集解析监控告警,6数据源监控告警 ")
     private Integer type;
 
     @ApiModelProperty(value = "报警回调URL地址，发生告警时，讲请求该URL（如果填写），	填写公网可访问的URL，云监控会将报警信息通过POST请求推送到该地址")
@@ -48,6 +48,9 @@ public class AlarmRuleDto implements Serializable{
 
     @ApiModelProperty(value = "通知渠道id列表，逗号隔开")
     private String constactsIds;
+
+    @ApiModelProperty(value = "自定义拓展信息")
+    private String customInfo;
 
 
     public Integer getId() {
@@ -130,6 +133,14 @@ public class AlarmRuleDto implements Serializable{
         this.constactsIds = constactsIds;
     }
 
+    public String getCustomInfo() {
+        return customInfo;
+    }
+
+    public void setCustomInfo(String customInfo) {
+        this.customInfo = customInfo;
+    }
+
     @Override
     public String toString() {
         return "AlarmRule{" +
@@ -143,6 +154,7 @@ public class AlarmRuleDto implements Serializable{
         ", alarmNotifyEndtime=" + alarmNotifyEndtime +
         ", serverIds=" + serverIds +
         ", constactsIds=" + constactsIds +
+        ", customInfo=" + customInfo +
         "}";
     }
 }

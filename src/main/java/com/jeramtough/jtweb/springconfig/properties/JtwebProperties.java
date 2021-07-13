@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "jtweb")
 public class JtwebProperties {
 
-    private boolean usedFastJson = true;
+    private boolean usedFastJson = false;
 
     public boolean isUsedFastJson() {
         return usedFastJson;

@@ -12,7 +12,7 @@ import io.swagger.annotations.Api;
  * </p>
  *
  * @author WeiBoWen
- * @since 2020-12-23
+ * @since 2021-04-27
  */
 @Api(tags = {"AlarmContactsController"})
 @RestController

@@ -47,7 +47,7 @@ public class DbTest {
                 Field[] fields = ReflectUtil.getFields(clazz);
 
                 String tableName = className.replace("com.jeramtough.test.dto.", "");
-                tableName = StringUtil.humpToLine(tableName);
+                tableName = StringUtil.humpToLine(tableName).replace("_dto","");
 
                 tables.put(tableName,objectList);
 

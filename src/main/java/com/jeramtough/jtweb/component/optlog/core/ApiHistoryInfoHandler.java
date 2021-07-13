@@ -1,6 +1,5 @@
 package com.jeramtough.jtweb.component.optlog.core;
 
-import com.jeramtough.jtcomponent.utils.DateTimeUtil;
 import com.jeramtough.jtweb.component.optlog.bean.AddHistoryParams;
 import com.jeramtough.jtweb.component.optlog.bean.InterfaceDetail;
 import com.jeramtough.jtweb.component.optlog.config.OptLoggerConfig;
@@ -77,14 +76,25 @@ public class ApiHistoryInfoHandler {
         }
 
         if (httpServletRequest != null) {
-            String requestMethod = httpServletRequest.getMethod();
-            params.setRequestMethod(requestMethod);
+            try {
+                String requestMethod = httpServletRequest.getMethod();
+                params.setRequestMethod(requestMethod);
+            }
+            catch (Exception ignored) {
+            }
 
-            String requestUrl = httpServletRequest.getRequestURL().toString();
-            params.setRequestUrl(requestUrl);
+            try {
+                String requestUrl = httpServletRequest.getRequestURL().toString();
+                params.setRequestUrl(requestUrl);
+            }
+            catch (Exception ignored) {
+            }
 
-            params.setCreateTime(DateTimeUtil.getCurrentDateTime());
-            params.setIp(IpAddrUtil.getIpAddr(httpServletRequest));
+            try {
+                params.setIp(IpAddrUtil.getIpAddr(httpServletRequest));
+            }
+            catch (Exception ignored) {
+            }
         }
 
         params.setIsCompleted(isCompleted);

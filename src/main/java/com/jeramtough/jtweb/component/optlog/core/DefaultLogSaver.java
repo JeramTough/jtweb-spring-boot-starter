@@ -36,6 +36,7 @@ public class DefaultLogSaver implements LogSaver, WithLogger {
                 new SynchronousQueue<>(), (ThreadFactory) Thread::new);
     }
 
+
     @Override
     public void save(final AddHistoryParams params) {
         //先通过过滤器过滤

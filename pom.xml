@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.3.7.45-LOCAL</version>
+    <version>2.3.7.46-LOCAL</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-LOCAL</version>-->
@@ -43,7 +43,7 @@
         <JTLOG_VERSION>1.8.1-SNAPSHOT</JTLOG_VERSION>
 
         <!--jtcomponent-->
-       <!-- <JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
+        <!-- <JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
         <JTCOMPONENT_VERSION>1.5.3-SNAPSHOT</JTCOMPONENT_VERSION>
 
         <!--swagger_bootstrap_ui-->
@@ -66,6 +66,13 @@
 
         <!--hutool-->
         <HUTOOL_VERSION>5.6.5</HUTOOL_VERSION>
+
+        <!--debezium-->
+        <DEBEZIUM_VERSION>1.6.1.Final</DEBEZIUM_VERSION>
+
+        <!--event-bus-->
+        <EVENT_BUS_VERSION>3.1.1</EVENT_BUS_VERSION>
+
     </properties>
 
 
@@ -92,16 +99,16 @@
             <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
         </repository>
 
-       <!-- <repository>
-            <id>nexus-ssd</id>
-            <name>Nexus ssd</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
-        </repository>
-        <repository>
-            <id>nexus-ssd-snapshots</id>
-            <name>Nexus ssd snapshot</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
-        </repository>-->
+        <!-- <repository>
+             <id>nexus-ssd</id>
+             <name>Nexus ssd</name>
+             <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+         </repository>
+         <repository>
+             <id>nexus-ssd-snapshots</id>
+             <name>Nexus ssd snapshot</name>
+             <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
+         </repository>-->
     </repositories>
 
 
@@ -122,6 +129,13 @@
     <dependencies>
 
         <!--TEST-->
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -166,6 +180,22 @@
             <version>2.7</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>3.141.59</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!--COMPILE-->
 
@@ -291,11 +321,22 @@
             <version>${HUTOOL_VERSION}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/wsdl4j/wsdl4j -->
         <dependency>
-            <groupId>wsdl4j</groupId>
-            <artifactId>wsdl4j</artifactId>
-            <version>1.6.1</version>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-embedded</artifactId>
+            <version>${DEBEZIUM_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-connector-mysql</artifactId>
+            <version>${DEBEZIUM_VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.greenrobot</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>${EVENT_BUS_VERSION}</version>
         </dependency>
 
 

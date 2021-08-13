@@ -3,23 +3,21 @@ package com.jeramtough.jtweb.component.bebezium;
 import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.component.bebezium.bean.ChangedData;
 import com.jeramtough.jtweb.component.bebezium.event.DbDataChangedEvent;
-import com.jeramtough.jtweb.component.bebezium.factory.ChangeDataFactory;
-import com.jeramtough.jtweb.component.bebezium.factory.DebeziumConfigFactory;
-import com.jeramtough.jtweb.component.bebezium.factory.EventFactory;
-import com.jeramtough.jtweb.component.bebezium.setting.DbMoniterConfig;
-import io.debezium.config.Configuration;
-import io.debezium.embedded.EmbeddedEngine;
-import io.debezium.engine.DebeziumEngine;
+import com.jeramtough.jtweb.component.bebezium.factory.*;
+import com.jeramtough.jtweb.component.bebezium.publisher.DebeziumPublisher;
+import com.jeramtough.jtweb.component.bebezium.setting.DbMoniterSetting;
+import com.jeramtough.jtweb.component.bebezium.setting.DbSourceSetting;
 import org.apache.kafka.connect.source.SourceRecord;
-import org.greenrobot.eventbus.EventBus;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -35,34 +33,34 @@ import java.util.concurrent.Executors;
 public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycle, WithLogger {
 
     private boolean isAble = false;
-    private final DbMoniterConfig dbMoniterConfig;
+    private final ApplicationContext applicationContext;
+    private final DbMoniterSetting dbMoniterSetting;
 
     private final Executor executor = Executors.newSingleThreadExecutor();
-    private final List<DebeziumEngine<?>> debeziumEngineList = new ArrayList<>();
+    private final List<DebeziumEngineBridge> debeziumEngineBridgeList = new ArrayList<>();
 
     @Autowired
     public DebeziumDatabaseListener(
-            DbMoniterConfig dbMoniterConfig) {
-        this.dbMoniterConfig = dbMoniterConfig;
+            ApplicationContext applicationContext,
+            DbMoniterSetting dbMoniterSetting) {
+        this.applicationContext = applicationContext;
+        this.dbMoniterSetting = dbMoniterSetting;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         // Create the engine with this configuration ...
-        this.isAble = dbMoniterConfig.isAble();
+        this.isAble = dbMoniterSetting.isAble();
 
         if (isAble) {
-            List<Configuration> configurationList =
-                    DebeziumConfigFactory.getConfigurationList(dbMoniterConfig);
-
-            for (Configuration configuration : configurationList) {
-                DebeziumEngine<?> debeziumEngine = EmbeddedEngine.create()
-                                                                 .using(configuration)
-                                                                 .notifying(this::handleEvent)
-                                                                 .build();
-                debeziumEngineList.add(debeziumEngine);
+            for (Map.Entry<String, DbSourceSetting> entry : dbMoniterSetting.getDatasource().entrySet()) {
+                DebeziumEngineBridge debeziumEngineBridge = new DebeziumEngineBridgeBuilder()
+                        .setName(entry.getKey())
+                        .setDbSourceSetting(entry.getValue())
+                        .setConsumer(this::handleEvent)
+                        .build();
+                debeziumEngineBridgeList.add(debeziumEngineBridge);
             }
-
         }
 
 
@@ -72,8 +70,9 @@ public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycl
     @Override
     public void start() {
         if (isAble) {
-            debeziumEngineList
+            debeziumEngineBridgeList
                     .parallelStream()
+                    .map(DebeziumEngineBridge::getDebeziumEngine)
                     .forEach(executor::execute);
         }
     }
@@ -81,8 +80,9 @@ public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycl
     @Override
     public void stop() {
         if (isAble) {
-            debeziumEngineList
+            debeziumEngineBridgeList
                     .parallelStream()
+                    .map(DebeziumEngineBridge::getDebeziumEngine)
                     .forEach(debeziumEngine -> {
                         try {
                             debeziumEngine.close();
@@ -99,20 +99,25 @@ public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycl
         return false;
     }
 
-    protected void handleEvent(List<SourceRecord> sourceRecords,
-                               DebeziumEngine.RecordCommitter<SourceRecord> sourceRecordRecordCommitter) {
-        for (SourceRecord sourceRecord : sourceRecords) {
-            try {
-                ChangedData changedData = ChangeDataFactory.getChangedData(sourceRecord);
+    protected void handleEvent(SourceRecord sourceRecord) {
+        try {
+            ChangedData changedData = ChangeDataFactory.getChangedData(sourceRecord);
+
+            if (changedData != null) {
+
+                DebeziumPublisher debeziumPublisher = BebeziumPublisherFactory
+                        .getBebeziumPublisher(applicationContext,
+                                dbMoniterSetting.getPublisherType());
+
                 DbDataChangedEvent dbDataChangedEvent =
                         EventFactory.getDbDataChangedEvent(changedData);
+                debeziumPublisher.publish(dbDataChangedEvent);
+            }
 
-                EventBus.getDefault().post(dbDataChangedEvent);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
         }
-
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

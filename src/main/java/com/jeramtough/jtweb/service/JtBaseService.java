@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ *
+ * 对BaseDtoService的增强
+ *
  * <pre>
  * Created on 2020/10/25 16:47
  * by @author WeiBoWen
@@ -23,6 +26,7 @@ public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
     String removeOneById(Long fid);
 
     PageDto<D> pageByCondition(QueryByPageParams queryByPageParams, BaseConditionParams params);
+
 
     @Override
     T getOne(Wrapper<T> queryWrapper);

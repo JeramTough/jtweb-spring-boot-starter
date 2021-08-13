@@ -6,19 +6,20 @@ package com.jeramtough.jtweb.component.bebezium.setting;
  * by @author WeiBoWen
  * </pre>
  */
-public class DbSourceConfig {
+public class DbSourceSetting {
 
-    private Boolean isAble =true;
+    private Boolean isAble = true;
     private String serverId;
-    private String hostname="127.0.0.1";
-    private String user="root";
-    private String password="123456";
-    private Integer port=3306;
-    private String databaseHistoryFile="/var/mysql-cache/storage/dbhistory.dat";
-    private String offsetStorageFile="/var/mysql-cache/storage/offset.dat";
+    private String hostname = "127.0.0.1";
+    private String user = "root";
+    private String password = "123456";
+    private Integer port = 3306;
+    private String databaseHistoryFile = "/var/mysql-cache/storage/dbhistory.dat";
+    private String offsetStorageFile = "/var/mysql-cache/storage/offset.dat";
     private String includeDb;
 
-    private String databaseType="mysql";
+
+    private String databaseType = "mysql";
 
     public String getServerId() {
         return serverId;
@@ -104,4 +105,5 @@ public class DbSourceConfig {
     public void setIsAble(Boolean able) {
         isAble = able;
     }
+
 }

@@ -34,7 +34,8 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     /**
      * Dto的class
      */
-    private final Class<D> dClass = (Class<D>) ReflectionKit.getSuperClassGenericType(this.getClass(), 2);
+    private final Class<D> dClass = (Class<D>) ReflectionKit.getSuperClassGenericType(
+            this.getClass(), 2);
 
     public BaseDtoServiceImpl(WebApplicationContext wc) {
         this.wc = wc;
@@ -146,7 +147,8 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
         return toDto(t);
     }
 
-    public PageDto<Map<String, Object>> toMapPageDto(QueryPage<Map<String, Object>> queryPage) {
+    public PageDto<Map<String, Object>> toMapPageDto(
+            QueryPage<Map<String, Object>> queryPage) {
         IPage<Map<String, Object>> iPage = queryPage;
         return toMapPageDto(iPage);
     }

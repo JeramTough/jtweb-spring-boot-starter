@@ -1,7 +1,8 @@
 package com.jeramtough.jtweb.component.bebezium.annotation;
 
-import com.jeramtough.jtweb.component.bebezium.DebeziumDatabaseListener;
+import com.jeramtough.jtweb.springconfig.JtDebeziumConfig;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 
 import java.lang.annotation.*;
 
@@ -13,7 +14,7 @@ import java.lang.annotation.*;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import({DebeziumDatabaseListener.class})
+@Import({JtDebeziumConfig.class})
 @Documented
-public @interface EnableDbMoniter {
+public @interface EnableDbMonitor {
 }

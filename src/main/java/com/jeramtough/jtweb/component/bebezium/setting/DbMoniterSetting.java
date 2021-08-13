@@ -13,10 +13,12 @@ import java.util.Map;
  */
 @Configuration
 @ConfigurationProperties(prefix = "dbmoniter")
-public class DbMoniterConfig {
+public class DbMoniterSetting {
 
     private boolean isAble =false;
-    private Map<String, DbSourceConfig> datasource;
+    private Integer publisherType=0;
+    private Map<String, DbSourceSetting> datasource;
+
 
 
     public boolean isAble() {
@@ -31,12 +33,20 @@ public class DbMoniterConfig {
         this.isAble = isAble;
     }
 
-    public Map<String, DbSourceConfig> getDatasource() {
+    public Map<String, DbSourceSetting> getDatasource() {
         return datasource;
     }
 
     public void setDatasource(
-            Map<String, DbSourceConfig> datasource) {
+            Map<String, DbSourceSetting> datasource) {
         this.datasource = datasource;
+    }
+
+    public Integer getPublisherType() {
+        return publisherType;
+    }
+
+    public void setPublisherType(Integer publisherType) {
+        this.publisherType = publisherType;
     }
 }

@@ -1,0 +1,50 @@
+
+spring:
+
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    password: 123456
+    url: jdbc:p6spy:mysql://localhost:3306/randl2_db?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+    username: root
+
+  redis:
+    host: 127.0.0.1
+    jedis:
+      pool:
+        max-active: 20
+        max-idle: 10
+        max-wait: -1
+        min-idle: 0
+    password: 123456
+    port: 6379
+    timeout: 1000
+
+dbmoniter:
+  is-able: true
+  datasource:
+    randl2-db:
+      server-id: 123454
+      hostname: "127.0.0.1"
+      user: "root"
+      password: "123456"
+      port: 3306
+      database-history-file: "/var/mysql-cache/storage/dbhistory.dat"
+      offset-storage-file: "/var/mysql-cache/storage/offset.dat"
+      include-db: "randl2_db"
+
+
+app:
+  setting:
+    jwt:
+      signingKey: ABCD
+      issuer: SSD
+      validity: 604800000
+    admin:
+      #管理员账号要尽量复杂，不和线上数据库里的账号重复
+      account: superadmin
+      password: '{noop}superadmin'
+      defaultAppId: 1
+      defaultRoleId: 1
+    user:
+      defaultAppId: 2
+      defaultRoleId: 2

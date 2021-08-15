@@ -8,9 +8,15 @@ package com.jeramtough.jtweb.component.cache.template;
  */
 public interface CacheTemplate {
 
+    void setBaseOutTimed(long baseOutTimed);
+
     String get(String key);
 
     void put(String key, String value);
+
+    void putCachedObject(String key, Object o);
+
+    void put(String key, String value,long outTimedMillisSecond);
 
     boolean containsKey(String key);
 

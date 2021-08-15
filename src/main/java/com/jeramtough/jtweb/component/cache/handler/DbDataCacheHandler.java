@@ -4,6 +4,8 @@ import com.jeramtough.jtcomponent.task.bean.TaskResult;
 import com.jeramtough.jtweb.component.business.extractentity.ExtractEntityRunner;
 import com.jeramtough.jtweb.component.cache.bean.DbDataKey;
 
+import java.util.List;
+
 /**
  * <pre>
  * Created on 2021/8/13 上午12:02
@@ -12,13 +14,19 @@ import com.jeramtough.jtweb.component.cache.bean.DbDataKey;
  */
 public interface DbDataCacheHandler extends CacheHandler {
 
+    boolean containsKey(String cacheKey, DbDataKey dbDataKey);
+
+    <T> T get(String cacheKey, DbDataKey dbDataKey, Class<T> clazz);
+
     /**
      * 添加数据库表关联关系的键值对缓存
      */
-    <T> void put(String key, DbDataKey dbDataKey, T data);
+    <T> void put(String cacheKey, List<DbDataKey> dbDataKeys, T data);
 
-    <T> void put(String cacheKey, TaskResult taskResult, Class<T> clazz);
 
-    <T> void put(String cacheKey, Class<T> clazz, ExtractEntityRunner<T> runner);
+    /**
+     * 返回实体对象的返回类型
+     */
+    DbDataKey put(String cacheKey, ExtractEntityRunner<Object> runner) throws Exception;
 
 }

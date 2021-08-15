@@ -1,6 +1,7 @@
 package com.jeramtough.jtweb.component.cache.template;
 
 import cn.hutool.core.util.RandomUtil;
+import com.jeramtough.jtweb.component.cache.annotation.BeCached;
 
 /**
  * <pre>
@@ -13,22 +14,44 @@ public abstract class BaseCacheTemplate implements CacheTemplate {
     /**
      * 十分钟,过时基数
      */
-    private static final Integer BASE_TIMED_COUNT = 10;
-
-    /**
-     * 偏移基数，10+3 || 10-3
-     */
-    private static final Integer OFFSET_TIMED_COUNT = 3;
+    private long baseOutTimed = 1000L * 60 * 60;
 
 
-    protected int getRandomTimedCount() {
-        int random = RandomUtil.randomInt(BASE_TIMED_COUNT - OFFSET_TIMED_COUNT,
-                BASE_TIMED_COUNT + OFFSET_TIMED_COUNT);
-        return random * 1000 * 60;
+    @Override
+    public void setBaseOutTimed(long baseOutTimed) {
+        this.baseOutTimed = baseOutTimed;
     }
 
-    protected int getBaseTimedCount() {
-        return BASE_TIMED_COUNT * 1000 * 60;
+    protected long getRandomTimedCount() {
+        if (baseOutTimed == 0) {
+            return 0;
+        }
+        long offsetOutTime = 0;
+        try {
+            offsetOutTime = baseOutTimed / 60;
+            offsetOutTime = RandomUtil.randomLong(offsetOutTime,
+                    offsetOutTime * 3);
+        }
+        catch (Exception ignored) {
+
+        }
+        long random = baseOutTimed - offsetOutTime;
+        return random;
+    }
+
+    protected long getBaseTimedCount() {
+        return baseOutTimed;
+    }
+
+    protected long getConfigTimedCount(Object o) {
+        BeCached beCachedAnnotation = o.getClass().getDeclaredAnnotation(BeCached.class);
+        if (beCachedAnnotation == null) {
+            return 0;
+        }
+        else {
+            long timed = beCachedAnnotation.timed();
+            return timed;
+        }
     }
 
 

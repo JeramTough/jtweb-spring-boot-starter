@@ -2,7 +2,7 @@ package com.jeramtough.jtweb.springconfig;
 
 import com.jeramtough.jtweb.component.bebezium.publisher.PublisherType;
 import com.jeramtough.jtweb.component.bebezium.publisher.RedisDebeziumPublisher;
-import com.jeramtough.jtweb.component.bebezium.setting.DbMoniterSetting;
+import com.jeramtough.jtweb.component.bebezium.setting.DbMonitorSetting;
 import com.jeramtough.jtweb.component.bebezium.subscriber.AbstractRedisDebeziumSubscriber;
 import com.jeramtough.jtweb.component.bebezium.subscriber.DebeziumSubscriber;
 import com.jeramtough.jtweb.component.bebezium.subscriber.DefaultEventBusDebeziumSubscriber;
@@ -38,14 +38,14 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
                 value = {})})
 public class JtDebeziumConfig {
 
-    private final DbMoniterSetting dbMoniterSetting;
+    private final DbMonitorSetting dbMonitorSetting;
     private final ApplicationContext applicationContext;
 
     @Autowired
     public JtDebeziumConfig(
-            DbMoniterSetting dbMoniterSetting,
+            DbMonitorSetting dbMonitorSetting,
             ApplicationContext applicationContext) {
-        this.dbMoniterSetting = dbMoniterSetting;
+        this.dbMonitorSetting = dbMonitorSetting;
         this.applicationContext = applicationContext;
     }
 
@@ -57,7 +57,7 @@ public class JtDebeziumConfig {
     @Bean
     @ConditionalOnMissingBean(DebeziumSubscriber.class)
     public DebeziumSubscriber debeziumSubscriber() {
-        int publisherTypeValue = dbMoniterSetting.getPublisherType();
+        int publisherTypeValue = dbMonitorSetting.getPublisherType();
         PublisherType publisherType = PublisherType.toPublisherType(publisherTypeValue);
 
         DebeziumSubscriber debeziumSubscriber;

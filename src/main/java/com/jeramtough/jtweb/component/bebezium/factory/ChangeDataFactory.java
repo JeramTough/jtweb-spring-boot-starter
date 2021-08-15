@@ -22,6 +22,19 @@ public class ChangeDataFactory {
 
     public static ChangedData getChangedData(SourceRecord sourceRecord) {
         try {
+
+            String idKeyName = null;
+            String idKeyValue = null;
+            if (sourceRecord.key() != null) {
+                Struct keyStruct = ((Struct) sourceRecord.key());
+                if (keyStruct.schema().fields().size() > 0) {
+                    idKeyName = keyStruct.schema().fields().get(0).name();
+                    Object idKeyValueObject = ((Struct) sourceRecord.key()).get(idKeyName);
+                    idKeyValue = idKeyValueObject.toString();
+                }
+            }
+
+
             Struct sourceRecordChangeValue = (Struct) sourceRecord.value();
             if (sourceRecordChangeValue != null) {
                 ChangedData changedData = new ChangedData();
@@ -73,6 +86,8 @@ public class ChangeDataFactory {
                 }
                 Objects.requireNonNull(dbOptionType);
 
+                changedData.setIdKeyName(idKeyName);
+                changedData.setIdKeyValue(idKeyValue);
                 changedData.setDbOptionType(dbOptionType);
                 changedData.setDbName(dbName);
                 changedData.setTableName(tableName);

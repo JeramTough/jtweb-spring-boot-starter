@@ -12,25 +12,24 @@ import java.util.Map;
  * </pre>
  */
 @Configuration
-@ConfigurationProperties(prefix = "dbmoniter")
-public class DbMoniterSetting {
+@ConfigurationProperties(prefix = "jtweb.dbmonitor")
+public class DbMonitorSetting {
 
-    private boolean isAble =false;
-    private Integer publisherType=0;
+    private boolean enable = true;
+    private Integer publisherType = 0;
     private Map<String, DbSourceSetting> datasource;
 
 
-
-    public boolean isAble() {
-        return isAble;
+    public boolean isEnable() {
+        return enable;
     }
 
-    public boolean getIsAble() {
-        return isAble;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsAble(boolean isAble) {
-        this.isAble = isAble;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Map<String, DbSourceSetting> getDatasource() {

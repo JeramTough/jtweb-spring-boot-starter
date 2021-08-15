@@ -1,16 +1,19 @@
 package com.jeramtough.jtweb.component.cache.bean;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * Created on 2021/8/13 上午9:42
  * by @author WeiBoWen
  * </pre>
  */
-public class DbDataKey {
+public class DbDataKey implements Serializable {
 
     private String databaseName;
     private String tableName;
     private String idValue;
+    private Class<?> dataClass;
 
     public String getDatabaseName() {
         return databaseName;
@@ -34,6 +37,14 @@ public class DbDataKey {
 
     public void setIdValue(String idValue) {
         this.idValue = idValue;
+    }
+
+    public Class<?> getDataClass() {
+        return dataClass;
+    }
+
+    public void setDataClass(Class<?> dataClass) {
+        this.dataClass = dataClass;
     }
 
     @Override
@@ -81,5 +92,26 @@ public class DbDataKey {
                     ", idValue='" + idValue + '\'' +
                     '}';
         }
+    }
+
+    /**
+     * 有时候会有没有数据库的情况，所以会有两种情况，key1和key2
+     */
+    public String toKey2() {
+        return "DbDataKey{" +
+                "databaseName='" + databaseName + '\'' +
+                ", tableName='" + tableName + '\'' +
+                ", idValue='" + idValue + '\'' +
+                '}';
+    }
+
+    /**
+     * 有时候会有没有数据库的情况，所以会有两种情况，key1和key2
+     */
+    public String toKey1() {
+        return "DbDataKey{" +
+                ", tableName='" + tableName + '\'' +
+                ", idValue='" + idValue + '\'' +
+                '}';
     }
 }

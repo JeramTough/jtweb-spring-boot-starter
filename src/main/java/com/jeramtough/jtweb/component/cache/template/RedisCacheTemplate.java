@@ -26,8 +26,30 @@ public class RedisCacheTemplate extends BaseCacheTemplate {
 
     @Override
     public void put(String key, String value) {
-        stringRedisTemplate.boundValueOps(key).set(value, getRandomTimedCount(),
-                TimeUnit.MILLISECONDS);
+        long timed = getRandomTimedCount();
+        if (timed != 0) {
+            stringRedisTemplate.boundValueOps(key).set(value, timed,
+                    TimeUnit.MILLISECONDS);
+        }
+
+    }
+
+    @Override
+    public void putCachedObject(String key, Object o) {
+        long timed = getConfigTimedCount(o);
+        if (timed != 0) {
+            stringRedisTemplate.boundValueOps(key).set(o.toString(), timed,
+                    TimeUnit.MILLISECONDS);
+        }
+    }
+
+    @Override
+    public void put(String key, String value, long outTimedMillisSecond) {
+        long timed = outTimedMillisSecond;
+        if (timed != 0) {
+            stringRedisTemplate.boundValueOps(key).set(value, timed,
+                    TimeUnit.MILLISECONDS);
+        }
     }
 
     @Override

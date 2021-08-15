@@ -17,6 +17,8 @@ public class ChangedData implements Serializable {
     private String tableName;
     private DbOptionType dbOptionType;
     private Map<String, Object> data;
+    private String idKeyName;
+    private String idKeyValue;
 
 
     public String getTableName() {
@@ -50,5 +52,21 @@ public class ChangedData implements Serializable {
 
     public void setDbOptionType(DbOptionType dbOptionType) {
         this.dbOptionType = dbOptionType;
+    }
+
+    public String getIdKeyName() {
+        return idKeyName;
+    }
+
+    public void setIdKeyName(String idKeyName) {
+        this.idKeyName = idKeyName;
+    }
+
+    public String getIdKeyValue() {
+        return idKeyValue;
+    }
+
+    public void setIdKeyValue(String idKeyValue) {
+        this.idKeyValue = idKeyValue;
     }
 }

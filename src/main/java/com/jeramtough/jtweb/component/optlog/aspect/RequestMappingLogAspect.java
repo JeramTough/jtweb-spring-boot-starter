@@ -1,10 +1,10 @@
 package com.jeramtough.jtweb.component.optlog.aspect;
 
 import com.jeramtough.jtlog.with.WithLogger;
+import com.jeramtough.jtweb.component.aspect.MethodGather;
 import com.jeramtough.jtweb.component.optlog.bean.InterfaceDetail;
 import com.jeramtough.jtweb.component.optlog.config.OptLoggerConfig;
 import com.jeramtough.jtweb.component.optlog.core.LogSaver;
-import com.jeramtough.jtweb.component.optlog.core.MethodGather;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

@@ -5,8 +5,11 @@ import com.jeramtough.jtweb.component.bebezium.bean.ChangedData;
 import com.jeramtough.jtweb.component.bebezium.event.DbDataChangedEvent;
 import com.jeramtough.jtweb.component.bebezium.factory.*;
 import com.jeramtough.jtweb.component.bebezium.publisher.DebeziumPublisher;
-import com.jeramtough.jtweb.component.bebezium.setting.DbMoniterSetting;
+import com.jeramtough.jtweb.component.bebezium.setting.DbMonitorSetting;
 import com.jeramtough.jtweb.component.bebezium.setting.DbSourceSetting;
+import com.jeramtough.jtweb.component.cache.setting.JtCacheSetting;
+import com.jeramtough.jtweb.springconfig.properties.JtwebProperties;
+import io.debezium.engine.DebeziumEngine;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycl
 
     private boolean isAble = false;
     private final ApplicationContext applicationContext;
-    private final DbMoniterSetting dbMoniterSetting;
+    private final DbMonitorSetting dbMonitorSetting;
 
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final List<DebeziumEngineBridge> debeziumEngineBridgeList = new ArrayList<>();
@@ -42,18 +45,18 @@ public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycl
     @Autowired
     public DebeziumDatabaseListener(
             ApplicationContext applicationContext,
-            DbMoniterSetting dbMoniterSetting) {
+            DbMonitorSetting dbMonitorSetting) {
         this.applicationContext = applicationContext;
-        this.dbMoniterSetting = dbMoniterSetting;
+        this.dbMonitorSetting = dbMonitorSetting;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         // Create the engine with this configuration ...
-        this.isAble = dbMoniterSetting.isAble();
+        this.isAble = dbMonitorSetting.isEnable();
 
         if (isAble) {
-            for (Map.Entry<String, DbSourceSetting> entry : dbMoniterSetting.getDatasource().entrySet()) {
+            for (Map.Entry<String, DbSourceSetting> entry : dbMonitorSetting.getDatasource().entrySet()) {
                 DebeziumEngineBridge debeziumEngineBridge = new DebeziumEngineBridgeBuilder()
                         .setName(entry.getKey())
                         .setDbSourceSetting(entry.getValue())
@@ -99,25 +102,37 @@ public class DebeziumDatabaseListener implements InitializingBean, SmartLifecycl
         return false;
     }
 
-    protected void handleEvent(SourceRecord sourceRecord) {
-        try {
-            ChangedData changedData = ChangeDataFactory.getChangedData(sourceRecord);
+    /**
+     * 每句sql修改了多少条记录，Records大小就是多少
+     */
+    protected void handleEvent(List<SourceRecord> sourceRecords,
+                               DebeziumEngine.RecordCommitter<SourceRecord> sourceRecordRecordCommitter) {
 
-            if (changedData != null) {
+        sourceRecords
+                .parallelStream()
+                .forEach(sourceRecord -> {
+                    try {
+                        ChangedData changedData = ChangeDataFactory.getChangedData(
+                                sourceRecord);
 
-                DebeziumPublisher debeziumPublisher = BebeziumPublisherFactory
-                        .getBebeziumPublisher(applicationContext,
-                                dbMoniterSetting.getPublisherType());
+                        if (changedData != null) {
 
-                DbDataChangedEvent dbDataChangedEvent =
-                        EventFactory.getDbDataChangedEvent(changedData);
-                debeziumPublisher.publish(dbDataChangedEvent);
-            }
+                            DebeziumPublisher debeziumPublisher = BebeziumPublisherFactory
+                                    .getBebeziumPublisher(applicationContext,
+                                            dbMonitorSetting.getPublisherType());
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+                            DbDataChangedEvent dbDataChangedEvent =
+                                    EventFactory.getDbDataChangedEvent(changedData);
+                            debeziumPublisher.publish(dbDataChangedEvent);
+                        }
+
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
     }
+
 
 }

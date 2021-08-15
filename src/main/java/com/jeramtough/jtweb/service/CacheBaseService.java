@@ -1,9 +1,5 @@
 package com.jeramtough.jtweb.service;
 
-import com.jeramtough.jtweb.model.dto.PageDto;
-import com.jeramtough.jtweb.model.params.BaseConditionParams;
-import com.jeramtough.jtweb.model.params.QueryByPageParams;
-
 /**
  * <pre>
  * Created on 2021/8/12 下午5:55

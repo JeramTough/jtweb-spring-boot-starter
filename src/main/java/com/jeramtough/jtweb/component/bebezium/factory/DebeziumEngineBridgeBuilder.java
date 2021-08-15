@@ -21,7 +21,7 @@ public class DebeziumEngineBridgeBuilder {
 
     private String name;
     private DbSourceSetting dbSourceSetting;
-    private Consumer<SourceRecord> consumer;
+    private DebeziumEngine.ChangeConsumer<SourceRecord> consumer;
 
     public DebeziumEngineBridgeBuilder setName(String name) {
         this.name = name;
@@ -35,12 +35,12 @@ public class DebeziumEngineBridgeBuilder {
     }
 
     public DebeziumEngineBridgeBuilder setConsumer(
-            Consumer<SourceRecord> consumer) {
+            DebeziumEngine.ChangeConsumer<SourceRecord> consumer) {
         this.consumer = consumer;
         return this;
     }
 
-    public  DebeziumEngineBridge build() {
+    public DebeziumEngineBridge build() {
         Objects.requireNonNull(name);
         Objects.requireNonNull(dbSourceSetting);
         Objects.requireNonNull(consumer);

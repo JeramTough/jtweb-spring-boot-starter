@@ -24,7 +24,30 @@ public class InMemoryCacheTemplate extends BaseCacheTemplate {
     @Override
     public void put(String key, String value) {
         lazyInit();
-        timedCache.put(key, value, getRandomTimedCount());
+        long timed = getRandomTimedCount();
+        //除非显式的配置0，不然都进不来
+        if (timed != 0) {
+            timedCache.put(key, value, timed);
+        }
+    }
+
+    @Override
+    public void putCachedObject(String key, Object o) {
+        lazyInit();
+        long timed = getConfigTimedCount(o);
+        //除非显式的配置0，不然都进不来
+        if (timed != 0) {
+            timedCache.put(key, o.toString(), timed);
+        }
+    }
+
+    @Override
+    public void put(String key, String value, long outTimedMillisSecond) {
+        lazyInit();
+        long timed = outTimedMillisSecond;
+        if (timed != 0) {
+            timedCache.put(key, value, timed);
+        }
     }
 
     @Override

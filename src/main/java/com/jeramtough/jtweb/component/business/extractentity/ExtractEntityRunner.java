@@ -16,5 +16,5 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public interface ExtractEntityRunner<T> {
 
-    T getEntity();
+    T getEntity() throws Throwable;
 }

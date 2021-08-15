@@ -45,45 +45,6 @@ public class JtWebConfig {
         this.jtwebProperties = jtwebProperties;
     }
 
-    @Bean
-    @ConditionalOnMissingBean(CacheTemplate.class)
-    public CacheTemplate cacheTemplate() {
-        CacheType cacheType = CacheType.valueOf(
-                jtwebProperties.getCacheType().toUpperCase().trim());
-        switch (cacheType) {
-            case MEMORY:
-                return new InMemoryCacheTemplate();
-            case REDIS:
-                StringRedisTemplate stringRedisTemplate =
-                        webApplicationContext.getBean(StringRedisTemplate.class);
-                return new RedisCacheTemplate(stringRedisTemplate);
-            default:
-                return null;
-        }
-    }
-
-    @Primary
-    @Bean("cacheHandler")
-    @ConditionalOnBean(CacheTemplate.class)
-    public CacheHandler cacheHandler() {
-        CacheTemplate cacheTemplate = webApplicationContext.getBean(CacheTemplate.class);
-        CacheHandler cacheHandler = new DefaultCacheHandler(cacheTemplate);
-        return cacheHandler;
-    }
-
-    @Bean("dbDataCacheHandler")
-    @Primary
-    @ConditionalOnBean({DebeziumSubscriber.class, CacheTemplate.class})
-    public DbDataCacheHandler dbDataCacheHandler() {
-        CacheTemplate cacheTemplate = webApplicationContext.getBean(CacheTemplate.class);
-        DebeziumSubscriber debeziumSubscriber = webApplicationContext.getBean(
-                DebeziumSubscriber.class);
-        DbDataCacheHandler dbDataCacheHandler = new DefaultDbDataCacheHandler(cacheTemplate,
-                debeziumSubscriber);
-        return dbDataCacheHandler;
-    }
-
-
 
     /*@Bean("defaultOptLoggerConfig")
     @ConditionalOnMissingBean(OptLoggerConfig.class)

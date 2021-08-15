@@ -3,6 +3,7 @@ package com.jeramtough.jtweb.component.cache.handler;
 import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.component.cache.template.CacheTemplate;
 
+import java.io.Serializable;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -24,6 +25,7 @@ public abstract class BaseCacheHandler implements CacheHandler, WithLogger {
     public CacheTemplate getCacheTemplate() {
         return cacheTemplate;
     }
+
 
     @Override
     public ReentrantReadWriteLock getRwLock() {

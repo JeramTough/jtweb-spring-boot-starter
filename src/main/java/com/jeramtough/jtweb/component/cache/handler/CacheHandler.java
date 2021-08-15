@@ -15,7 +15,12 @@ public interface CacheHandler {
 
     <T> T get(String key, Class<T> clazz);
 
+    /**
+     * 这个方法注意，不要传json字符串，里面会自动转一次的
+     */
     <D extends Serializable> void put(String key, D data);
+
+    <D extends Serializable> void put(String key, D data,long outTimed);
 
     boolean containsKey(String key);
 

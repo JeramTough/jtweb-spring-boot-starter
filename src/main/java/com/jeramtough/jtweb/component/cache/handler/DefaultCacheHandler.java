@@ -43,6 +43,13 @@ public class DefaultCacheHandler extends BaseCacheHandler {
     }
 
     @Override
+    public <D extends Serializable> void put(String key, D data, long outTimed) {
+        Objects.requireNonNull(data);
+        String json = JSON.toJSONString(data);
+        getCacheTemplate().put(key, json, outTimed);
+    }
+
+    @Override
     public boolean containsKey(String key) {
         return getCacheTemplate().containsKey(key);
     }

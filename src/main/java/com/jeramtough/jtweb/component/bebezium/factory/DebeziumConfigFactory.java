@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.component.bebezium.factory;
 
-import com.jeramtough.jtweb.component.bebezium.setting.DbMoniterSetting;
+import com.jeramtough.jtweb.component.bebezium.setting.DbMonitorSetting;
 import com.jeramtough.jtweb.component.bebezium.setting.DbSourceSetting;
 import io.debezium.config.Configuration;
 
@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public class DebeziumConfigFactory {
 
-    public static List<Configuration> getConfigurationList(DbMoniterSetting dbMoniterSetting) {
+    public static List<Configuration> getConfigurationList(DbMonitorSetting dbMonitorSetting) {
         List<Configuration> configurationList = new ArrayList<>();
-        for (Map.Entry<String, DbSourceSetting> entry : dbMoniterSetting.getDatasource().entrySet()) {
+        for (Map.Entry<String, DbSourceSetting> entry : dbMonitorSetting.getDatasource().entrySet()) {
             Configuration config = getConfiguration(entry.getKey(), entry.getValue());
             if (config != null) {
                 configurationList.add(config);
@@ -31,7 +31,7 @@ public class DebeziumConfigFactory {
     public static Configuration getConfiguration(String name,
                                                  DbSourceSetting dbSourceSetting) {
 
-        if (!dbSourceSetting.getIsAble()) {
+        if (!dbSourceSetting.getEnable()) {
             return null;
         }
 

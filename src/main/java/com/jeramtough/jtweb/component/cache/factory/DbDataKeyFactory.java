@@ -41,6 +41,7 @@ public class DbDataKeyFactory {
         List<DbDataKey> dataKeyList = listEntity
                 .parallelStream()
                 .map(DbDataKeyFactory::toDbDataKey)
+                .peek(dbDataKey -> dbDataKey.setWrapperClass(List.class))
                 .collect(Collectors.toList());
         return dataKeyList;
     }
@@ -53,6 +54,7 @@ public class DbDataKeyFactory {
         List<DbDataKey> dataKeyList = setEntity
                 .parallelStream()
                 .map(DbDataKeyFactory::toDbDataKey)
+                .peek(dbDataKey -> dbDataKey.setWrapperClass(Set.class))
                 .collect(Collectors.toList());
         return dataKeyList;
     }

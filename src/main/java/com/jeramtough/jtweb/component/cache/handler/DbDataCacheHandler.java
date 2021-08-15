@@ -16,7 +16,7 @@ public interface DbDataCacheHandler extends CacheHandler {
 
     boolean containsKey(String cacheKey, DbDataKey dbDataKey);
 
-    <T> T get(String cacheKey, DbDataKey dbDataKey, Class<T> clazz);
+    Object get(String cacheKey, DbDataKey dbDataKey);
 
     /**
      * 添加数据库表关联关系的键值对缓存

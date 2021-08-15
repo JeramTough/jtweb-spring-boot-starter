@@ -2,6 +2,7 @@ package com.jeramtough.jtweb.component.cache.handler;
 
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jeramtough.jtweb.component.bebezium.event.DbDataChangedEvent;
 import com.jeramtough.jtweb.component.bebezium.listener.DbDataChangedListener;
@@ -10,11 +11,13 @@ import com.jeramtough.jtweb.component.business.extractentity.ExtractEntityRunner
 import com.jeramtough.jtweb.component.cache.bean.DbDataKey;
 import com.jeramtough.jtweb.component.cache.exception.CacheException;
 import com.jeramtough.jtweb.component.cache.exception.EmptyCollectionException;
+import com.jeramtough.jtweb.component.cache.exception.NullReturnException;
 import com.jeramtough.jtweb.component.cache.factory.DbDataKeyFactory;
 import com.jeramtough.jtweb.component.cache.template.CacheTemplate;
 import com.jeramtough.jtweb.component.cache.util.JtCacheUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -64,21 +67,48 @@ public class DefaultDbDataCacheHandler extends DefaultCacheHandler
     }
 
     @Override
-    public <T> T get(String cacheKey, DbDataKey dbDataKey, Class<T> clazz) {
+    public Object get(String cacheKey, DbDataKey dbDataKey) {
         if (getRwLock() != null) {
             getRwLock().readLock().lock();
         }
 
         try {
             Objects.requireNonNull(dbDataKey);
+            Objects.requireNonNull(dbDataKey.getDataClass());
 
             Map<String, String> cacheKeyDataKeyMap = getCacheKeyDataKeyMap(dbDataKey);
             String dataKey = cacheKeyDataKeyMap.get(cacheKey);
             String dataJson = getCacheTemplate().get(dataKey);
 
-            Objects.requireNonNull(dataJson);
-            T t = JSON.parseObject(dataJson, clazz);
-            return t;
+            if (dbDataKey.getWrapperClass() == null) {
+                Objects.requireNonNull(dataJson);
+                Object o = JSON.parseObject(dataJson, dbDataKey.getDataClass());
+                return o;
+            }
+            else {
+                JSONArray jsonArray = JSON.parseArray(dataJson);
+                if (dbDataKey.getWrapperClass() == List.class) {
+                    List<?> list = jsonArray
+                            .stream()
+                            .map(JSON::toJSONString)
+                            .map(jsonStr -> JSON.parseObject(jsonStr,
+                                    dbDataKey.getDataClass()))
+                            .collect(Collectors.toList());
+                    return list;
+                }
+                else if (dbDataKey.getWrapperClass() == Set.class) {
+                    Set<?> set = jsonArray
+                            .parallelStream()
+                            .map(JSON::toJSONString)
+                            .map(jsonStr -> JSON.parseObject(jsonStr,
+                                    dbDataKey.getDataClass()))
+                            .collect(Collectors.toSet());
+                    return set;
+                }
+
+                throw new NullPointerException(
+                        "不能正确解析" + dbDataKey.getDataClass().getName() + "," + dbDataKey.getWrapperClass().getName());
+            }
         }
         finally {
             if (getRwLock() != null) {
@@ -170,10 +200,11 @@ public class DefaultDbDataCacheHandler extends DefaultCacheHandler
             }
             //正常执行，但是数据库没有数据
             else {
-                return null;
+                NullReturnException nullReturnException = new NullReturnException(cacheKey);
+                throw nullReturnException;
             }
         }
-        catch (EmptyCollectionException e) {
+        catch (EmptyCollectionException | NullReturnException e) {
             throw e;
         }
         catch (Exception e) {

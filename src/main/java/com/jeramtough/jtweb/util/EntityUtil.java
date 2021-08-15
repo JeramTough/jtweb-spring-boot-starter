@@ -60,8 +60,7 @@ public class EntityUtil {
                                 entity);
                         break;
                     }
-                    catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                    catch (IllegalAccessException ignored) {
                     }
                 }
             }

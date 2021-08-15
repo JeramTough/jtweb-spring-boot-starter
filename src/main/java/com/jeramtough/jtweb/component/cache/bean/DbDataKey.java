@@ -14,6 +14,7 @@ public class DbDataKey implements Serializable {
     private String tableName;
     private String idValue;
     private Class<?> dataClass;
+    private Class<?> wrapperClass;
 
     public String getDatabaseName() {
         return databaseName;
@@ -45,6 +46,14 @@ public class DbDataKey implements Serializable {
 
     public void setDataClass(Class<?> dataClass) {
         this.dataClass = dataClass;
+    }
+
+    public Class<?> getWrapperClass() {
+        return wrapperClass;
+    }
+
+    public void setWrapperClass(Class<?> wrapperClass) {
+        this.wrapperClass = wrapperClass;
     }
 
     @Override

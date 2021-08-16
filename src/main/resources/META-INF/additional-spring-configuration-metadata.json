@@ -1,0 +1,54 @@
+{
+  "properties": [
+    {
+      "name": "jtweb2.dbmoniter.enable",
+      "type": "java.lang.Boolean",
+      "description": "Description for jtweb2.dbmoniter.enable."
+    },
+    {
+      "name": "jtweb2.dbmoniter.publisher-type",
+      "type": "java.lang.Integer",
+      "description": "Description for jtweb2.dbmoniter.publisherType."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.server-id",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.server-id."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.hostname",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.hostname."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.user",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.user."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.password",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.password."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.port",
+      "type": "java.lang.Integer",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.port."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.database-history-file",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.database-history-file."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.offset-storage-file",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.offset-storage-file."
+    },
+    {
+      "name": "jtweb2.dbmoniter.datasource.randl2-db.include-db",
+      "type": "java.lang.String",
+      "description": "Description for jtweb2.dbmoniter.datasource.randl2-db.include-db."
+    }
+  ]
+}

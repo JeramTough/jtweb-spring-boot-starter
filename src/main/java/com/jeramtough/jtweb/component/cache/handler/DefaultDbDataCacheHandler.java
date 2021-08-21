@@ -125,13 +125,13 @@ public class DefaultDbDataCacheHandler extends DefaultCacheHandler
         //获取超时时间
         final Long outTimed = JtCacheUtil.getOutTimedFromCacheObject(data);
 
-        //先存数据key,和数据data
-        String dataKey = data.hashCode() + "_" + IdUtil.fastSimpleUUID();
+        //生成元数据的uuidkey，然后用uuid-data存入缓存
+        String dataUuidKey = data.hashCode() + "_" + IdUtil.fastSimpleUUID();
         if (outTimed == null) {
-            this.getCacheTemplate().put(dataKey, json);
+            this.getCacheTemplate().put(dataUuidKey, json);
         }
         else {
-            this.getCacheTemplate().put(dataKey, json, outTimed + 1000);
+            this.getCacheTemplate().put(dataUuidKey, json, outTimed + 1000);
         }
 
         //进行数据库表和数据的key进行关联关系的键值添加
@@ -139,9 +139,10 @@ public class DefaultDbDataCacheHandler extends DefaultCacheHandler
                 .parallelStream()
                 .forEach(dbDataKey -> {
                     if (dbDataKey != null) {
+                        //每一个datakey对应的Map集合里，存的都是元数据的uuidKey
                         Map<String, String> cacheKeyDataKeyMap = getCacheKeyDataKeyMap(
                                 dbDataKey);
-                        cacheKeyDataKeyMap.put(cacheKey, dataKey);
+                        cacheKeyDataKeyMap.put(cacheKey, dataUuidKey);
                         setCacheKeyDataKeyMap(dbDataKey, cacheKeyDataKeyMap, outTimed);
                     }
                 });
@@ -230,16 +231,23 @@ public class DefaultDbDataCacheHandler extends DefaultCacheHandler
             getRwLock().writeLock().lock();
         }
 
+        //得到dataKey
         DbDataKey dbDataKey = DbDataKeyFactory.getDbDataKey(dbDataChangedEvent);
 
+        //每一个datakey对应的Map集合里，存的都是元数据的uuidKey
         Map<String, String> cacheKeyDataKeyMap = getCacheKeyDataKeyMap(dbDataKey);
         cacheKeyDataKeyMap
                 .entrySet()
                 .parallelStream()
                 .forEach(entry -> {
-                    String dataKey = entry.getValue();
-                    getCacheTemplate().remove(dataKey);
+                    String dataUuidKey = entry.getValue();
+                    getLogger().debug("{uuidkey=[%s]} 元数据缓存即将被清除！",dataUuidKey);
+                    getCacheTemplate().remove(dataUuidKey);
                 });
+
+        getLogger().debug("DataKey=[%s] Map缓存即将被清除！",dbDataKey.toKey1());
+        getLogger().debug("DataKey=[%s] Map缓存即将被清除！",dbDataKey.toKey1());
+
         getCacheTemplate().remove(dbDataKey.toKey1());
         getCacheTemplate().remove(dbDataKey.toKey2());
 

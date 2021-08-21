@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.component.aspect.MethodGather;
 import com.jeramtough.jtweb.component.business.extractentity.ExtractEntityRunner;
+import com.jeramtough.jtweb.component.cache.annotation.IgnoreCache;
 import com.jeramtough.jtweb.component.cache.bean.DbDataKey;
 import com.jeramtough.jtweb.component.cache.exception.CacheException;
 import com.jeramtough.jtweb.component.cache.exception.EmptyCollectionException;
@@ -11,6 +12,7 @@ import com.jeramtough.jtweb.component.cache.exception.NullReturnException;
 import com.jeramtough.jtweb.component.cache.handler.DbDataCacheHandler;
 import com.jeramtough.jtweb.component.cache.setting.JtCacheSetting;
 import com.jeramtough.jtweb.component.cache.util.JtCacheUtil;
+import com.jeramtough.jtweb.component.optlog.annotation.IgnoreOptLog;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -60,9 +62,6 @@ public class MapperCacheAspect extends BaseCacheAspect implements WithLogger {
     @Around("pointCut()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-            //得到方法和参数组成的key
-            String cacheMethodKey = JtCacheUtil.generateKey(joinPoint);
-
             if (!super.jtCacheSetting.isEnableMapper()) {
                 getLogger().debug("isAble=false,mapper缓存禁用！");
                 return joinPoint.proceed();
@@ -73,6 +72,21 @@ public class MapperCacheAspect extends BaseCacheAspect implements WithLogger {
                 getLogger().warn("获取切面方法失败！");
                 return joinPoint.proceed();
             }
+
+            //先拿类的注释，如果方法有在用方法的代替
+            IgnoreCache ignoreCacheAnnotation =
+                    joinPoint.getTarget().getClass().getDeclaredAnnotation(IgnoreCache.class);
+            if (aspectMethod.getDeclaredAnnotation(IgnoreCache.class) != null) {
+                ignoreCacheAnnotation = aspectMethod.getDeclaredAnnotation(IgnoreCache.class);
+            }
+
+            if (ignoreCacheAnnotation != null) {
+                getLogger().debug("ignoreCache=true,忽略该mapper【%s】缓存！", aspectMethod.getName());
+                return joinPoint.proceed();
+            }
+
+            //得到方法和参数组成的key
+            String cacheMethodKey = JtCacheUtil.generateKey(joinPoint);
 
             boolean hasCache = super.dbDataCacheHandler.containsKey(cacheMethodKey,
                     methodHandler.getMethodReturnDbDataKey(cacheMethodKey));

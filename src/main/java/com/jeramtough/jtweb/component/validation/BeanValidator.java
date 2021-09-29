@@ -44,14 +44,31 @@ public class BeanValidator {
             if (validatorAnnotation instanceof NotBlankButNull) {
                 NotBlankButNull notBlankButNull = (NotBlankButNull) validatorAnnotation;
                 if (notBlankButNull.isSetNullAuto()) {
-                    try {
-                        Field field = checkedObject.getClass().getDeclaredField(fieldName);
-                        field.setAccessible(true);
-                        field.set(checkedObject, null);
-                        continue;
+                    Field field = null;
+                    Class<?> superclass;
+
+                    //循环遍历父类里的成员变量
+                    superclass = checkedObject.getClass();
+                    while (superclass != null) {
+                        try {
+                            Class<?> checkClass = superclass;
+                            superclass = checkClass.getSuperclass();
+                            field = checkClass.getDeclaredField(fieldName);
+                            break;
+                        }
+                        catch (NoSuchFieldException ignored) {
+                        }
                     }
-                    catch (NoSuchFieldException | IllegalAccessException e) {
-                        e.printStackTrace();
+
+                    if (field != null) {
+                        field.setAccessible(true);
+                        try {
+                            field.set(checkedObject, null);
+                        }
+                        catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        continue;
                     }
                 }
             }

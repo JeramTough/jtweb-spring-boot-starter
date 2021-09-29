@@ -15,22 +15,23 @@ public class GeneratorMainForStudentManager {
         CodeGeneratorAgent codeGeneratorAgent = new CodeGeneratorAgent(new GeneratorConfigAdapter() {
             @Override
             public String getProjectName() {
-                return "studentmanager";
+                return "im";
             }
 
             @Override
             public String getOutputDir() {
-                return "E:\\Codes\\IdeaCodes\\spring-boot-starter-jtweb2\\src\\test\\code\\studentmanager";
+                return "/developer/Codes/IdeaCodes/spring-boot-starter-jtweb2/src/test/code" +
+                        "/im";
             }
 
             @Override
             public String getAuthor() {
-                return "WeiJieHui";
+                return "WeiBoWen";
             }
 
             @Override
             public String getUrl() {
-                return "jdbc:mysql://localhost:3306/studentinfomanagement?useUnicode=true" +
+                return "jdbc:mysql://39.99.51.221:3306/im_db?useUnicode=true" +
                         "&useSSL=false&characterEncoding=utf8";
             }
 
@@ -41,7 +42,7 @@ public class GeneratorMainForStudentManager {
 
             @Override
             public String[] getUsernameAndPassword() {
-                return new String[]{"root", "123456"};
+                return new String[]{"root", "Aa73979901995"};
             }
 
             @Override

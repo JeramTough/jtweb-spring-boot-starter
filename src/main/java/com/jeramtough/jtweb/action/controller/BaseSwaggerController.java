@@ -45,6 +45,7 @@ import java.io.PrintWriter;
         @ApiResponse(code = ErrorS.CODE_4.C, message = ErrorS.CODE_4.M),
         @ApiResponse(code = ErrorS.CODE_5.C, message = ErrorS.CODE_5.M),
         @ApiResponse(code = ErrorS.CODE_6.C, message = ErrorS.CODE_6.M),
+        @ApiResponse(code = ErrorS.CODE_7.C, message = ErrorS.CODE_7.M),
 })
 @ControllerAdvice
 public abstract class BaseSwaggerController {
@@ -59,14 +60,16 @@ public abstract class BaseSwaggerController {
         return ApiResponseFactory.getSuccessfulApiResponse(responseBody);
     }
 
-    public CommonApiResponse<String> getFailedApiResponse(Integer customErrorCode, String message) {
+    public CommonApiResponse<String> getFailedApiResponse(Integer customErrorCode,
+                                                          String message) {
         ApiException apiException = new ApiException(customErrorCode, message);
         CommonApiResponse<String> failedApiResponse =
                 ApiResponseFactory.getFailedResponse(apiException);
         return failedApiResponse;
     }
 
-    public CommonApiResponse<String> getFailedApiResponse(ErrorCode errorCode, String message) {
+    public CommonApiResponse<String> getFailedApiResponse(ErrorCode errorCode,
+                                                          String message) {
         ApiException apiException = new ApiException(errorCode, message);
         CommonApiResponse<String> failedApiResponse =
                 ApiResponseFactory.getFailedResponse(apiException);

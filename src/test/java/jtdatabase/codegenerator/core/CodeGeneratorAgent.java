@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.jeramtough.jtcomponent.utils.StringUtil;
 import com.jeramtough.jtlog.facade.L;
 import jtdatabase.codegenerator.adapter.GeneratorConfigAdapter;
 
@@ -28,6 +29,8 @@ public class CodeGeneratorAgent {
     private CountDownLatch countDownLatch;
 
     private static final String DTO_PATH = "dto_path";
+
+    public List<String> tableNames=new ArrayList<>();
 
 
     public CodeGeneratorAgent(GeneratorConfigAdapter configAdapter) {
@@ -77,10 +80,12 @@ public class CodeGeneratorAgent {
         strategy.setSuperEntityClass(configAdapter.getSuperControllerClass());
         strategy.setEntityLombokModel(false);
         strategy.setRestControllerStyle(true);
+        strategy.setNaming(NamingStrategy.underline_to_camel);
         //包含前缀的数据库表将会省略掉前缀
 //        strategy.setTablePrefix("ap");
         codeAutoGenerator.setStrategy(strategy);
     }
+
 
     protected void initCustomTemplateConfig() {
 
@@ -105,8 +110,33 @@ public class CodeGeneratorAgent {
                 if (tableInfo == null) {
                     L.arrive();
                 }
+                else{
+                    tableNames.add(tableInfo.getName());
+                }
+
                 if (tableInfo.getFields() != null) {
                     for (TableField tableField : tableInfo.getFields()) {
+                        //命名重构
+                        String propertyName = tableField.getPropertyName();
+                        String columnName=tableField.getColumnName();
+
+                        if (!columnName.contains("_")) {
+                            String s = columnName.substring(0, 1);
+                            String e = columnName.substring(1, columnName.length());
+                            propertyName = s.toLowerCase() + e;
+                        }
+                        else if (columnName.equalsIgnoreCase("ID")) {
+                            propertyName = "id";
+                        }
+                        else if (columnName.equalsIgnoreCase("LDATE")) {
+                            propertyName = "ldate";
+                        }
+                        else if (columnName.equalsIgnoreCase("LIME")) {
+                            propertyName = "ltime";
+                        }
+//                        tableField.setName(name);
+                        tableField.setPropertyName(propertyName);
+
                         //把注释的回车换成#号
                         String comment = tableField.getComment();
                         if (comment != null) {
@@ -144,6 +174,11 @@ public class CodeGeneratorAgent {
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     public void startGenerating() {
+
+        File file = new File(configAdapter.getOutputDir());
+        if (file.exists()) {
+            file.delete();
+        }
 
         if (configAdapter.hasBusinessPrefix()) {
             List<TableInfo> tableInfoList = codeAutoGenerator.getTableInfoList();

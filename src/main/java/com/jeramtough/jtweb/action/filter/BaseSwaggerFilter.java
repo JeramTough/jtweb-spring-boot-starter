@@ -38,7 +38,8 @@ public interface BaseSwaggerFilter {
                                          HttpServletResponse httpServletResponse) {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json; charset=utf-8");
-        try (PrintWriter out = httpServletResponse.getWriter()) {
+        try {
+            PrintWriter out = httpServletResponse.getWriter();
             out.append(JSON.toJSONString(commonApiResponse));
         }
         catch (IOException e) {

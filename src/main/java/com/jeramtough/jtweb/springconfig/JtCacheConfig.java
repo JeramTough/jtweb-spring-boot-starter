@@ -66,7 +66,7 @@ public class JtCacheConfig {
     }
 
 
-    @Bean("dbDataCacheHandler")
+    /*@Bean("dbDataCacheHandler")
     @Primary
     @ConditionalOnBean({DebeziumSubscriber.class, CacheTemplate.class})
     public DbDataCacheHandler dbDataCacheHandler() {
@@ -76,7 +76,7 @@ public class JtCacheConfig {
         DbDataCacheHandler dbDataCacheHandler = new DefaultDbDataCacheHandler(cacheTemplate,
                 debeziumSubscriber);
         return dbDataCacheHandler;
-    }
+    }*/
 
 
 

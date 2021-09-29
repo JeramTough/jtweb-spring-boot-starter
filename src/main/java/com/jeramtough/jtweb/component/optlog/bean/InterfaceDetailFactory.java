@@ -82,7 +82,7 @@ public class InterfaceDetailFactory {
                 || longJavaMethodName.contains("index") || longJavaMethodName.contains("Get")) {
             apiTypeEnum = ApiTypeEnum.SELECT;
         }
-        else if (longJavaMethodName.contains("add") || longJavaMethodName.contains(
+        else if (longJavaMethodName.contains("addByParams") || longJavaMethodName.contains(
                 "Add") || longJavaMethodName.contains("insert") ||
                 longJavaMethodName.contains("save")) {
             apiTypeEnum = ApiTypeEnum.INSERT;

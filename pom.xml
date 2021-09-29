@@ -6,10 +6,10 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.3.7.48-LOCAL</version>
+    <version>2.3.7.61-RELEASE</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
-    <!--<version>2.1.14.38-LOCAL</version>-->
+    <!--<version>2.1.14.38-RELEASE</version>-->
 
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
@@ -33,27 +33,24 @@
         <!--Bean校验框架-->
         <HIBERNATE_VALIDATOR_VERSION>6.1.0.Final</HIBERNATE_VALIDATOR_VERSION>
 
-        <!--springfox-swagger框架-->
-        <SPRING_FOX_SWAGGER_VERSION>2.9.2</SPRING_FOX_SWAGGER_VERSION>
-
         <!--google-guava-->
         <GUAVA_VERSION>28.0-jre</GUAVA_VERSION>
 
         <!--jtlog-->
-        <JTLOG_VERSION>1.8.4-SNAPSHOT</JTLOG_VERSION>
+        <JTLOG_VERSION>1.8.4-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
         <!-- <JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
-        <JTCOMPONENT_VERSION>1.5.3-SNAPSHOT</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.5.7-RELEASE</JTCOMPONENT_VERSION>
 
-        <!--swagger_bootstrap_ui-->
-        <SWAGGER_BOOTSTRAP_UI_VERSION>1.9.6</SWAGGER_BOOTSTRAP_UI_VERSION>
+        <!--knife4j-spring-boot-starter-->
+        <KNIE4J_BOOT_STARTER_VERSION>3.0.3</KNIE4J_BOOT_STARTER_VERSION>
 
         <!--commons-lang3-->
         <COMMONS_LANG3_VERSION>3.9</COMMONS_LANG3_VERSION>
 
         <!--druid版本-->
-        <DRUID_BOOT_STARTER_VERSION>1.1.17</DRUID_BOOT_STARTER_VERSION>
+        <DRUID_BOOT_STARTER_VERSION>1.2.6</DRUID_BOOT_STARTER_VERSION>
 
         <!--JDBC-->
         <MYSQL_JDBC_VERSION>5.1.48</MYSQL_JDBC_VERSION>
@@ -73,57 +70,12 @@
         <!--event-bus-->
         <EVENT_BUS_VERSION>3.1.1</EVENT_BUS_VERSION>
 
+        <HIKARICP_VERSION>5.0.0</HIKARICP_VERSION>
+
+        <!--图片编辑压缩thumbnailator-->
+        <HUMBNAILATOR_VERSION>0.4.8</HUMBNAILATOR_VERSION>
+
     </properties>
-
-
-    <repositories>
-        <repository>
-            <id>alimaven</id>
-            <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <name>sonatype maven</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jcenter-snapshots</id>
-            <name>jcenter</name>
-            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-        </repository>
-
-        <!-- <repository>
-             <id>nexus-ssd</id>
-             <name>Nexus ssd</name>
-             <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
-         </repository>
-         <repository>
-             <id>nexus-ssd-snapshots</id>
-             <name>Nexus ssd snapshot</name>
-             <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
-         </repository>-->
-    </repositories>
-
-
-    <distributionManagement>
-        <repository>
-            <id>nexus-ssd</id>
-            <name>Nexus ssd</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-ssd-snapshots</id>
-            <name>Nexus ssd snapshot</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 
     <dependencies>
@@ -246,6 +198,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${HIKARICP_VERSION}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${FASTJSON_VERSION}</version>
@@ -303,23 +262,11 @@
             <version>${ORIKA_VERSION}</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${SPRING_FOX_SWAGGER_VERSION}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>${SWAGGER_BOOTSTRAP_UI_VERSION}</version>
-        </dependency>-->
-
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索最新版本号-->
-            <version>2.0.4</version>
+            <version>${KNIE4J_BOOT_STARTER_VERSION}</version>
         </dependency>
 
         <dependency>
@@ -352,8 +299,99 @@
             <version>${EVENT_BUS_VERSION}</version>
         </dependency>
 
+        <!--图片编辑压缩缩放-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>${HUMBNAILATOR_VERSION}</version>
+        </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+
+        <!--阿里云效maven仓库地址-->
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2104196-release-lI3GuI/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2104196-snapshot-rbGMvX/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>sonatype</id>
+            <name>sonatype maven</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jcenter-snapshots</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+        </repository>
+
+        <repository>
+            <id>nexus-ssd</id>
+            <name>Nexus ssd</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+        </repository>
+
+        <repository>
+            <id>nexus-ssd-snapshots</id>
+            <name>Nexus ssd snapshot</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
+        </repository>
+    </repositories>
+
+
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <name>rdc-releases</name>
+            <url>https://packages.aliyun.com/maven/repository/2104196-release-lI3GuI/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <name>rdc-snapshots</name>
+            <url>https://packages.aliyun.com/maven/repository/2104196-snapshot-rbGMvX/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <!--<distributionManagement>
+        <repository>
+            <id>nexus-ssd</id>
+            <name>Nexus ssd</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-ssd-snapshots</id>
+            <name>Nexus ssd snapshot</name>
+            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>-->
 
     <build>
         <plugins>

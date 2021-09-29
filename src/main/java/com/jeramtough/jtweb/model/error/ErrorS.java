@@ -44,6 +44,11 @@ public class ErrorS {
         public static final String M = "【系统公共错误码】系统执行抄作超时。。。！";
     }
 
+    public static final class CODE_7 {
+        public static final int C = 10007;
+        public static final String M = "【系统公共错误码】系统执行[%s]操作失败，因为[%s]";
+    }
+
     //=========================
 
 

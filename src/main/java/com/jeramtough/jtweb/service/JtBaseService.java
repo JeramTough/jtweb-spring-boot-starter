@@ -1,15 +1,16 @@
 package com.jeramtough.jtweb.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.jeramtough.jtweb.component.business.ToEntityProcess;
 import com.jeramtough.jtweb.model.dto.PageDto;
 import com.jeramtough.jtweb.model.params.BaseConditionParams;
 import com.jeramtough.jtweb.model.params.QueryByPageParams;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
- *
  * 对BaseDtoService的增强
  *
  * <pre>
@@ -19,13 +20,23 @@ import java.util.List;
  */
 public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
 
+    String addByParams(Object params);
+
     String updateByParams(Object params);
+
+    String addOrUpdateBatchByParamsList(List<?> paramsList);
+
+    String addOrUpdateBatchByParamsList(List<?> paramsList,
+                                        ToEntityProcess<T> toEntityProcess);
+
+    String addOrUpdateByParams(Object params);
 
     String updateByParamsList(List<?> params);
 
     String removeOneById(Long fid);
 
-    PageDto<D> pageByCondition(QueryByPageParams queryByPageParams, BaseConditionParams params);
+    PageDto<D> pageByCondition(QueryByPageParams queryByPageParams,
+                               BaseConditionParams params);
 
 
     @Override

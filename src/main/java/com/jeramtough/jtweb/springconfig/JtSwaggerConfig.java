@@ -24,6 +24,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created on 2019/7/25 11:38
@@ -62,7 +63,7 @@ public class JtSwaggerConfig {
         //这里不过就是用“/”
         docket.pathMapping("/");
         //模型特定对象属性转成String类型
-        docket.directModelSubstitute(LocalDate.class, String.class);
+//        docket.directModelSubstitute(LocalDate.class, String.class);
         return docket;
 
 
@@ -71,17 +72,13 @@ public class JtSwaggerConfig {
     /**
      * 决定在xxx条件下，该接口才被swagger映射到在线接口文档
      */
-    private Predicate<RequestHandler> getRequestHandlerPredicate() {
-        Predicate<RequestHandler> selector = new Predicate<RequestHandler>() {
-            @Override
-            public boolean apply(RequestHandler input) {
-
-                //标注着Api注释的接口才被映射
-                if (input.findControllerAnnotation(Api.class).isPresent()) {
-                    return true;
-                }
-                return false;
+    private java.util.function.Predicate<RequestHandler> getRequestHandlerPredicate() {
+        java.util.function.Predicate<RequestHandler> selector = (Predicate<RequestHandler>) input -> {
+            //标注着Api注释的接口才被映射
+            if (Objects.requireNonNull(input).findControllerAnnotation(Api.class).isPresent()) {
+                return true;
             }
+            return false;
         };
         return selector;
     }

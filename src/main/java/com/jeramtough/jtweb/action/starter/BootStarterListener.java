@@ -6,6 +6,8 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
 
 import javax.servlet.ServletContext;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * <pre>
@@ -25,18 +27,28 @@ public class BootStarterListener {
 
     @EventListener
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        L.info("The project has launched successfully! ");
-
         serverNamespace =
                 applicationReadyEvent.getApplicationContext().getBean(
                         ServletContext.class).getContextPath();
 
-        if (serverNamespace == null ) {
+        if (serverNamespace == null) {
             serverNamespace = "";
         }
 
-        L.info("swagger: http://127.0.0.1:%d%s/doc.html?cache=1&lang=zh",
-                port, serverNamespace);
+
+        String ipAddress;
+        try {
+            InetAddress address = InetAddress.getLocalHost();
+            ipAddress = address.getHostAddress();
+
+        }
+        catch (UnknownHostException e) {
+            ipAddress = "127.0.0.1";
+        }
+        String swaggerAddress = String.format(
+                "swagger: http://%s:%d%s/doc.html?cache=1&lang=zh",
+                ipAddress, port, serverNamespace);
+        L.info(swaggerAddress + "\n项目已经成功启动^0^y\nThe project has launched successfully!");
     }
 }
 

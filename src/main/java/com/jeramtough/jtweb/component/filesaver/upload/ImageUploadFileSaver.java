@@ -1,7 +1,7 @@
-package com.jeramtough.jtweb.component.filesaver.core;
+package com.jeramtough.jtweb.component.filesaver.upload;
 
 import com.jeramtough.jtlog.with.WithLogger;
-import com.jeramtough.jtweb.component.filesaver.config.ImageFileSaveConfigAdapter;
+import com.jeramtough.jtweb.component.filesaver.config.upload.ImageUploadFileSaveConfigAdapter;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,12 +16,13 @@ import java.io.InputStream;
  * by @author WeiBoWen
  * </pre>
  */
-public class ImageFileSaver extends BaseFileSaver implements FileSaver, WithLogger {
+public class ImageUploadFileSaver extends BaseUploadFileSaver
+        implements UploadFileSaver, WithLogger {
 
-    private final ImageFileSaveConfigAdapter imageFileSaveConfigAdapter;
+    private final ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter;
 
-    public ImageFileSaver(
-            ImageFileSaveConfigAdapter imageFileSaveConfigAdapter) {
+    public ImageUploadFileSaver(
+            ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter) {
         super(imageFileSaveConfigAdapter);
         this.imageFileSaveConfigAdapter = imageFileSaveConfigAdapter;
     }

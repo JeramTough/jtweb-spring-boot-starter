@@ -36,6 +36,21 @@ public abstract class BaseFileReader implements FileReader {
     }
 
     @Override
+    public String getRelativePath(File file) {
+
+        String basePath = new File(configAdapter.getBasePath()).getAbsolutePath();
+        if (!file.getAbsolutePath().startsWith(basePath)) {
+            throw new IllegalStateException(file.getAbsolutePath() + "该文件不存在基础路径之上！");
+        }
+
+        String path = file.getAbsolutePath();
+        String relativePath = path.substring(basePath.length());
+        relativePath = relativePath.replace("\\\\", "/");
+        relativePath = relativePath.replace("\\", "/");
+        return relativePath;
+    }
+
+    @Override
     public File[] read(FileFilter fileFilter) throws NoSuchFileException {
         String basePath = configAdapter.getBasePath();
 

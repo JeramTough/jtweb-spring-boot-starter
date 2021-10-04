@@ -10,7 +10,5 @@ public interface FileSaveConfigAdapter {
 
     String getPath();
 
-    int getMaxSize();
 
-    String getType();
 }

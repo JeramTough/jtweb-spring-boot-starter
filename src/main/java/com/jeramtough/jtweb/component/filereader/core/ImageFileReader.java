@@ -26,6 +26,12 @@ public class ImageFileReader extends BaseFileReader implements FileReader {
         return super.readOne(fileFilter);
     }
 
+    public File readImage(String relativePath, int imageQuality) throws NoSuchFileException {
+        File file = super.read(relativePath);
+        ImageManager imageManager = new DefaultImageManager();
+        return imageManager.get(file, imageQuality);
+    }
+
     public File readImage(FileFilter fileFilter, int imageQuality) throws NoSuchFileException {
         File file = super.readOne(fileFilter);
         ImageManager imageManager = new DefaultImageManager();

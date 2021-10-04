@@ -1,5 +1,6 @@
-package com.jeramtough.jtweb.component.filesaver.core;
+package com.jeramtough.jtweb.component.filesaver.upload;
 
+import com.jeramtough.jtweb.component.filesaver.base.FileSaver;
 import com.jeramtough.jtweb.component.filesaver.exception.IllegalFileTypeException;
 import com.jeramtough.jtweb.component.filesaver.exception.MaxSizeLimitException;
 import com.jeramtough.jtweb.component.filesaver.exception.SaveFileException;
@@ -15,14 +16,6 @@ import java.nio.file.NoSuchFileException;
  * by @author WeiBoWen
  * </pre>
  */
-public interface FileSaver {
+public interface UploadFileSaver extends FileSaver<MultipartFile> {
 
-    File save(MultipartFile file) throws IOException, MaxSizeLimitException,
-            IllegalFileTypeException, SaveFileException;
-
-    String getRelativePath();
-
-    File read(String relativePath) throws NoSuchFileException;
-
-    String getFileContentType(File file);
 }

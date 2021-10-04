@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @ApiModel(value="ImStudentActivity对象", description="")
 public class ImStudentActivity implements Serializable {
@@ -45,6 +45,8 @@ public class ImStudentActivity implements Serializable {
    * 沟通时间
    */
     private LocalDateTime time;
+
+    private Long operatorUid;
 
     private LocalDateTime createTime;
 
@@ -91,6 +93,14 @@ public class ImStudentActivity implements Serializable {
         this.time = time;
     }
 
+    public Long getOperatorUid() {
+        return operatorUid;
+    }
+
+    public void setOperatorUid(Long operatorUid) {
+        this.operatorUid = operatorUid;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -115,6 +125,7 @@ public class ImStudentActivity implements Serializable {
         ", title=" + title +
         ", content=" + content +
         ", time=" + time +
+        ", operatorUid=" + operatorUid +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         "}";

@@ -17,6 +17,8 @@ public interface FileReader {
 
     File read(String relativePath) throws NoSuchFileException;
 
+    String getRelativePath(File file);
+
     File[] read(FileFilter fileFilter) throws NoSuchFileException;
 
     File readOne(FileFilter fileFilter) throws NoSuchFileException;

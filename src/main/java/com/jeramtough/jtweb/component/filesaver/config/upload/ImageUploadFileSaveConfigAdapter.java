@@ -1,4 +1,4 @@
-package com.jeramtough.jtweb.component.filesaver.config;
+package com.jeramtough.jtweb.component.filesaver.config.upload;
 
 /**
  * <pre>
@@ -6,7 +6,7 @@ package com.jeramtough.jtweb.component.filesaver.config;
  * by @author WeiBoWen
  * </pre>
  */
-public interface ImageFileSaveConfigAdapter extends FileSaveConfigAdapter {
+public interface ImageUploadFileSaveConfigAdapter extends UploadFileSaveConfigAdaper {
 
     int getResetWidth();
 

@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @ApiModel(value="ImStudentScore对象", description="")
 public class ImStudentScore implements Serializable {
@@ -56,6 +56,8 @@ public class ImStudentScore implements Serializable {
    * 学期
    */
     private String semester;
+
+    private Long operatorUid;
 
   /**
    * 学生id
@@ -123,6 +125,14 @@ public class ImStudentScore implements Serializable {
         this.semester = semester;
     }
 
+    public Long getOperatorUid() {
+        return operatorUid;
+    }
+
+    public void setOperatorUid(Long operatorUid) {
+        this.operatorUid = operatorUid;
+    }
+
     public Long getStudentId() {
         return studentId;
     }
@@ -157,6 +167,7 @@ public class ImStudentScore implements Serializable {
         ", scoresComprehensive=" + scoresComprehensive +
         ", scoresChinese=" + scoresChinese +
         ", semester=" + semester +
+        ", operatorUid=" + operatorUid +
         ", studentId=" + studentId +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +

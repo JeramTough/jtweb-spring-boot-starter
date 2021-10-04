@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @ApiModel(value="ImParentCommunication对象", description="")
 public class ImParentCommunication implements Serializable {

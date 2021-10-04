@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @Service
 public class SmPushMessageServiceImpl extends ServiceImpl<SmPushMessageMapper, SmPushMessage> implements SmPushMessageService {

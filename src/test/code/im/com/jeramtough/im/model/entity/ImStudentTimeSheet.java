@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @ApiModel(value="ImStudentTimeSheet对象", description="")
 public class ImStudentTimeSheet implements Serializable {
@@ -31,11 +31,6 @@ public class ImStudentTimeSheet implements Serializable {
    * 学生id
    */
     private Long studentId;
-
-  /**
-   * 出勤类型
-   */
-    private String attendanceType;
 
   /**
    * 早上出勤情况
@@ -56,6 +51,8 @@ public class ImStudentTimeSheet implements Serializable {
    * 沟通时间
    */
     private LocalDate date;
+
+    private Long operatorUid;
 
   /**
    * 数据创建时间
@@ -82,14 +79,6 @@ public class ImStudentTimeSheet implements Serializable {
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
-    }
-
-    public String getAttendanceType() {
-        return attendanceType;
-    }
-
-    public void setAttendanceType(String attendanceType) {
-        this.attendanceType = attendanceType;
     }
 
     public String getMorning() {
@@ -124,6 +113,14 @@ public class ImStudentTimeSheet implements Serializable {
         this.date = date;
     }
 
+    public Long getOperatorUid() {
+        return operatorUid;
+    }
+
+    public void setOperatorUid(Long operatorUid) {
+        this.operatorUid = operatorUid;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -145,11 +142,11 @@ public class ImStudentTimeSheet implements Serializable {
         return "ImStudentTimeSheet{" +
         "fid=" + fid +
         ", studentId=" + studentId +
-        ", attendanceType=" + attendanceType +
         ", morning=" + morning +
         ", afternoon=" + afternoon +
         ", evening=" + evening +
         ", date=" + date +
+        ", operatorUid=" + operatorUid +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         "}";

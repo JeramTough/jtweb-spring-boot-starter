@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @Service
 public class ImParentServiceImpl extends ServiceImpl<ImParentMapper, ImParent> implements ImParentService {

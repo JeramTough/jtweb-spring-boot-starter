@@ -1,11 +1,11 @@
-package com.jeramtough.jtweb.component.filesaver.core;
+package com.jeramtough.jtweb.component.filesaver.upload;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.jeramtough.jtcomponent.io.Directory;
 import com.jeramtough.jtcomponent.utils.StringUtil;
-import com.jeramtough.jtweb.component.filesaver.config.FileSaveConfigAdapter;
+import com.jeramtough.jtweb.component.filesaver.base.BaseFileSaver;
+import com.jeramtough.jtweb.component.filesaver.config.upload.UploadFileSaveConfigAdaper;
 import com.jeramtough.jtweb.component.filesaver.exception.IllegalFileTypeException;
 import com.jeramtough.jtweb.component.filesaver.exception.MaxSizeLimitException;
 import com.jeramtough.jtweb.component.filesaver.exception.SaveFileException;
@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -25,16 +24,17 @@ import java.util.stream.Collectors;
  * by @author WeiBoWen
  * </pre>
  */
-public abstract class BaseFileSaver implements FileSaver {
+public abstract class BaseUploadFileSaver extends BaseFileSaver<MultipartFile>
+        implements UploadFileSaver {
 
     private final static Pattern VAR_PATTERN = Pattern.compile("\\$\\{[\\S]+}");
 
-    private final FileSaveConfigAdapter fileSaveConfigAdapter;
+    private final UploadFileSaveConfigAdaper fileSaveConfigAdapter;
 
-    private File productFile;
 
-    protected BaseFileSaver(
-            FileSaveConfigAdapter fileSaveConfigAdapter) {
+    public BaseUploadFileSaver(
+            UploadFileSaveConfigAdaper fileSaveConfigAdapter) {
+        super(fileSaveConfigAdapter);
         this.fileSaveConfigAdapter = fileSaveConfigAdapter;
     }
 
@@ -42,7 +42,7 @@ public abstract class BaseFileSaver implements FileSaver {
     public File save(MultipartFile file) throws IOException, MaxSizeLimitException,
             IllegalFileTypeException, SaveFileException {
         if (file.isEmpty()) {
-            throw new IOException("上传图片大小为0");
+            throw new IOException("上传大小为0");
         }
         //图片大小不允许超过500kb
         if (file.getSize() > 1024L * fileSaveConfigAdapter.getMaxSize()) {
@@ -62,48 +62,11 @@ public abstract class BaseFileSaver implements FileSaver {
 
         checkFile(file);
 
-        productFile = saveFile(file);
+        File productFile = saveFile(file);
         if (!productFile.exists()) {
             throw new SaveFileException(file.getName());
         }
         return productFile;
-    }
-
-    @Override
-    public String getRelativePath() {
-        String path = productFile.getAbsolutePath();
-        path = path.replace(fileSaveConfigAdapter.getPath(), "");
-        if (!path.startsWith(File.separator)) {
-            path = File.separator + path;
-        }
-        return path;
-    }
-
-    @Override
-    public File read(String relativePath) throws NoSuchFileException {
-        String path = fileSaveConfigAdapter.getPath() + File.separator + relativePath;
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new NoSuchFileException(path);
-        }
-        return file;
-    }
-
-    @Override
-    public String getFileContentType(File file) {
-        String extName = FileNameUtil.extName(file);
-        if ("jpg".equals(extName)) {
-            return "image/jpeg";
-        }
-        else if ("png".equals(extName)) {
-            return "image/png";
-        }
-        else if ("git".equals(extName)) {
-            return "image/git";
-        }
-        else {
-            return "";
-        }
     }
 
     public abstract void checkFile(MultipartFile file);

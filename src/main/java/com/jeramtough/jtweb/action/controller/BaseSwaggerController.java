@@ -1,6 +1,7 @@
 package com.jeramtough.jtweb.action.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponseFactory;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponsesAnnotationHandler;
 import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
@@ -48,7 +49,7 @@ import java.io.PrintWriter;
         @ApiResponse(code = ErrorS.CODE_7.C, message = ErrorS.CODE_7.M),
 })
 @ControllerAdvice
-public abstract class BaseSwaggerController {
+public abstract class BaseSwaggerController implements WithLogger {
 
 
     public BaseSwaggerController() {

@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-09-23
+ * @since 2021-10-02
  */
 @ApiModel(value="ImStudentTimeSheet对象", description="")
 public class ImStudentTimeSheetDto implements Serializable{
@@ -28,9 +28,6 @@ public class ImStudentTimeSheetDto implements Serializable{
     @ApiModelProperty(value = "学生id")
     private Long studentId;
 
-    @ApiModelProperty(value = "出勤类型")
-    private String attendanceType;
-
     @ApiModelProperty(value = "早上出勤情况")
     private String morning;
 
@@ -42,6 +39,8 @@ public class ImStudentTimeSheetDto implements Serializable{
 
     @ApiModelProperty(value = "沟通时间")
     private LocalDate date;
+
+    private Long operatorUid;
 
     @ApiModelProperty(value = "数据创建时间")
     private LocalDateTime createTime;
@@ -64,14 +63,6 @@ public class ImStudentTimeSheetDto implements Serializable{
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
-    }
-
-    public String getAttendanceType() {
-        return attendanceType;
-    }
-
-    public void setAttendanceType(String attendanceType) {
-        this.attendanceType = attendanceType;
     }
 
     public String getMorning() {
@@ -106,6 +97,14 @@ public class ImStudentTimeSheetDto implements Serializable{
         this.date = date;
     }
 
+    public Long getOperatorUid() {
+        return operatorUid;
+    }
+
+    public void setOperatorUid(Long operatorUid) {
+        this.operatorUid = operatorUid;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -127,11 +126,11 @@ public class ImStudentTimeSheetDto implements Serializable{
         return "ImStudentTimeSheet{" +
         "fid=" + fid +
         ", studentId=" + studentId +
-        ", attendanceType=" + attendanceType +
         ", morning=" + morning +
         ", afternoon=" + afternoon +
         ", evening=" + evening +
         ", date=" + date +
+        ", operatorUid=" + operatorUid +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         "}";

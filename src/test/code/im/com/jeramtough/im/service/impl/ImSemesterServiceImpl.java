@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-21
  */
 @Service
 public class ImSemesterServiceImpl extends ServiceImpl<ImSemesterMapper, ImSemester> implements ImSemesterService {

@@ -1,8 +1,6 @@
 package com.jeramtough.im.model.entity;
 
 import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @ApiModel(value="ImStudentScore对象", description="")
 public class ImStudentScore implements Serializable {
@@ -24,38 +22,17 @@ public class ImStudentScore implements Serializable {
   /**
    * 主键
    */
-    @TableId(value = "fid", type = IdType.AUTO)
     private Long fid;
 
   /**
-   * 英语成绩
+   * 课程id
    */
-    private BigDecimal scoresEnglish;
+    private Long courseId;
 
   /**
-   * 数学成绩
+   * 成绩
    */
-    private BigDecimal scoresMath;
-
-  /**
-   * 艺术成绩
-   */
-    private BigDecimal scoresArt;
-
-  /**
-   * 综合成绩
-   */
-    private BigDecimal scoresComprehensive;
-
-  /**
-   * 语文成绩
-   */
-    private BigDecimal scoresChinese;
-
-  /**
-   * 学期
-   */
-    private String semester;
+    private BigDecimal scores;
 
     private Long operatorUid;
 
@@ -77,52 +54,20 @@ public class ImStudentScore implements Serializable {
         this.fid = fid;
     }
 
-    public BigDecimal getScoresEnglish() {
-        return scoresEnglish;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setScoresEnglish(BigDecimal scoresEnglish) {
-        this.scoresEnglish = scoresEnglish;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public BigDecimal getScoresMath() {
-        return scoresMath;
+    public BigDecimal getScores() {
+        return scores;
     }
 
-    public void setScoresMath(BigDecimal scoresMath) {
-        this.scoresMath = scoresMath;
-    }
-
-    public BigDecimal getScoresArt() {
-        return scoresArt;
-    }
-
-    public void setScoresArt(BigDecimal scoresArt) {
-        this.scoresArt = scoresArt;
-    }
-
-    public BigDecimal getScoresComprehensive() {
-        return scoresComprehensive;
-    }
-
-    public void setScoresComprehensive(BigDecimal scoresComprehensive) {
-        this.scoresComprehensive = scoresComprehensive;
-    }
-
-    public BigDecimal getScoresChinese() {
-        return scoresChinese;
-    }
-
-    public void setScoresChinese(BigDecimal scoresChinese) {
-        this.scoresChinese = scoresChinese;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
+    public void setScores(BigDecimal scores) {
+        this.scores = scores;
     }
 
     public Long getOperatorUid() {
@@ -161,12 +106,8 @@ public class ImStudentScore implements Serializable {
     public String toString() {
         return "ImStudentScore{" +
         "fid=" + fid +
-        ", scoresEnglish=" + scoresEnglish +
-        ", scoresMath=" + scoresMath +
-        ", scoresArt=" + scoresArt +
-        ", scoresComprehensive=" + scoresComprehensive +
-        ", scoresChinese=" + scoresChinese +
-        ", semester=" + semester +
+        ", courseId=" + courseId +
+        ", scores=" + scores +
         ", operatorUid=" + operatorUid +
         ", studentId=" + studentId +
         ", createTime=" + createTime +

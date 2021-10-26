@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-21
  */
 @ApiModel(value="ImSemester对象", description="")
 public class ImSemester implements Serializable {
@@ -22,9 +22,6 @@ public class ImSemester implements Serializable {
     @TableId(value = "fid", type = IdType.AUTO)
     private Long fid;
 
-  /**
-   * 学期名
-   */
     private String name;
 
 

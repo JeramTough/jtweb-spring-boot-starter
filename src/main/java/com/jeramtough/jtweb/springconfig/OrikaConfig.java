@@ -2,7 +2,9 @@ package com.jeramtough.jtweb.springconfig;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.OrikaSystemProperties;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
+import ma.glasnost.orika.impl.generator.JavassistCompilerStrategy;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +21,15 @@ public class OrikaConfig {
     @Bean
     @ConditionalOnMissingBean(MapperFacade.class)
     public MapperFacade injectMapperFacade() {
-        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-        MapperFacade mapperFacade = mapperFactory.getMapperFacade();
+        System.setProperty(OrikaSystemProperties.COMPILER_STRATEGY,
+                JavassistCompilerStrategy.class.getName());
+
+        System.setProperty(OrikaSystemProperties.WRITE_SOURCE_FILES, "true");
+        System.setProperty(OrikaSystemProperties.WRITE_CLASS_FILES, "true");
+
+        MapperFactory factory = new DefaultMapperFactory.Builder().build();
+        MapperFacade mapperFacade = factory.getMapperFacade();
+
         return mapperFacade;
     }
 }

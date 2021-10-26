@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * VIEW 服务实现类
+ * View 'im_db.tem_view_2' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them 服务实现类
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @Service
 public class TemView2ServiceImpl extends ServiceImpl<TemView2Mapper, TemView2> implements TemView2Service {

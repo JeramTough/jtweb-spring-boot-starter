@@ -28,7 +28,7 @@ public class SourceSurfaceImage implements Serializable {
     private String surfaceImage;
 
   /**
-   * 0:base64 || 1:url
+   * 0:base64 || 1:getUrl
    */
     private Integer type;
 

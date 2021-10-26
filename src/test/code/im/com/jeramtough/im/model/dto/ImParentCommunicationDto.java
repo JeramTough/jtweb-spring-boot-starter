@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @ApiModel(value="ImParentCommunication对象", description="")
 public class ImParentCommunicationDto implements Serializable{
@@ -32,6 +32,12 @@ public class ImParentCommunicationDto implements Serializable{
 
     @ApiModelProperty(value = "沟通时间")
     private LocalDateTime time;
+
+    @ApiModelProperty(value = "家长支持度")
+    private String approvalState;
+
+    @ApiModelProperty(value = "家境情况")
+    private String familyState;
 
     private Long operatorUid;
 
@@ -72,6 +78,22 @@ public class ImParentCommunicationDto implements Serializable{
         this.time = time;
     }
 
+    public String getApprovalState() {
+        return approvalState;
+    }
+
+    public void setApprovalState(String approvalState) {
+        this.approvalState = approvalState;
+    }
+
+    public String getFamilyState() {
+        return familyState;
+    }
+
+    public void setFamilyState(String familyState) {
+        this.familyState = familyState;
+    }
+
     public Long getOperatorUid() {
         return operatorUid;
     }
@@ -103,6 +125,8 @@ public class ImParentCommunicationDto implements Serializable{
         ", parentId=" + parentId +
         ", content=" + content +
         ", time=" + time +
+        ", approvalState=" + approvalState +
+        ", familyState=" + familyState +
         ", operatorUid=" + operatorUid +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +

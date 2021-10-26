@@ -38,7 +38,7 @@ public class AlarmContacts implements Serializable {
     private String extParams;
 
   /**
-   * 通知类型 1,钉钉群 2，短信 3，邮箱 4, url
+   * 通知类型 1,钉钉群 2，短信 3，邮箱 4, getUrl
    */
     private Integer type;
 

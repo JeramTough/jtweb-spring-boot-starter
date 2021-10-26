@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 public interface ImParentCommunicationService extends IService<ImParentCommunication> {
 

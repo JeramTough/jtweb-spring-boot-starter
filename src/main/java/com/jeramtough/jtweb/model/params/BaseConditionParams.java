@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * <pre>
@@ -25,13 +26,23 @@ public class BaseConditionParams {
 
     @JSONField(format = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(value = "时间环查询的开始时间", example = "1996-02-23", required = false)
+    @ApiModelProperty(value = "时间环查询的开始日期", example = "1996-02-23", required = false)
     private LocalDate startDate;
 
     @JSONField(format = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(value = "时间环查询的结束时间", example = "2021-02-23", required = false)
+    @ApiModelProperty(value = "时间环查询的结束日期", example = "2021-02-23", required = false)
     private LocalDate endDate;
+
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "时间环查询的开始时间", example = "1996-02-23 00:00:00", required = false)
+    private LocalDateTime startTime;
+
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "时间环查询的结束时间", example = "2021-02-23 23:59:59", required = false)
+    private LocalDateTime endTime;
 
     @ApiModelProperty(value = "根据什么字段排序,可以用逗号排序多个", example = "fid,id", required = false)
     private String orderBy;
@@ -87,5 +98,21 @@ public class BaseConditionParams {
 
     public void setAsc(Boolean asc) {
         isAsc = asc;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

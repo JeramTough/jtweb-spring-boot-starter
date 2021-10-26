@@ -31,7 +31,7 @@ public class AlarmContactsDto implements Serializable{
     @ApiModelProperty(value = "扩展参数，根据需要存放扩展参数，如钉钉的access_token ")
     private String extParams;
 
-    @ApiModelProperty(value = "通知类型 1,钉钉群 2，短信 3，邮箱 4, url")
+    @ApiModelProperty(value = "通知类型 1,钉钉群 2，短信 3，邮箱 4, getUrl")
     private Integer type;
 
 

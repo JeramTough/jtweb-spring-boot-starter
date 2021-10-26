@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @Service
 public class ImStudentScoreServiceImpl extends ServiceImpl<ImStudentScoreMapper, ImStudentScore> implements ImStudentScoreService {

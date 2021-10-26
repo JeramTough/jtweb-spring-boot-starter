@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @ApiModel(value="ImStudentTimeSheet对象", description="")
 public class ImStudentTimeSheetDto implements Serializable{

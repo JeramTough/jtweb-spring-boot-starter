@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @ApiModel(value="ImStudentActivity对象", description="")
 public class ImStudentActivityDto implements Serializable{

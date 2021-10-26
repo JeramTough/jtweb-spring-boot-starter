@@ -12,7 +12,7 @@ import io.swagger.annotations.Api;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @Api(tags = {"SmPushMessageController"})
 @RestController

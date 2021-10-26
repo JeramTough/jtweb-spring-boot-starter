@@ -8,6 +8,7 @@ import com.jeramtough.jtcomponent.utils.StringUtil;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseBeanException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.component.business.ToEntityProcess;
+import com.jeramtough.jtweb.component.business.ToEntityWithBundleProcess;
 import com.jeramtough.jtweb.component.validation.BeanValidator;
 import com.jeramtough.jtweb.model.QueryPage;
 import com.jeramtough.jtweb.model.dto.PageDto;
@@ -16,6 +17,7 @@ import com.jeramtough.jtweb.model.error.ErrorU;
 import com.jeramtough.jtweb.model.params.BaseConditionParams;
 import com.jeramtough.jtweb.model.params.QueryByPageParams;
 import com.jeramtough.jtweb.service.JtBaseService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
@@ -24,10 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -98,11 +97,12 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     @Override
     public String addOrUpdateBatchByParamsList(List<?> paramsList,
                                                ToEntityProcess<T> toEntityProcess) {
-        List<T> entityList = paramsList
-                .parallelStream()
-                .peek(BeanValidator::verifyParams)
-                .map(params -> getMapperFacade().map(params, getEntityClass()))
-                .collect(Collectors.toList());
+        List<T> entityList = new ArrayList<>();
+        for (Object params : paramsList) {
+            BeanValidator.verifyParams(params);
+            T t = getMapperFacade().map(params, getEntityClass());
+            entityList.add(t);
+        }
 
         entityList
                 .parallelStream()
@@ -117,6 +117,47 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
 
                     if (toEntityProcess != null) {
                         toEntityProcess.toEntity(entity);
+                    }
+                });
+
+        boolean isSuccessful = saveOrUpdateBatch(entityList);
+        if (!isSuccessful) {
+            throw new ApiResponseException(ErrorS.CODE_2.C, "更新");
+        }
+        return "新增/更新成功！";
+    }
+
+    @Override
+    public String addOrUpdateBatchByParamsList(List<?> paramsList,
+                                               Map<String, Object> bundle,
+                                               ToEntityWithBundleProcess<T> toEntityProcess) {
+
+        if (bundle == null) {
+            bundle = new HashMap<>(0);
+        }
+
+        List<T> entityList = new ArrayList<>();
+        for (Object params : paramsList) {
+            BeanValidator.verifyParams(params);
+            T t = getMapperFacade().map(params, getEntityClass());
+            entityList.add(t);
+        }
+
+        Map<String, Object> finalBundle = bundle;
+
+        entityList
+                .parallelStream()
+                .forEach(entity -> {
+                    Long fid = getPrimaryKeyValue(entity);
+                    if (fid == null) {
+                        setCreateTime(entity);
+                    }
+                    else {
+                        setUpdateTime(entity);
+                    }
+
+                    if (toEntityProcess != null) {
+                        toEntityProcess.toEntity(entity, finalBundle);
                     }
                 });
 
@@ -195,9 +236,25 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
 
 
         if (params.getStartDate() != null && params.getEndDate() != null) {
+            String column = "create_time";
+            if (StringUtils.hasText(params.getOrderBy())) {
+                column = params.getOrderBy();
+            }
+            String finalColumn = column;
             queryWrapper.and(wrapper ->
-                    wrapper.between("create_time", params.getStartDate(),
+                    wrapper.between(finalColumn, params.getStartDate(),
                             params.getEndDate()));
+        }
+
+        if (params.getStartTime() != null && params.getEndTime() != null) {
+            String column = "create_time";
+            if (StringUtils.hasText(params.getOrderBy())) {
+                column = params.getOrderBy();
+            }
+            String finalColumn = column;
+            queryWrapper.and(wrapper ->
+                    wrapper.between(finalColumn, params.getStartTime(),
+                            params.getEndTime()));
         }
 
         QueryPage<T> queryPage =
@@ -316,9 +373,9 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         return t;
     }
 
-    //***********************************
+    //////////////////////////////////////////////////
 
-    private Long getPrimaryKeyValue(Object params) {
+    protected Long getPrimaryKeyValue(Object params) {
         boolean has = false;
         Long fid = null;
         for (String name : PRIMARY_KEY_NAME) {
@@ -343,13 +400,13 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
 
     }
 
-    private void setCreateTime(T entity) {
+    protected void setCreateTime(T entity) {
         for (String name : CREATE_TIME_NAME) {
             ObjectsUtil.setTime(entity, name);
         }
     }
 
-    private void setUpdateTime(T entity) {
+    protected void setUpdateTime(T entity) {
         for (String name : UPDATE_TIME_NAME) {
             ObjectsUtil.setTime(entity, name);
         }

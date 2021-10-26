@@ -1,7 +1,6 @@
 package com.jeramtough.im.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -14,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @ApiModel(value="ImStudent对象", description="")
 public class ImStudent implements Serializable {
@@ -53,14 +52,9 @@ public class ImStudent implements Serializable {
     private String school;
 
   /**
-   * 入学日期
+   * 入学年份
    */
-    private LocalDate startDate;
-
-  /**
-   * 学号
-   */
-    private String number;
+    private Integer startDateNumber;
 
   /**
    * 身份证号
@@ -121,6 +115,11 @@ public class ImStudent implements Serializable {
    * 性格分析
    */
     private String characterAnalysis;
+
+  /**
+   * 是否退学
+   */
+    private String isQuitSchool;
 
   /**
    * 省级编码
@@ -196,20 +195,12 @@ public class ImStudent implements Serializable {
         this.school = school;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Integer getStartDateNumber() {
+        return startDateNumber;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+    public void setStartDateNumber(Integer startDateNumber) {
+        this.startDateNumber = startDateNumber;
     }
 
     public String getIdentityNumber() {
@@ -308,6 +299,14 @@ public class ImStudent implements Serializable {
         this.characterAnalysis = characterAnalysis;
     }
 
+    public String getIsQuitSchool() {
+        return isQuitSchool;
+    }
+
+    public void setIsQuitSchool(String isQuitSchool) {
+        this.isQuitSchool = isQuitSchool;
+    }
+
     public String getRegionCode1() {
         return regionCode1;
     }
@@ -357,8 +356,7 @@ public class ImStudent implements Serializable {
         ", gender=" + gender +
         ", classNumber=" + classNumber +
         ", school=" + school +
-        ", startDate=" + startDate +
-        ", number=" + number +
+        ", startDateNumber=" + startDateNumber +
         ", identityNumber=" + identityNumber +
         ", homeAddress=" + homeAddress +
         ", dormitoryNumber=" + dormitoryNumber +
@@ -371,6 +369,7 @@ public class ImStudent implements Serializable {
         ", paymentStatus=" + paymentStatus +
         ", headimagePath=" + headimagePath +
         ", characterAnalysis=" + characterAnalysis +
+        ", isQuitSchool=" + isQuitSchool +
         ", regionCode1=" + regionCode1 +
         ", regionCode2=" + regionCode2 +
         ", regionCode3=" + regionCode3 +

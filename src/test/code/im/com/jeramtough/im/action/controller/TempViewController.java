@@ -8,11 +8,11 @@ import io.swagger.annotations.Api;
 
 /**
  * <p>
- * VIEW 前端控制器
+ * View 'im_db.temp_view' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them 前端控制器
  * </p>
  *
  * @author WeiBoWen
- * @since 2021-10-02
+ * @since 2021-10-22
  */
 @Api(tags = {"TempViewController"})
 @RestController

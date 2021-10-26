@@ -25,7 +25,7 @@ public class SourceSurfaceImageDto implements Serializable{
     @ApiModelProperty(value = "可以是url或者base64格式图片")
     private String surfaceImage;
 
-    @ApiModelProperty(value = "0:base64 || 1:url")
+    @ApiModelProperty(value = "0:base64 || 1:getUrl")
     private Integer type;
 
 

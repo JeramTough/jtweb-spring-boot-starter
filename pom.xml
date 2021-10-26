@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.3.7.64-RELEASE</version>
+    <version>2.3.7.72-RELEASE</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-RELEASE</version>-->
@@ -28,8 +28,12 @@
         <SPRING_BOOT_STARTER_VERSION>2.3.7.RELEASE</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
         <FASTJSON_VERSION>1.2.70</FASTJSON_VERSION>
+
         <!--Bean映射-orika版本-->
         <ORIKA_VERSION>1.5.4</ORIKA_VERSION>
+        <!--<JAVASSIST.VERSION>3.28.0-GA</JAVASSIST.VERSION>
+        <PARANAMER.VERSION>2.8</PARANAMER.VERSION>-->
+
         <!--Bean校验框架-->
         <HIBERNATE_VALIDATOR_VERSION>6.1.0.Final</HIBERNATE_VALIDATOR_VERSION>
 
@@ -41,7 +45,7 @@
 
         <!--jtcomponent-->
         <!-- <JTCOMPONENT_VERSION>1.5.3-RELEASE</JTCOMPONENT_VERSION>-->
-        <JTCOMPONENT_VERSION>1.5.7-RELEASE</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.5.8-RELEASE</JTCOMPONENT_VERSION>
 
         <!--knife4j-spring-boot-starter-->
         <KNIE4J_BOOT_STARTER_VERSION>3.0.3</KNIE4J_BOOT_STARTER_VERSION>
@@ -49,11 +53,12 @@
         <!--commons-lang3-->
         <COMMONS_LANG3_VERSION>3.9</COMMONS_LANG3_VERSION>
 
-        <!--druid版本-->
-        <DRUID_BOOT_STARTER_VERSION>1.2.6</DRUID_BOOT_STARTER_VERSION>
-
         <!--JDBC-->
         <MYSQL_JDBC_VERSION>5.1.48</MYSQL_JDBC_VERSION>
+        <!--druid版本-->
+        <DRUID_BOOT_STARTER_VERSION>1.2.8</DRUID_BOOT_STARTER_VERSION>
+        <!--数据库连接池hikaricp-->
+        <HIKARICP_VERSION>5.0.0</HIKARICP_VERSION>
 
         <!--mybatis-plus-boot-starter-->
         <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.2</MYBATIS_PLUS_BOOT_STARTER_VERSION>
@@ -69,8 +74,6 @@
 
         <!--event-bus-->
         <EVENT_BUS_VERSION>3.1.1</EVENT_BUS_VERSION>
-
-        <HIKARICP_VERSION>5.0.0</HIKARICP_VERSION>
 
         <!--图片编辑压缩thumbnailator-->
         <HUMBNAILATOR_VERSION>0.4.8</HUMBNAILATOR_VERSION>
@@ -189,26 +192,25 @@
             <version>${SPRING_BOOT_STARTER_VERSION}</version>
         </dependency>
 
-
-        <!--ali-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${DRUID_BOOT_STARTER_VERSION}</version>
-        </dependency>
-
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${HIKARICP_VERSION}</version>
         </dependency>
 
-
+        <!--ali-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${FASTJSON_VERSION}</version>
         </dependency>
+        <!--DRUID不兼容jdk11以上版本，先不用-->
+        <!--<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${DRUID_BOOT_STARTER_VERSION}</version>
+        </dependency>-->
+
 
         <!--jeramtough-->
         <dependency>
@@ -261,6 +263,16 @@
             <artifactId>orika-core</artifactId>
             <version>${ORIKA_VERSION}</version>
         </dependency>
+        <!--<dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>${JAVASSIST.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.paranamer</groupId>
+            <artifactId>paranamer</artifactId>
+            <version>${PARANAMER.VERSION}</version>
+        </dependency>-->
 
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -384,12 +396,12 @@
         <repository>
             <id>nexus-ssd</id>
             <name>Nexus ssd</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+            <getUrl>http://maven.ssd.vi:3333/repository/nexus-ssd/</getUrl>
         </repository>
         <snapshotRepository>
             <id>nexus-ssd-snapshots</id>
             <name>Nexus ssd snapshot</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
+            <getUrl>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</getUrl>
         </snapshotRepository>
     </distributionManagement>-->
 

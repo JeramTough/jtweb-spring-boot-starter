@@ -54,7 +54,7 @@
         <COMMONS_LANG3_VERSION>3.9</COMMONS_LANG3_VERSION>
 
         <!--JDBC-->
-        <MYSQL_JDBC_VERSION>5.1.48</MYSQL_JDBC_VERSION>
+        <MYSQL_JDBC_VERSION>8.0.16</MYSQL_JDBC_VERSION>
         <!--druid版本-->
         <DRUID_BOOT_STARTER_VERSION>1.2.8</DRUID_BOOT_STARTER_VERSION>
         <!--数据库连接池hikaricp-->

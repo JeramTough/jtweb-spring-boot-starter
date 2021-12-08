@@ -1,6 +1,7 @@
 package com.jeramtough.jtweb.component.filesaver.base;
 
 import com.jeramtough.jtweb.component.filesaver.config.FileSaveConfigAdapter;
+import com.jeramtough.jtweb.component.filesaver.exception.DeleteFileException;
 import com.jeramtough.jtweb.component.filesaver.exception.IllegalFileTypeException;
 import com.jeramtough.jtweb.component.filesaver.exception.MaxSizeLimitException;
 import com.jeramtough.jtweb.component.filesaver.exception.SaveFileException;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class BaseFileSaver<T> implements FileSaver<T> {
 
+
     private final FileSaveConfigAdapter fileSaveConfigAdapter;
     private final ScheduledExecutorService scheduledExecutorService;
 
@@ -29,6 +31,7 @@ public abstract class BaseFileSaver<T> implements FileSaver<T> {
 
         scheduledExecutorService = new ScheduledThreadPoolExecutor(10);
     }
+
 
     @Override
     public File save(T t, long delay, TimeUnit unit) throws IOException, SaveFileException,
@@ -57,11 +60,39 @@ public abstract class BaseFileSaver<T> implements FileSaver<T> {
 
     @Override
     public File read(String relativePath) throws NoSuchFileException {
-        String path = fileSaveConfigAdapter.getPath() + File.separator + relativePath;
+
+        String path =
+                fileSaveConfigAdapter.getPath() + File.separator + getFileSystemRelativePath(
+                        relativePath);
         File file = new File(path);
         if (!file.exists()) {
             throw new NoSuchFileException(path);
         }
         return file;
     }
+
+    @Override
+    public void delete(String relativePath) throws NoSuchFileException {
+        File file = read(relativePath);
+        boolean isOk = file.delete();
+        if (!isOk) {
+            getLogger().error("删除本地文件失败！[%s]", file.getAbsolutePath());
+            throw new DeleteFileException(relativePath);
+        }
+        else {
+            getLogger().debug("删除本地文件成功！[%s]", file.getAbsolutePath());
+        }
+    }
+
+    public ScheduledExecutorService getScheduledExecutorService() {
+        return scheduledExecutorService;
+    }
+
+    //********************
+
+    private String getFileSystemRelativePath(String relativePath) {
+        return relativePath.replace("/", File.separator);
+    }
+
+
 }

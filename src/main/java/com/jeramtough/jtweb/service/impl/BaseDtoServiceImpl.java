@@ -4,16 +4,15 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.jeramtough.jtcomponent.utils.StringUtil;
+import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.component.business.ToDtoProcess;
 import com.jeramtough.jtweb.component.validation.BeanValidator;
-import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.model.QueryPage;
 import com.jeramtough.jtweb.model.dto.PageDto;
 import com.jeramtough.jtweb.model.params.QueryByPageParams;
 import com.jeramtough.jtweb.service.BaseDtoService;
-import ma.glasnost.orika.MapperFacade;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
@@ -29,7 +28,6 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
         extends ServiceImpl<M, T> implements BaseDtoService<T, D> {
 
     private WebApplicationContext wc;
-    private MapperFacade mapperFacade;
 
     /**
      * Dto的class
@@ -42,34 +40,52 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     protected D toDto(T t) {
-        D d = getMapperFacade().map(t, dClass);
-        return d;
+        try {
+            D d = dClass.newInstance();
+            BeanUtils.copyProperties(t, d);
+            return d;
+        }
+        catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        throw new IllegalStateException("bean映射失败！");
+
+
     }
 
-    /**
-     * 抛弃不再使用
-     */
-    @Deprecated
-    protected D toDto1(T t, Class<D> dClass) {
-        D d = getMapperFacade().map(t, dClass);
-        return d;
+
+    protected T toEntity(Object params, Class<?> tClass) {
+        try {
+            T t = (T) tClass.newInstance();
+            BeanUtils.copyProperties(params, t);
+            return t;
+        }
+        catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalStateException("bean映射失败");
+    }
+
+
+    protected <S> S mapBean(Object o,Class<S> sClass){
+        try {
+            S s = (S) sClass.newInstance();
+            BeanUtils.copyProperties(o, s);
+            return s;
+        }
+        catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalStateException("bean映射失败");
     }
 
     public WebApplicationContext getWC() {
         return wc;
     }
-
-    public MapperFacade getMapperFacade() {
-        if (mapperFacade == null) {
-            synchronized (this) {
-                if (mapperFacade == null) {
-                    mapperFacade = getWC().getBean(MapperFacade.class);
-                }
-            }
-        }
-        return mapperFacade;
-    }
-
 
     @Override
     public boolean save(T entity) {
@@ -199,7 +215,7 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     private List<D> gettDtoListByProcess(List<T> list, ToDtoProcess<T, D> toDtoProcess) {
         List<D> dtoList = new ArrayList<>(list.size());
         for (T t : list) {
-            dtoList.add(toDtoProcess.toDto(t, getMapperFacade()));
+            dtoList.add(toDtoProcess.toDto(t));
         }
         return dtoList;
     }

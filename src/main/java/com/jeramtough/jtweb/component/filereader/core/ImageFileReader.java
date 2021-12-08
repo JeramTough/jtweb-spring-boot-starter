@@ -2,8 +2,8 @@ package com.jeramtough.jtweb.component.filereader.core;
 
 import com.jeramtough.jtweb.component.filereader.config.FileReaderConfigAdapter;
 import com.jeramtough.jtweb.component.filereader.filter.FileFilter;
-import com.jeramtough.jtweb.component.filereader.image.DefaultImageManager;
-import com.jeramtough.jtweb.component.filereader.image.ImageManager;
+import com.jeramtough.jtweb.component.filereader.image.DefaultImageReader;
+import com.jeramtough.jtweb.component.filereader.image.ImageReader;
 
 import java.io.File;
 import java.nio.file.NoSuchFileException;
@@ -28,13 +28,13 @@ public class ImageFileReader extends BaseFileReader implements FileReader {
 
     public File readImage(String relativePath, int imageQuality) throws NoSuchFileException {
         File file = super.read(relativePath);
-        ImageManager imageManager = new DefaultImageManager();
-        return imageManager.get(file, imageQuality);
+        ImageReader imageReader = new DefaultImageReader();
+        return imageReader.get(file, imageQuality);
     }
 
     public File readImage(FileFilter fileFilter, int imageQuality) throws NoSuchFileException {
         File file = super.readOne(fileFilter);
-        ImageManager imageManager = new DefaultImageManager();
-        return imageManager.get(file, imageQuality);
+        ImageReader imageReader = new DefaultImageReader();
+        return imageReader.get(file, imageQuality);
     }
 }

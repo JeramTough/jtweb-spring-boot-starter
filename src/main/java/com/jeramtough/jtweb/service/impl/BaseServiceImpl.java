@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.service.impl;
 
-import ma.glasnost.orika.MapperFacade;
+//import ma.glasnost.orika.MapperFacade;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class BaseServiceImpl {
 
     private WebApplicationContext wc;
-    private MapperFacade mapperFacade;
+//    private MapperFacade mapperFacade;
 
     public BaseServiceImpl(WebApplicationContext wc) {
         this.wc = wc;
@@ -22,7 +22,7 @@ public class BaseServiceImpl {
         return wc;
     }
 
-    public MapperFacade getMapperFacade() {
+   /* public MapperFacade getMapperFacade() {
         if (mapperFacade == null) {
             synchronized (this) {
                 if (mapperFacade == null) {
@@ -31,6 +31,7 @@ public class BaseServiceImpl {
             }
         }
         return mapperFacade;
-    }
+    }*/
+
 
 }

@@ -1,24 +1,30 @@
 package com.jeramtough.jtweb.component.filesaver.upload;
 
-import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.hutool.core.util.RandomUtil;
 import com.jeramtough.jtcomponent.io.Directory;
 import com.jeramtough.jtcomponent.utils.StringUtil;
 import com.jeramtough.jtweb.component.filesaver.base.BaseFileSaver;
-import com.jeramtough.jtweb.component.filesaver.config.upload.UploadFileSaveConfigAdaper;
+import com.jeramtough.jtweb.component.filesaver.config.upload.UploadFileSaveConfigAdapter;
+import com.jeramtough.jtweb.component.filesaver.directory.TimeFormatDirectory;
 import com.jeramtough.jtweb.component.filesaver.exception.IllegalFileTypeException;
 import com.jeramtough.jtweb.component.filesaver.exception.MaxSizeLimitException;
+import com.jeramtough.jtweb.component.filesaver.exception.ReNameFileException;
 import com.jeramtough.jtweb.component.filesaver.exception.SaveFileException;
+import com.jeramtough.jtweb.component.filesaver.upload.cleartask.DefaultRemoveUndeterminedTask;
+import com.jeramtough.jtweb.component.filesaver.upload.cleartask.RemoveUndeterminedTask;
+import com.jeramtough.jtweb.component.filesaver.upload.named.ImageUploadFileNamed;
+import com.jeramtough.jtweb.component.filesaver.upload.named.UploadFileNamed;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.nio.file.NoSuchFileException;
 import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
+ * 上传文件保存器，比起基础文件保存器，多了定时清理功能
+ *
  * <pre>
  * Created on 2021/9/15 上午10:00
  * by @author WeiBoWen
@@ -27,16 +33,48 @@ import java.util.stream.Collectors;
 public abstract class BaseUploadFileSaver extends BaseFileSaver<MultipartFile>
         implements UploadFileSaver {
 
-    private final static Pattern VAR_PATTERN = Pattern.compile("\\$\\{[\\S]+}");
+    /**
+     * 延时一分钟后执行清除图片任务
+     */
+    public static final long REMOVE_UNDETERMINED_TASK_INITIAL_DELAY = 60L;
 
-    private final UploadFileSaveConfigAdaper fileSaveConfigAdapter;
+    private final UploadFileSaveConfigAdapter fileSaveConfigAdapter;
+    private final UploadFileNamed uploadFileNamed;
 
 
     public BaseUploadFileSaver(
-            UploadFileSaveConfigAdaper fileSaveConfigAdapter) {
+            UploadFileSaveConfigAdapter fileSaveConfigAdapter) {
         super(fileSaveConfigAdapter);
         this.fileSaveConfigAdapter = fileSaveConfigAdapter;
+
+        uploadFileNamed = new ImageUploadFileNamed(fileSaveConfigAdapter);
+
+        init();
     }
+
+
+    protected void init() {
+
+        //初始化定时删除未确定图片任务，如果配置开启才开启
+        if (fileSaveConfigAdapter.allowRemoveUndeterminedOnScheme() != null && fileSaveConfigAdapter.allowRemoveUndeterminedOnScheme()) {
+            try {
+                RemoveUndeterminedTask removeUndeterminedTask =
+                        new DefaultRemoveUndeterminedTask(getSaveDir(), getUploadFileNamed(),
+                                fileSaveConfigAdapter.getRemoveUndeterminedPeriod());
+
+                getScheduledExecutorService().scheduleAtFixedRate(removeUndeterminedTask,
+                        REMOVE_UNDETERMINED_TASK_INITIAL_DELAY,
+                        fileSaveConfigAdapter.getRemoveUndeterminedPeriod(),
+                        TimeUnit.SECONDS);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
 
     @Override
     public File save(MultipartFile file) throws IOException, MaxSizeLimitException,
@@ -69,6 +107,24 @@ public abstract class BaseUploadFileSaver extends BaseFileSaver<MultipartFile>
         return productFile;
     }
 
+    @Override
+    public File determined(String relativePath) throws NoSuchFileException {
+        File file = read(relativePath);
+        String str =
+                getUploadFileNamed().getBoundSymbol() + getUploadFileNamed().getUndeterminedSuffix();
+        String oldName = file.getName();
+        String newName = oldName.replace(str, "");
+        File newFile = new File(
+                file.getParentFile().getAbsolutePath() + File.separator + newName);
+        boolean isOk = file.renameTo(newFile);
+
+        if (!isOk) {
+            throw new ReNameFileException(file.getAbsolutePath());
+        }
+
+        return newFile;
+    }
+
     public abstract void checkFile(MultipartFile file);
 
     public abstract File saveFile(MultipartFile file) throws IOException;
@@ -86,32 +142,25 @@ public abstract class BaseUploadFileSaver extends BaseFileSaver<MultipartFile>
         return tempDir;
     }
 
+    public UploadFileSaveConfigAdapter getFileSaveConfig() {
+        return fileSaveConfigAdapter;
+    }
+
+    /**
+     * 上传图片的文件夹是写死的，年月日划分
+     */
     public Directory getSaveDir() throws IOException {
-        LocalDateTime nowTime = LocalDateTime.now();
-        String year = LocalDateTimeUtil.format(nowTime, "yyyy");
-        String month = LocalDateTimeUtil.format(nowTime, "MM");
-        String day = LocalDateTimeUtil.format(nowTime, "dd");
-
-        String path = fileSaveConfigAdapter.getPath() + File.separator + year
-                + File.separator + month + File.separator + day + File.separator;
-        File dir = new File(path);
-        if (!dir.exists()) {
-            boolean isOk = dir.mkdirs();
-            if (!isOk) {
-                throw new IOException("创建文件夹失败:" + dir.getAbsolutePath());
-            }
-        }
-
-        Directory saveDir = new Directory(path);
-        return saveDir;
+        TimeFormatDirectory timeFormatDirectory =
+                new TimeFormatDirectory(fileSaveConfigAdapter.getPath());
+        return timeFormatDirectory.get();
     }
 
-    public String getRandomFilePrefix() {
-        LocalDateTime time = LocalDateTime.now();
-        String name =
-                LocalDateTimeUtil.format(time,
-                        "yyyyMMddHHmmss") + "_" + RandomUtil.randomString(3);
-        return name;
+    /**
+     * 文件名命名器
+     */
+    public UploadFileNamed getUploadFileNamed() {
+        return uploadFileNamed;
     }
+
 
 }

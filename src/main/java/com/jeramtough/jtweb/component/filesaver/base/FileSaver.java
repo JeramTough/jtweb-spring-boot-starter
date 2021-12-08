@@ -28,4 +28,6 @@ public interface FileSaver<T> extends WithLogger {
     String getRelativePath(File productFile);
 
     File read(String relativePath) throws NoSuchFileException;
+
+    void delete(String relativePath) throws NoSuchFileException;
 }

@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.3.7.72-RELEASE</version>
+    <version>2.5.3.81-RELEASE</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-RELEASE</version>-->
@@ -25,7 +25,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--SpringBoot版本-->
-        <SPRING_BOOT_STARTER_VERSION>2.3.7.RELEASE</SPRING_BOOT_STARTER_VERSION>
+        <SPRING_BOOT_STARTER_VERSION>2.5.3</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
         <FASTJSON_VERSION>1.2.70</FASTJSON_VERSION>
 
@@ -120,7 +120,13 @@
             <version>1.0</version>
             <scope>test</scope>
         </dependency>
-
+        <!--Oracle-->
+        <dependency>
+            <groupId>cn.easyproject</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>12.1.0.2.0</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <dependency>
@@ -205,11 +211,11 @@
             <version>${FASTJSON_VERSION}</version>
         </dependency>
         <!--DRUID不兼容jdk11以上版本，先不用-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>${DRUID_BOOT_STARTER_VERSION}</version>
-        </dependency>-->
+        </dependency>
 
 
         <!--jeramtough-->
@@ -258,11 +264,11 @@
             <version>${COMMONS_LANG3_VERSION}</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>ma.glasnost.orika</groupId>
             <artifactId>orika-core</artifactId>
             <version>${ORIKA_VERSION}</version>
-        </dependency>
+        </dependency>-->
         <!--<dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
@@ -396,12 +402,12 @@
         <repository>
             <id>nexus-ssd</id>
             <name>Nexus ssd</name>
-            <getUrl>http://maven.ssd.vi:3333/repository/nexus-ssd/</getUrl>
+            <url>http://192.168.0.213:3333/repository/nexus-ssd/</url>
         </repository>
         <snapshotRepository>
             <id>nexus-ssd-snapshots</id>
             <name>Nexus ssd snapshot</name>
-            <getUrl>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</getUrl>
+            <url>http://192.168.0.213:3333/repository/nexus-ssd-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>-->
 

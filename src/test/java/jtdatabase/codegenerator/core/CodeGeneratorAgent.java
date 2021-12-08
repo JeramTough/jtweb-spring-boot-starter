@@ -94,6 +94,7 @@ public class CodeGeneratorAgent {
         TemplateConfig templateConfig = new TemplateConfig()
                 .setEntity("/templates/entity1.java");
         templateConfig.setController("/templates/controller.java");
+        templateConfig.setEntity("/templates/entity1.java");
 
         //配置自定义模板
         codeAutoGenerator.setTemplate(templateConfig);

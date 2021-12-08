@@ -24,6 +24,8 @@ public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
 
     String addByParams(Object params);
 
+    T addByParamsAndReturnEntity(Object params);
+
     String updateByParams(Object params);
 
     String addOrUpdateBatchByParamsList(List<?> paramsList);
@@ -41,9 +43,12 @@ public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
 
     String removeOneById(Long fid);
 
+    D oneByCondition(BaseConditionParams params,boolean enableReturnNull);
+
+    List<D> listByCondition(BaseConditionParams params);
+
     PageDto<D> pageByCondition(QueryByPageParams queryByPageParams,
                                BaseConditionParams params);
-
 
     @Override
     T getOne(Wrapper<T> queryWrapper);

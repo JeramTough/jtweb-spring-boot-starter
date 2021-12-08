@@ -18,4 +18,9 @@ import java.nio.file.NoSuchFileException;
  */
 public interface UploadFileSaver extends FileSaver<MultipartFile> {
 
+    /**
+     * 确定图片
+     */
+    File determined(String relativePath) throws NoSuchFileException;
+
 }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * by @author WeiBoWen
  * </pre>
  */
-public class DefaultImageManager implements ImageManager, WithLogger {
+public class DefaultImageReader implements ImageReader, WithLogger {
 
 
     @Override

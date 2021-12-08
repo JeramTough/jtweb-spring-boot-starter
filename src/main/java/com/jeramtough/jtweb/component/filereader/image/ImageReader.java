@@ -8,7 +8,7 @@ import java.io.File;
  * by @author WeiBoWen
  * </pre>
  */
-public interface ImageManager {
+public interface ImageReader {
 
     File get(File imageFile,int imageQuality);
 

@@ -22,12 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -41,7 +36,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     /**
      * 数据库主键名
      */
-    private static final String[] PRIMARY_KEY_NAME = new String[]{"fid", "id"};
+    private static final String[] DEFAULT_PRIMARY_KEY_NAME = new String[]{"fid", "id"};
 
     private static final String[] CREATE_TIME_NAME = new String[]{"createTime"};
     private static final String[] UPDATE_TIME_NAME = new String[]{"updateTime"};
@@ -55,7 +50,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     public String addByParams(Object params) {
         BeanValidator.verifyParams(params);
 
-        T entity = getMapperFacade().map(params, getEntityClass());
+        T entity = toEntity(params, getEntityClass());
 
         setCreateTime(entity);
 
@@ -67,27 +62,44 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     @Override
+    public T addByParamsAndReturnEntity(Object params) {
+        BeanValidator.verifyParams(params);
+
+        T entity = toEntity(params, getEntityClass());
+
+        setCreateTime(entity);
+
+        boolean isSuccessful = this.save(entity);
+        if (!isSuccessful) {
+            throw new ApiResponseException(ErrorS.CODE_2.C, "插入");
+        }
+        return entity;
+    }
+
+    @Override
     public String updateByParams(Object params) {
         BeanValidator.verifyParams(params);
 
-        Long fid = getPrimaryKeyValue(params);
+        Serializable fid = getPrimaryKeyValue(params);
         T entityFromDb = getBaseMapper().selectById(fid);
         if (entityFromDb == null) {
-            throw new ApiResponseException(ErrorU.CODE_9.C, "主键" + PRIMARY_KEY_NAME);
+            throw new ApiResponseException(ErrorU.CODE_9.C,
+                    "主键" + getPrimaryKeyNames(DEFAULT_PRIMARY_KEY_NAME));
         }
 
-        T entity = (T) getMapperFacade().map(params, entityFromDb.getClass());
+        T entity = toEntity(params, entityFromDb.getClass());
 
         setUpdateTime(entity);
 
         int resultCount = getBaseMapper().updateById(entity);
         if (resultCount == 0) {
             throw new ApiResponseException(ErrorS.CODE_5.C,
-                    "[" + PRIMARY_KEY_NAME + "=" + fid);
+                    "[" + DEFAULT_PRIMARY_KEY_NAME + "=" + fid);
         }
 
         return "更新成功";
     }
+
 
     @Override
     public String addOrUpdateBatchByParamsList(List<?> paramsList) {
@@ -100,14 +112,14 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         List<T> entityList = new ArrayList<>();
         for (Object params : paramsList) {
             BeanValidator.verifyParams(params);
-            T t = getMapperFacade().map(params, getEntityClass());
+            T t = toEntity(params, getEntityClass());
             entityList.add(t);
         }
 
         entityList
                 .parallelStream()
                 .forEach(entity -> {
-                    Long fid = getPrimaryKeyValue(entity);
+                    Serializable fid = getPrimaryKeyValue(entity);
                     if (fid == null) {
                         setCreateTime(entity);
                     }
@@ -139,7 +151,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         List<T> entityList = new ArrayList<>();
         for (Object params : paramsList) {
             BeanValidator.verifyParams(params);
-            T t = getMapperFacade().map(params, getEntityClass());
+            T t = toEntity(params, getEntityClass());
             entityList.add(t);
         }
 
@@ -148,7 +160,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         entityList
                 .parallelStream()
                 .forEach(entity -> {
-                    Long fid = getPrimaryKeyValue(entity);
+                    Serializable fid = getPrimaryKeyValue(entity);
                     if (fid == null) {
                         setCreateTime(entity);
                     }
@@ -172,7 +184,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     public String addOrUpdateByParams(Object params) {
         BeanValidator.verifyParams(params);
 
-        Long fid = getPrimaryKeyValue(params);
+        Serializable fid = getPrimaryKeyValue(params);
         if (fid != null) {
             return this.updateByParams(params);
         }
@@ -200,6 +212,34 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     @Override
+    public D oneByCondition(BaseConditionParams params, boolean enableReturnNull) {
+        BeanValidator.verifyParams(params);
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        setCondition(params, queryWrapper);
+
+        T t = getOne(queryWrapper);
+        if (!enableReturnNull) {
+            if (t == null) {
+                throw new ApiResponseBeanException(ErrorU.CODE_10.C,
+                        getEntityClass().getSimpleName(), params == null ? "查詢条件" :
+                        params.toString());
+            }
+        }
+        return toDto(t);
+    }
+
+    @Override
+    public List<D> listByCondition(BaseConditionParams params) {
+        BeanValidator.verifyParams(params);
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        setCondition(params, queryWrapper);
+
+        List<T> entityList = list(queryWrapper);
+        List<D> dList = getDtoList(entityList);
+        return dList;
+    }
+
+    @Override
     public PageDto<D> pageByCondition(QueryByPageParams queryByPageParams,
                                       BaseConditionParams params) {
         BeanValidator.verifyParams(params);
@@ -221,7 +261,12 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
             }
         }
 
+        setCondition(params, queryWrapper);
         return pageByConditionTwo(queryByPageParams, params, queryWrapper);
+    }
+
+    public void setCondition(BaseConditionParams params, QueryWrapper<T> queryWrapper) {
+
     }
 
     public PageDto<D> pageByConditionTwo(QueryByPageParams queryByPageParams,
@@ -373,16 +418,30 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         return t;
     }
 
+    @Override
+    public List<T> listByIds(Collection<? extends Serializable> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return super.listByIds(idList);
+    }
+
+    protected String[] getPrimaryKeyNames(String[] defaultPrimaryKeyName) {
+        return defaultPrimaryKeyName;
+    }
+
     //////////////////////////////////////////////////
 
-    protected Long getPrimaryKeyValue(Object params) {
+    protected Serializable getPrimaryKeyValue(Object params) {
         boolean has = false;
-        Long fid = null;
-        for (String name : PRIMARY_KEY_NAME) {
+        Serializable fid = null;
+        String[] pimaryKeyNames = getPrimaryKeyNames(DEFAULT_PRIMARY_KEY_NAME);
+
+        for (String name : pimaryKeyNames) {
             try {
                 Field field = params.getClass().getDeclaredField(name);
                 field.setAccessible(true);
-                fid = (Long) field.get(params);
+                fid = (Serializable) field.get(params);
                 has = true;
                 break;
             }
@@ -392,7 +451,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
 
         if (!has) {
             throw new ApiResponseBeanException(ErrorU.CODE_1.C,
-                    Arrays.toString(PRIMARY_KEY_NAME));
+                    Arrays.toString(getPrimaryKeyNames(DEFAULT_PRIMARY_KEY_NAME)));
         }
         else {
             return fid;

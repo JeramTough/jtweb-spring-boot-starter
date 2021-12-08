@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 
 /**
  * <pre>
@@ -34,7 +35,10 @@ public class ImageUploadFileSaver extends BaseUploadFileSaver
 
     @Override
     public File saveFile(MultipartFile file) throws IOException {
-        String imageFileName = getRandomFilePrefix() + "." + imageFileSaveConfigAdapter.getSaveExtname();
+        //生成上传图片生成的名字
+        String imageFileName =
+                getUploadFileNamed().getCompletedName() + "." + imageFileSaveConfigAdapter.getSaveExtname();
+
         File compressedImageFile = new File(getSaveDir() + File.separator + imageFileName);
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());
@@ -45,6 +49,12 @@ public class ImageUploadFileSaver extends BaseUploadFileSaver
             if (imageFileSaveConfigAdapter.getResetHeight() > 0 && imageFileSaveConfigAdapter.getResetWidth() > 0) {
                 builder = builder.forceSize(imageFileSaveConfigAdapter.getResetWidth(),
                         imageFileSaveConfigAdapter.getResetHeight());
+            }
+            else {
+                double scale = new BigDecimal(imageFileSaveConfigAdapter.getScale())
+                        .divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN)
+                        .doubleValue();
+                builder = builder.scale(scale);
             }
 
             //输出
@@ -58,5 +68,10 @@ public class ImageUploadFileSaver extends BaseUploadFileSaver
         catch (Exception e) {
             throw new IOException(e.getMessage());
         }
+    }
+
+
+    public ImageUploadFileSaveConfigAdapter getImageFileSaveConfig() {
+        return imageFileSaveConfigAdapter;
     }
 }

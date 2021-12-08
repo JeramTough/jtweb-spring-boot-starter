@@ -8,7 +8,16 @@ import com.jeramtough.jtweb.component.filesaver.config.FileSaveConfigAdapter;
  * by @author WeiBoWen
  * </pre>
  */
-public interface UploadFileSaveConfigAdaper extends FileSaveConfigAdapter {
+public interface UploadFileSaveConfigAdapter extends FileSaveConfigAdapter {
+
+    Boolean allowRemoveUndeterminedOnScheme();
+
+    /**
+     * 返回定时任务的时间周期
+     *
+     * @return 单位秒
+     */
+    Long getRemoveUndeterminedPeriod();
 
     int getMaxSize();
 

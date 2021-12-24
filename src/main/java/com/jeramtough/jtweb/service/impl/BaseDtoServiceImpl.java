@@ -15,6 +15,8 @@ import com.jeramtough.jtweb.service.BaseDtoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,14 +59,12 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
 
     protected T toEntity(Object params, Class<?> tClass) {
         try {
-            T t = (T) tClass.newInstance();
+            Constructor constructor=tClass.getConstructor();
+            T t = (T) constructor.newInstance();
             BeanUtils.copyProperties(params, t);
             return t;
         }
-        catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
+        catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         throw new IllegalStateException("bean映射失败");
@@ -73,11 +73,12 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
 
     protected <S> S mapBean(Object o,Class<S> sClass){
         try {
-            S s = (S) sClass.newInstance();
+            Constructor<S> constructor=sClass.getConstructor();
+            S s = constructor.newInstance();
             BeanUtils.copyProperties(o, s);
             return s;
         }
-        catch (InstantiationException | IllegalAccessException e) {
+        catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         throw new IllegalStateException("bean映射失败");

@@ -43,12 +43,17 @@ public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
 
     String removeOneById(Long fid);
 
-    D oneByCondition(BaseConditionParams params,boolean enableReturnNull);
+    D oneByCondition(BaseConditionParams params, boolean enableReturnNull);
 
     List<D> listByCondition(BaseConditionParams params);
 
     PageDto<D> pageByCondition(QueryByPageParams queryByPageParams,
                                BaseConditionParams params);
+
+    /**
+     * @param enableReturnNull 如果设置为true，那么删除失败返回null
+     */
+    String removeByCondition(BaseConditionParams params, boolean enableReturnNull);
 
     @Override
     T getOne(Wrapper<T> queryWrapper);

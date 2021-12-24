@@ -44,12 +44,25 @@ public class BaseConditionParams {
     @ApiModelProperty(value = "时间环查询的结束时间", example = "2021-02-23 23:59:59", required = false)
     private LocalDateTime endTime;
 
-    @ApiModelProperty(value = "根据什么字段排序,可以用逗号排序多个", example = "fid,id", required = false)
+    @ApiModelProperty(value = "根据什么字段排序，或者时间环的key,可以用逗号排序多个", example = "fid,id", required =
+            false)
     private String orderBy;
+
+    @ApiModelProperty(value = "根据什么字段时间环的key,可以用逗号排序多个", example = "fid,id", required =
+            false)
+    private String timeBy;
 
     @ApiModelProperty(value = "是否升序", example = "true", required = false)
     private Boolean isAsc = true;
 
+
+    public String getTimeBy() {
+        return timeBy;
+    }
+
+    public void setTimeBy(String timeBy) {
+        this.timeBy = timeBy;
+    }
 
     public String getKeyword() {
         return keyword;

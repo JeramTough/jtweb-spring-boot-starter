@@ -245,6 +245,39 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         BeanValidator.verifyParams(params);
 
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+
+        setCondition(params, queryWrapper);
+
+        QueryPage<T> queryPage =
+                getBaseMapper().selectPage(new QueryPage<>(queryByPageParams),
+                        queryWrapper);
+
+        return toPageDto(queryPage);
+    }
+
+    @Override
+    public String removeByCondition(BaseConditionParams params, boolean enableReturnNull) {
+        BeanValidator.verifyParams(params);
+
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        setCondition(params,queryWrapper);
+
+        int removeCount=getBaseMapper().delete(queryWrapper);
+        if (removeCount==0){
+            if (enableReturnNull){
+                return null;
+            }
+            else{
+                throw new ApiResponseException(ErrorS.CODE_2.C, "删除资源");
+            }
+        }
+        else{
+            return "删除成功!";
+        }
+    }
+
+    public void setCondition(BaseConditionParams params, QueryWrapper<T> queryWrapper) {
+        //排序
         if (params.getOrderBy() != null) {
             List<String> columns = StringUtil.splitByComma(params.getOrderBy());
             for (int i = 0; i < columns.size(); i++) {
@@ -261,30 +294,17 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
             }
         }
 
-        setCondition(params, queryWrapper);
-        return pageByConditionTwo(queryByPageParams, params, queryWrapper);
-    }
-
-    public void setCondition(BaseConditionParams params, QueryWrapper<T> queryWrapper) {
-
-    }
-
-    public PageDto<D> pageByConditionTwo(QueryByPageParams queryByPageParams,
-                                         BaseConditionParams params,
-                                         QueryWrapper<T> queryWrapper) {
-        return pageByConditionThree(queryByPageParams, params, queryWrapper);
-    }
-
-    public PageDto<D> pageByConditionThree(QueryByPageParams queryByPageParams,
-                                           BaseConditionParams params,
-                                           QueryWrapper<T> queryWrapper) {
-
-
+        //时间环
         if (params.getStartDate() != null && params.getEndDate() != null) {
             String column = "create_time";
             if (StringUtils.hasText(params.getOrderBy())) {
                 column = params.getOrderBy();
             }
+
+            if (StringUtils.hasText(params.getTimeBy())) {
+                column = params.getTimeBy();
+            }
+
             String finalColumn = column;
             queryWrapper.and(wrapper ->
                     wrapper.between(finalColumn, params.getStartDate(),
@@ -296,17 +316,17 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
             if (StringUtils.hasText(params.getOrderBy())) {
                 column = params.getOrderBy();
             }
+
+            if (StringUtils.hasText(params.getTimeBy())) {
+                column = params.getTimeBy();
+            }
+
             String finalColumn = column;
             queryWrapper.and(wrapper ->
                     wrapper.between(finalColumn, params.getStartTime(),
                             params.getEndTime()));
         }
 
-        QueryPage<T> queryPage =
-                getBaseMapper().selectPage(new QueryPage<>(queryByPageParams),
-                        queryWrapper);
-
-        return toPageDto(queryPage);
     }
 
     @Override

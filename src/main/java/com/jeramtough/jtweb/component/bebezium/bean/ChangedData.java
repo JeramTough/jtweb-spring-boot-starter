@@ -1,7 +1,5 @@
 package com.jeramtough.jtweb.component.bebezium.bean;
 
-import io.debezium.data.Envelope;
-
 import java.io.Serializable;
 import java.util.Map;
 

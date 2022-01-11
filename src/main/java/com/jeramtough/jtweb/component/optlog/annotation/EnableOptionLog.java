@@ -2,6 +2,7 @@ package com.jeramtough.jtweb.component.optlog.annotation;
 
 import com.jeramtough.jtweb.component.optlog.config.OptLogComponentScanConfig;
 import org.springframework.context.annotation.Import;
+
 import java.lang.annotation.*;
 
 /**

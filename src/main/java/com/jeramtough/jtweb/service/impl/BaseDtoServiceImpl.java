@@ -1,5 +1,6 @@
 package com.jeramtough.jtweb.service.impl;
 
+import cn.hutool.core.util.ClassUtil;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
@@ -15,6 +16,7 @@ import com.jeramtough.jtweb.service.BaseDtoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -34,15 +36,20 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     /**
      * Dto的class
      */
-    private final Class<D> dClass = (Class<D>) ReflectionKit.getSuperClassGenericType(
-            this.getClass(), 2);
+    private final Class<D> dClass;
 
-    public BaseDtoServiceImpl(WebApplicationContext wc) {
+    protected BaseDtoServiceImpl(WebApplicationContext wc) {
         this.wc = wc;
+        this.dClass = (Class<D>) ClassUtil.getTypeArgument(this.getClass(), 2);
     }
 
-    protected D toDto(T t) {
+    @Override
+    public @Nullable
+    D toDto(@Nullable T t) {
         try {
+            if (t == null) {
+                return null;
+            }
             D d = dClass.newInstance();
             BeanUtils.copyProperties(t, d);
             return d;
@@ -59,7 +66,7 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
 
     protected T toEntity(Object params, Class<?> tClass) {
         try {
-            Constructor constructor=tClass.getConstructor();
+            Constructor<?> constructor = tClass.getConstructor();
             T t = (T) constructor.newInstance();
             BeanUtils.copyProperties(params, t);
             return t;
@@ -71,9 +78,9 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
 
-    protected <S> S mapBean(Object o,Class<S> sClass){
+    protected <S> S mapBean(Object o, Class<S> sClass) {
         try {
-            Constructor<S> constructor=sClass.getConstructor();
+            Constructor<S> constructor = sClass.getConstructor();
             S s = constructor.newInstance();
             BeanUtils.copyProperties(o, s);
             return s;
@@ -121,6 +128,7 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     public List<D> getDtoList(List<T> tList) {
+
         List<D> dList = new ArrayList<>(tList.size());
         for (T t : tList) {
             dList.add(toDto(t));
@@ -152,7 +160,7 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
 
     public List<D> getAllBaseDto(ToDtoProcess<T, D> toDtoProcess) {
         List<T> list = getBaseMapper().selectList(null);
-        return gettDtoListByProcess(list, toDtoProcess);
+        return getDtoListByProcess(list, toDtoProcess);
     }
 
     @Override
@@ -207,13 +215,13 @@ public abstract class BaseDtoServiceImpl<M extends BaseMapper<T>, T, D>
         pageDto.setIndex(iPage.getCurrent());
         pageDto.setSize(iPage.getSize());
         pageDto.setTotal(iPage.getTotal());
-        pageDto.setList(gettDtoListByProcess(iPage.getRecords(), toDtoProcess));
+        pageDto.setList(getDtoListByProcess(iPage.getRecords(), toDtoProcess));
         return pageDto;
     }
 
     //********************
 
-    private List<D> gettDtoListByProcess(List<T> list, ToDtoProcess<T, D> toDtoProcess) {
+    private List<D> getDtoListByProcess(List<T> list, ToDtoProcess<T, D> toDtoProcess) {
         List<D> dtoList = new ArrayList<>(list.size());
         for (T t : list) {
             dtoList.add(toDtoProcess.toDto(t));

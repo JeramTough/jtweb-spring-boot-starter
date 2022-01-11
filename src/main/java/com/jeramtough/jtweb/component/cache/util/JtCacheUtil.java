@@ -2,7 +2,6 @@ package com.jeramtough.jtweb.component.cache.util;
 
 import com.baomidou.mybatisplus.core.conditions.ISqlSegment;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jeramtough.jtcomponent.utils.StringUtil;
 import com.jeramtough.jtweb.component.cache.annotation.BeCached;
 import org.aspectj.lang.ProceedingJoinPoint;

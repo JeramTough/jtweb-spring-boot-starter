@@ -1,7 +1,5 @@
 package com.jeramtough.jtweb.component.validation.constraints;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;

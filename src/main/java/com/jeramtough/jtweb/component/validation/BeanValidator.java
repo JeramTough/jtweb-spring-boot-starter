@@ -8,14 +8,12 @@ import com.jeramtough.jtweb.component.apiresponse.error.ErrorCode;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseBeanException;
 import com.jeramtough.jtweb.component.validation.constraints.NotBlankButNull;
-import org.apache.commons.lang3.ClassUtils;
 
 import javax.validation.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 

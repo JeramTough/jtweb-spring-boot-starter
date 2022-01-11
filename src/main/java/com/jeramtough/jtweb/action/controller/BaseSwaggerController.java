@@ -8,7 +8,6 @@ import com.jeramtough.jtweb.component.apiresponse.bean.CommonApiResponse;
 import com.jeramtough.jtweb.component.apiresponse.error.ErrorCode;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
-import com.jeramtough.jtweb.component.optlog.annotation.IgnoreOptLog;
 import com.jeramtough.jtweb.model.error.ErrorS;
 import com.jeramtough.jtweb.model.error.ErrorU;
 import io.swagger.annotations.ApiResponse;

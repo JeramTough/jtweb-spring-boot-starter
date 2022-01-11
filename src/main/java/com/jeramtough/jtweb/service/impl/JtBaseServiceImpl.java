@@ -1,5 +1,6 @@
 package com.jeramtough.jtweb.service.impl;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -23,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -36,13 +38,46 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     /**
      * 数据库主键名
      */
-    private static final String[] DEFAULT_PRIMARY_KEY_NAME = new String[]{"fid", "id"};
+    private String[] defaultPrimaryKeyNames;
 
     private static final String[] CREATE_TIME_NAME = new String[]{"createTime"};
     private static final String[] UPDATE_TIME_NAME = new String[]{"updateTime"};
 
-    public JtBaseServiceImpl(WebApplicationContext wc) {
+    protected JtBaseServiceImpl(WebApplicationContext wc) {
         super(wc);
+        initDefaultPrimaryKeyName();
+    }
+
+    protected void initDefaultPrimaryKeyName() {
+        List<String> keyNameList = new ArrayList<>();
+        keyNameList.add("fid");
+        keyNameList.add("id");
+
+        Field[] fields = getEntityClass().getDeclaredFields();
+        List<String> filterKeyNameList = Arrays
+                .asList(fields)
+                .parallelStream()
+                .filter(field -> {
+                    TableId tableIdAnnotation =
+                            field.getDeclaredAnnotation(
+                                    com.baomidou.mybatisplus.annotation.TableId.class);
+                    boolean noNull = tableIdAnnotation != null;
+                    boolean hasText = noNull && StringUtils.hasText(tableIdAnnotation.value());
+                    boolean noContains = noNull && !keyNameList.contains(
+                            tableIdAnnotation.value());
+                    return hasText && noContains;
+                })
+                .map(field -> {
+                    TableId tableIdAnnotation =
+                            field.getDeclaredAnnotation(
+                                    com.baomidou.mybatisplus.annotation.TableId.class);
+                    return tableIdAnnotation.value();
+                })
+                .collect(Collectors.toList());
+
+        keyNameList.addAll(filterKeyNameList);
+
+        defaultPrimaryKeyNames = keyNameList.toArray(new String[0]);
     }
 
 
@@ -84,7 +119,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         T entityFromDb = getBaseMapper().selectById(fid);
         if (entityFromDb == null) {
             throw new ApiResponseException(ErrorU.CODE_9.C,
-                    "主键" + getPrimaryKeyNames(DEFAULT_PRIMARY_KEY_NAME));
+                    "主键" + getPrimaryKeyNames(defaultPrimaryKeyNames));
         }
 
         T entity = toEntity(params, entityFromDb.getClass());
@@ -94,7 +129,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         int resultCount = getBaseMapper().updateById(entity);
         if (resultCount == 0) {
             throw new ApiResponseException(ErrorS.CODE_5.C,
-                    "[" + DEFAULT_PRIMARY_KEY_NAME + "=" + fid);
+                    "[" + defaultPrimaryKeyNames + "=" + fid);
         }
 
         return "更新成功";
@@ -260,18 +295,18 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         BeanValidator.verifyParams(params);
 
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-        setCondition(params,queryWrapper);
+        setCondition(params, queryWrapper);
 
-        int removeCount=getBaseMapper().delete(queryWrapper);
-        if (removeCount==0){
-            if (enableReturnNull){
+        int removeCount = getBaseMapper().delete(queryWrapper);
+        if (removeCount == 0) {
+            if (enableReturnNull) {
                 return null;
             }
-            else{
+            else {
                 throw new ApiResponseException(ErrorS.CODE_2.C, "删除资源");
             }
         }
-        else{
+        else {
             return "删除成功!";
         }
     }
@@ -286,11 +321,11 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
                 columns.set(i, colum);
             }
 
-            if (params.isAsc()) {
-                queryWrapper.orderByAsc(columns.toArray(new String[0]));
+            if (Boolean.TRUE.equals(params.isAsc())) {
+                queryWrapper.orderByAsc(columns);
             }
             else {
-                queryWrapper.orderByDesc(columns.toArray(new String[0]));
+                queryWrapper.orderByDesc(columns);
             }
         }
 
@@ -455,8 +490,9 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     protected Serializable getPrimaryKeyValue(Object params) {
         boolean has = false;
         Serializable fid = null;
-        String[] pimaryKeyNames = getPrimaryKeyNames(DEFAULT_PRIMARY_KEY_NAME);
+        String[] pimaryKeyNames = getPrimaryKeyNames(defaultPrimaryKeyNames);
 
+        //如果发现多个能作为主键的field，那就用最后一个field的值
         for (String name : pimaryKeyNames) {
             try {
                 Field field = params.getClass().getDeclaredField(name);
@@ -471,7 +507,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
 
         if (!has) {
             throw new ApiResponseBeanException(ErrorU.CODE_1.C,
-                    Arrays.toString(getPrimaryKeyNames(DEFAULT_PRIMARY_KEY_NAME)));
+                    Arrays.toString(getPrimaryKeyNames(defaultPrimaryKeyNames)));
         }
         else {
             return fid;

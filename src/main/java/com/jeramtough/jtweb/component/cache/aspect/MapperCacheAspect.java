@@ -12,7 +12,6 @@ import com.jeramtough.jtweb.component.cache.exception.NullReturnException;
 import com.jeramtough.jtweb.component.cache.handler.DbDataCacheHandler;
 import com.jeramtough.jtweb.component.cache.setting.JtCacheSetting;
 import com.jeramtough.jtweb.component.cache.util.JtCacheUtil;
-import com.jeramtough.jtweb.component.optlog.annotation.IgnoreOptLog;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

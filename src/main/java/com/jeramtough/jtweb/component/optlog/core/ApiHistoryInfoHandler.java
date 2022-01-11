@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 public class ApiHistoryInfoHandler {
 
     private HttpServletRequest httpServletRequest;
-    private HttpServletResponse httpServletResponse;
     private final HttpSession httpSession;
     private final OptLoggerConfig loggerConfig;
 
@@ -41,10 +40,6 @@ public class ApiHistoryInfoHandler {
         this.httpServletRequest = httpServletRequest;
     }
 
-    @Autowired
-    public void setHttpServletResponse(HttpServletResponse httpServletResponse) {
-        this.httpServletResponse = httpServletResponse;
-    }
 
     public AddHistoryParams newAddHistoryParams(InterfaceDetail interfaceDetail, Object[] args, Object resp,
                                                 boolean isCompleted) {

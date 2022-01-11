@@ -2,7 +2,6 @@ package com.jeramtough.jtweb.component.bebezium.publisher;
 
 import com.alibaba.fastjson.JSON;
 import com.jeramtough.jtweb.component.bebezium.event.DbDataChangedEvent;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**

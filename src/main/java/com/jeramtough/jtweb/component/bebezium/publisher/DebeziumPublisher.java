@@ -1,6 +1,5 @@
 package com.jeramtough.jtweb.component.bebezium.publisher;
 
-import com.jeramtough.jtweb.component.bebezium.bean.ChangedData;
 import com.jeramtough.jtweb.component.bebezium.event.DbDataChangedEvent;
 
 /**

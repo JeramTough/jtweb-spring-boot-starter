@@ -22,7 +22,7 @@ public abstract class AbastractSwaggerFilter implements Filter, BaseSwaggerFilte
     /**
      * 静态资源
      */
-    private static Set<String> staticResourceTypes = new HashSet<String>();
+    private static Set<String> staticResourceTypes = new HashSet<>();
 
     private static final String[] SWAGGER_URLS = {
             "/swagger-resources",
@@ -42,7 +42,7 @@ public abstract class AbastractSwaggerFilter implements Filter, BaseSwaggerFilte
             "/swagger-resources/configuration/security"
     };
 
-    public AbastractSwaggerFilter() {
+    protected AbastractSwaggerFilter() {
         staticResourceTypes.add(".html");
         staticResourceTypes.add(".css");
         staticResourceTypes.add(".js");

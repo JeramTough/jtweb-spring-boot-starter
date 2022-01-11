@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class ApiResponseFactory {
 
+    private ApiResponseFactory(){
+    }
 
     public static <T> CommonApiResponse<T> getSuccessfulApiResponse(T responseBody) {
         CommonApiResponse<T> commonApiResponse = new CommonApiResponse<>();

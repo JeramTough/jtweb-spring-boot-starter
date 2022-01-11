@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.5.3.84-RELEASE</version>
+    <version>2.5.3.85-RELEASE</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-RELEASE</version>-->
@@ -60,8 +60,8 @@
         <HIKARICP_VERSION>5.0.0</HIKARICP_VERSION>
 
         <!--mybatis-plus-boot-starter-->
-        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.2</MYBATIS_PLUS_BOOT_STARTER_VERSION>
-        <MYBATIS_PLUS_GENERATOR_VERSION>3.4.1</MYBATIS_PLUS_GENERATOR_VERSION>
+        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.3.4</MYBATIS_PLUS_BOOT_STARTER_VERSION>
+        <MYBATIS_PLUS_GENERATOR_VERSION>3.5.1</MYBATIS_PLUS_GENERATOR_VERSION>
         <!--p6spy-数据库sql打印-->
         <P6SPY_VERSION>3.9.1</P6SPY_VERSION>
 
@@ -127,20 +127,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>${MYBATIS_PLUS_GENERATOR_VERSION}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-            <version>2.1</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

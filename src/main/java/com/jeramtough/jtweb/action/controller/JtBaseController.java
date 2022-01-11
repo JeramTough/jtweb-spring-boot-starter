@@ -1,7 +1,6 @@
 package com.jeramtough.jtweb.action.controller;
 
 import cn.hutool.core.io.IoUtil;
-import com.jeramtough.jtlog.facade.L;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.component.http.HttpContentTypeHandler;
 import com.jeramtough.jtweb.model.error.ErrorS;

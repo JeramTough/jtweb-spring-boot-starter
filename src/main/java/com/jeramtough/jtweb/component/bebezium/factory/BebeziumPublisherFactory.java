@@ -4,7 +4,6 @@ import com.jeramtough.jtweb.component.bebezium.publisher.DebeziumPublisher;
 import com.jeramtough.jtweb.component.bebezium.publisher.EventbusDebeziumPublisher;
 import com.jeramtough.jtweb.component.bebezium.publisher.RedisDebeziumPublisher;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.Objects;

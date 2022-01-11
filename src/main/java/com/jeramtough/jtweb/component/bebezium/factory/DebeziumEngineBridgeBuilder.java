@@ -7,9 +7,7 @@ import io.debezium.embedded.EmbeddedEngine;
 import io.debezium.engine.DebeziumEngine;
 import org.apache.kafka.connect.source.SourceRecord;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * <pre>

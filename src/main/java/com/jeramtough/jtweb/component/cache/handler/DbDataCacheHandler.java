@@ -1,6 +1,5 @@
 package com.jeramtough.jtweb.component.cache.handler;
 
-import com.jeramtough.jtcomponent.task.bean.TaskResult;
 import com.jeramtough.jtweb.component.business.extractentity.ExtractEntityRunner;
 import com.jeramtough.jtweb.component.cache.bean.DbDataKey;
 

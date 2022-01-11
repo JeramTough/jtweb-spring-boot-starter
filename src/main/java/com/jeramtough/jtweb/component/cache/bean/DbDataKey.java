@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public class DbDataKey implements Serializable {
 
+    private static final long serialVersionUID = -5669547469508491714L;
+
     private String databaseName;
     private String tableName;
     private String idValue;

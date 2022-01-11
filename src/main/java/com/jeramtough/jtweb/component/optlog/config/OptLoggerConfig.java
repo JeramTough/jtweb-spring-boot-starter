@@ -3,8 +3,6 @@ package com.jeramtough.jtweb.component.optlog.config;
 import com.jeramtough.jtweb.component.optlog.channel.LogChannel;
 import com.jeramtough.jtweb.component.optlog.filter.OptLogFilter;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * <pre>
  * Created on 2020/12/25 15:20

@@ -21,6 +21,9 @@ public class ApiException extends RuntimeException implements Serializable {
 
     private String message;
 
+    public ApiException() {
+    }
+
     public ApiException(Integer customErrorCode, String message) {
         this.customErrorCode = customErrorCode;
         this.message = message;

@@ -4,7 +4,6 @@ import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * <pre>

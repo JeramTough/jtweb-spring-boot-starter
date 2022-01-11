@@ -2,7 +2,6 @@ package com.jeramtough.jtweb.component.bebezium.annotation;
 
 import com.jeramtough.jtweb.springconfig.JtDebeziumConfig;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
 
 import java.lang.annotation.*;
 

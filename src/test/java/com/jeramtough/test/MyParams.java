@@ -2,11 +2,6 @@ package com.jeramtough.test;
 
 import com.jeramtough.jtweb.component.validation.constraints.NotBlankButNull;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.lang.ref.PhantomReference;
-
 /**
  * <pre>
  * Created on 2020/10/12 22:19

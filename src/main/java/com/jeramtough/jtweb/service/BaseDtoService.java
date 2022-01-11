@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jeramtough.jtweb.model.dto.PageDto;
 import com.jeramtough.jtweb.model.params.QueryByPageParams;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
  * </pre>
  */
 public interface BaseDtoService<T,D> extends IService<T> {
+
+    @Nullable D toDto(@Nullable T t);
 
     PageDto<D> getBaseDtoListByPage(QueryByPageParams queryByPageParams);
 

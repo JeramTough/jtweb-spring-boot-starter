@@ -1,12 +1,15 @@
 package com.jeramtough.jtweb.component.apiresponse.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created on 2019/7/31 15:30
  * by @author WeiBoWen
  */
-public class FailureReason {
+public class FailureReason implements Serializable {
+
+    private static final long serialVersionUID = -5777670984051395103L;
 
     private int code;
     private List<String> placeholders;

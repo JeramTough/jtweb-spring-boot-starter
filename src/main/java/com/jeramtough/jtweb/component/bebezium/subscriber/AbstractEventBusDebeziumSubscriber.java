@@ -17,7 +17,7 @@ public abstract class AbstractEventBusDebeziumSubscriber extends BaseDebeziumSub
 
     private boolean isRunning = false;
 
-    public AbstractEventBusDebeziumSubscriber() {
+    protected AbstractEventBusDebeziumSubscriber() {
         start();
     }
 

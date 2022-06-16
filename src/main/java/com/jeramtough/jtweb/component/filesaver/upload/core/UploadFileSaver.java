@@ -1,4 +1,4 @@
-package com.jeramtough.jtweb.component.filesaver.upload;
+package com.jeramtough.jtweb.component.filesaver.upload.core;
 
 import com.jeramtough.jtweb.component.filesaver.base.FileSaver;
 import org.springframework.web.multipart.MultipartFile;

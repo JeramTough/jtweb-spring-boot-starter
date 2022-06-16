@@ -9,6 +9,8 @@ import com.jeramtough.jtweb.component.filesaver.exception.SaveFileException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -34,10 +36,23 @@ public abstract class BaseFileSaver<T> implements FileSaver<T> {
 
 
     @Override
+    public File save(T t) throws IOException, SaveFileException, MaxSizeLimitException,
+            IllegalFileTypeException {
+        return this.save(t, new HashMap<>(1));
+    }
+
+    @Override
     public File save(T t, long delay, TimeUnit unit) throws IOException, SaveFileException,
             MaxSizeLimitException, IllegalFileTypeException {
+        return this.save(t, new HashMap<>(1), delay, unit);
+    }
 
-        final File productFile = save(t);
+    @Override
+    public File save(T t, Map<String, Object> params, long delay,
+                     TimeUnit unit) throws IOException, SaveFileException,
+            MaxSizeLimitException, IllegalFileTypeException {
+
+        final File productFile = save(t, params);
 
         scheduledExecutorService.schedule(() -> {
             if (productFile.exists()) {
@@ -67,6 +82,33 @@ public abstract class BaseFileSaver<T> implements FileSaver<T> {
         File file = new File(path);
         if (!file.exists()) {
             throw new NoSuchFileException(path);
+        }
+        return file;
+    }
+
+    @Override
+    public File readAndDefault(String relativePath) throws NoSuchFileException {
+
+        String path =
+                fileSaveConfigAdapter.getPath() + File.separator + getFileSystemRelativePath(
+                        relativePath);
+        File file = new File(path);
+        if (!file.exists()) {
+            if (fileSaveConfigAdapter.getDefault() != null) {
+                path =
+                        fileSaveConfigAdapter.getPath() + File.separator + getFileSystemRelativePath(
+                                fileSaveConfigAdapter.getDefault());
+                file = new File(path);
+                if (!file.exists()) {
+                    throw new NoSuchFileException(path);
+                }
+                else {
+                    return file;
+                }
+            }
+            else {
+                throw new NoSuchFileException(path);
+            }
         }
         return file;
     }

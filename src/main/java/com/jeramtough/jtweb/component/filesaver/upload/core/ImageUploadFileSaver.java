@@ -1,7 +1,9 @@
-package com.jeramtough.jtweb.component.filesaver.upload;
+package com.jeramtough.jtweb.component.filesaver.upload.core;
 
 import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.component.filesaver.config.upload.ImageUploadFileSaveConfigAdapter;
+import com.jeramtough.jtweb.component.filesaver.upload.named.UploadFileNamed;
+import com.jeramtough.jtweb.component.filesaver.upload.path.PathStrategy;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * <pre>
@@ -21,6 +24,29 @@ public class ImageUploadFileSaver extends BaseUploadFileSaver
         implements UploadFileSaver, WithLogger {
 
     private final ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter;
+
+
+    public ImageUploadFileSaver(
+            ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter,
+            UploadFileNamed uploadFileNamed,
+            PathStrategy pathStrategy) {
+        super(imageFileSaveConfigAdapter, uploadFileNamed, pathStrategy);
+        this.imageFileSaveConfigAdapter = imageFileSaveConfigAdapter;
+    }
+
+    public ImageUploadFileSaver(
+            ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter,
+            UploadFileNamed uploadFileNamed) {
+        super(imageFileSaveConfigAdapter, uploadFileNamed);
+        this.imageFileSaveConfigAdapter = imageFileSaveConfigAdapter;
+    }
+
+    public ImageUploadFileSaver(
+            ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter,
+            PathStrategy pathStrategy) {
+        super(imageFileSaveConfigAdapter, pathStrategy);
+        this.imageFileSaveConfigAdapter = imageFileSaveConfigAdapter;
+    }
 
     public ImageUploadFileSaver(
             ImageUploadFileSaveConfigAdapter imageFileSaveConfigAdapter) {
@@ -34,12 +60,15 @@ public class ImageUploadFileSaver extends BaseUploadFileSaver
     }
 
     @Override
-    public File saveFile(MultipartFile file) throws IOException {
+    public File saveFile(MultipartFile file,
+                         Map<String, Object> params) throws IOException {
         //生成上传图片生成的名字
         String imageFileName =
-                getUploadFileNamed().getCompletedName() + "." + imageFileSaveConfigAdapter.getSaveExtname();
+                getUploadFileNamed().getCompletedName(
+                        params) + "." + imageFileSaveConfigAdapter.getSaveExtname();
 
-        File compressedImageFile = new File(getSaveDir() + File.separator + imageFileName);
+        File compressedImageFile = new File(
+                getSaveDir(params) + File.separator + imageFileName);
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());
             //压缩图片框架加载图片

@@ -465,6 +465,17 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     @Override
+    public T getOne(boolean enableReturnNull, Wrapper<T> queryWrapper) {
+        if (enableReturnNull){
+            T t = super.getOne(queryWrapper);
+            return t;
+        }
+        else{
+            return getOne(queryWrapper);
+        }
+    }
+
+    @Override
     public T getOne(Wrapper<T> queryWrapper) {
         T t = super.getOne(queryWrapper);
         if (t == null) {

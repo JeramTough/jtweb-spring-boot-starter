@@ -27,7 +27,7 @@
         <!--SpringBoot版本-->
         <SPRING_BOOT_STARTER_VERSION>2.6.8</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
-        <FASTJSON_VERSION>1.2.70</FASTJSON_VERSION>
+        <FASTJSON_VERSION>1.2.83</FASTJSON_VERSION>
 
         <!--Bean映射-orika版本-->
         <ORIKA_VERSION>1.5.4</ORIKA_VERSION>

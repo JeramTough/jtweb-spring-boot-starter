@@ -30,6 +30,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created on 2019/7/25 11:38
@@ -77,8 +79,8 @@ public class JtSwaggerConfig {
     /**
      * 决定在xxx条件下，该接口才被swagger映射到在线接口文档
      */
-    private java.util.function.Predicate<RequestHandler> getRequestHandlerPredicate() {
-        java.util.function.Predicate<RequestHandler> selector = (Predicate<RequestHandler>) input -> {
+    private Predicate<RequestHandler> getRequestHandlerPredicate() {
+        Predicate<RequestHandler> selector = requestHandler -> {
             //标注着Api注释的接口才被映射
             if (Objects.requireNonNull(requestHandler).findControllerAnnotation(
                     Api.class).isPresent()) {
@@ -136,9 +138,9 @@ public class JtSwaggerConfig {
      * getPatterns(WebMvcPatternsRequestConditionWrapper
      * .java:56)问题
      * spring:
-     *   mvc:
-     *     pathmatch:
-     *       matching-strategy: ANT_PATH_MATCHER
+     * mvc:
+     * pathmatch:
+     * matching-strategy: ANT_PATH_MATCHER
      */
     @Bean
     public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {

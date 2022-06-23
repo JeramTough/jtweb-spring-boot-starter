@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.5.3.85-RELEASE</version>
+    <version>2.5.3.93-RELEASE</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-RELEASE</version>-->
@@ -44,7 +44,7 @@
         <JTLOG_VERSION>1.8.4-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.5.8-RELEASE</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.6.6-RELEASE</JTCOMPONENT_VERSION>
 
         <!--knife4j-spring-boot-starter-->
         <KNIE4J_BOOT_STARTER_VERSION>3.0.3</KNIE4J_BOOT_STARTER_VERSION>
@@ -76,6 +76,8 @@
 
         <!--图片编辑压缩thumbnailator-->
         <HUMBNAILATOR_VERSION>0.4.8</HUMBNAILATOR_VERSION>
+
+        <ALIYUN_OSS_VERSION>3.10.2</ALIYUN_OSS_VERSION>
 
     </properties>
 
@@ -308,6 +310,30 @@
             <artifactId>thumbnailator</artifactId>
             <version>${HUMBNAILATOR_VERSION}</version>
         </dependency>
+
+        <!--阿里云OSS对象存储-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${ALIYUN_OSS_VERSION}</version>
+        </dependency>
+        <!--如果使用的是Java 9及以上的版本，则需要添加jaxb相关依赖。
+        添加jaxb相关依赖示例代码如下-->
+        <!--<dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.3</version>
+        </dependency>-->
 
     </dependencies>
 

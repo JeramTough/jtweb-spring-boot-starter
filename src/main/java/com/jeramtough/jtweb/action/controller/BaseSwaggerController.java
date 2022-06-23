@@ -39,6 +39,11 @@ import java.io.PrintWriter;
         @ApiResponse(code = ErrorU.CODE_12.C, message = ErrorU.CODE_12.M),
         @ApiResponse(code = ErrorU.CODE_13.C, message = ErrorU.CODE_13.M),
 
+        @ApiResponse(code = ErrorU.CODE_101.C, message = ErrorU.CODE_101.M),
+        @ApiResponse(code = ErrorU.CODE_102.C, message = ErrorU.CODE_102.M),
+        @ApiResponse(code = ErrorU.CODE_103.C, message = ErrorU.CODE_103.M),
+        @ApiResponse(code = ErrorU.CODE_104.C, message = ErrorU.CODE_104.M),
+
         @ApiResponse(code = ErrorS.CODE_1.C, message = ErrorS.CODE_1.M),
         @ApiResponse(code = ErrorS.CODE_2.C, message = ErrorS.CODE_2.M),
         @ApiResponse(code = ErrorS.CODE_3.C, message = ErrorS.CODE_3.M),

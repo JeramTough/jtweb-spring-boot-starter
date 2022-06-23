@@ -9,4 +9,6 @@ package com.jeramtough.jtweb.component.filesaver.config;
 public interface FileSaveConfigAdapter {
 
     String getPath();
+
+    String getDefault();
 }

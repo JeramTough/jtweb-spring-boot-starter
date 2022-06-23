@@ -33,7 +33,8 @@ public class ExcelFileSaver extends BaseFileSaver<List<Map<String, Object>>> {
     }
 
     @Override
-    public File save(List<Map<String, Object>> dataList) throws IOException, SaveFileException,
+    public File save(List<Map<String, Object>> dataList,
+                     Map<String, Object> params) throws IOException, SaveFileException,
             MaxSizeLimitException, IllegalFileTypeException {
         final Map<String, String> keyMap = excelFileSaveConfigAdapter.getKeyMap();
 

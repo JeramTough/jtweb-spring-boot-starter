@@ -59,4 +59,6 @@ public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
 
     @Override
     T getById(Serializable id);
+
+    T getOne(boolean enableReturnNull, Wrapper<T> queryWrapper);
 }

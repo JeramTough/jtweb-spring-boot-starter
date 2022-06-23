@@ -91,4 +91,26 @@ public class ErrorU {
 
     //****************************************************
 
+
+    //=================上传业务===========================
+
+    public static final class CODE_101 implements Payload {
+        public static final int C = 20101;
+        public static final String M = "上传失败，上传数据为空！";
+    }
+
+    public static final class CODE_102 implements Payload {
+        public static final int C = 20102;
+        public static final String M = "上传失败，图片大小不允许超过%s！";
+    }
+
+    public static final class CODE_103 implements Payload {
+        public static final int C = 20103;
+        public static final String M = "上传失败，图片格式只能为%s！";
+    }
+
+    public static final class CODE_104 implements Payload {
+        public static final int C = 20104;
+        public static final String M = "该[%s]头像不允许被修改！";
+    }
 }

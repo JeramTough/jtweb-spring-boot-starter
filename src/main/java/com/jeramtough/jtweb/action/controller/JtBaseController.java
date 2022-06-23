@@ -35,7 +35,10 @@ public class JtBaseController extends BaseSwaggerController {
     }
 
     public void returnResoureFile(File file) {
+        this.returnResoureFile(file, 0L);
+    }
 
+    public void returnResoureFile(File file, Long expiresTime) {
 
         String contentType = HttpContentTypeHandler.getInstance().getContentType(file);
         Objects.requireNonNull(contentType);
@@ -44,8 +47,16 @@ public class JtBaseController extends BaseSwaggerController {
         Objects.requireNonNull(requestAttributes);
         HttpServletRequest request = requestAttributes.getRequest();
         HttpServletResponse response = requestAttributes.getResponse();
+        Objects.requireNonNull(response);
 
-        getLogger().debug("[%s]请求响应content-type为 [%s] ", request.getRequestURI(), contentType);
+        getLogger().verbose("[%s]请求响应content-type为 [%s] ", request.getRequestURI(),
+                contentType);
+
+        if (expiresTime != 0L) {
+            getLogger().verbose("[%s]请求缓存时间为 [%s] ", request.getRequestURI(),
+                    expiresTime + "");
+            response.setDateHeader("Expires", System.currentTimeMillis() + expiresTime);
+        }
 
         try {
             response.setContentType(contentType);
@@ -56,6 +67,5 @@ public class JtBaseController extends BaseSwaggerController {
             e.printStackTrace();
             throw new ApiResponseException(ErrorS.CODE_2.C, "读取资源文件");
         }
-
     }
 }

@@ -54,7 +54,7 @@ public abstract class BaseFileReader implements FileReader {
     public File[] read(FileFilter fileFilter) throws NoSuchFileException {
         String basePath = configAdapter.getBasePath();
 
-        Directory directory = new Directory(basePath);
+        Directory directory = new Directory(basePath,true);
         //到了这里，一定是文件夹而且存在
         return fileFilter.filter(directory);
     }

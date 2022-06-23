@@ -2,10 +2,14 @@ package com.jeramtough.jtweb.springconfig;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.Api;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -17,13 +21,15 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
+import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
  * Created on 2019/7/25 11:38
@@ -71,8 +77,8 @@ public class JtSwaggerConfig {
     /**
      * 决定在xxx条件下，该接口才被swagger映射到在线接口文档
      */
-    private Predicate<RequestHandler> getRequestHandlerPredicate() {
-        Predicate<RequestHandler> selector= requestHandler -> {
+    private java.util.function.Predicate<RequestHandler> getRequestHandlerPredicate() {
+        java.util.function.Predicate<RequestHandler> selector = (Predicate<RequestHandler>) input -> {
             //标注着Api注释的接口才被映射
             if (Objects.requireNonNull(requestHandler).findControllerAnnotation(
                     Api.class).isPresent()) {
@@ -123,6 +129,51 @@ public class JtSwaggerConfig {
                                              UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
                                      .validatorUrl(null)
                                      .build();
+    }
+
+    /**
+     * 修复springboot 2.6.x版本集成swagger报
+     * getPatterns(WebMvcPatternsRequestConditionWrapper
+     * .java:56)问题
+     * spring:
+     *   mvc:
+     *     pathmatch:
+     *       matching-strategy: ANT_PATH_MATCHER
+     */
+    @Bean
+    public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
+        return new BeanPostProcessor() {
+
+            @Override
+            public Object postProcessAfterInitialization(Object bean, String beanName) throws
+                    BeansException {
+                if (bean instanceof WebMvcRequestHandlerProvider || bean instanceof WebFluxRequestHandlerProvider) {
+                    customizeSpringfoxHandlerMappings(getHandlerMappings(bean));
+                }
+                return bean;
+            }
+
+            private <T extends RequestMappingInfoHandlerMapping> void customizeSpringfoxHandlerMappings(
+                    List<T> mappings) {
+                List<T> copy = mappings.stream()
+                                       .filter(mapping -> mapping.getPatternParser() == null)
+                                       .collect(Collectors.toList());
+                mappings.clear();
+                mappings.addAll(copy);
+            }
+
+            private List<RequestMappingInfoHandlerMapping> getHandlerMappings(Object bean) {
+                try {
+                    Field field = ReflectionUtils.findField(bean.getClass(),
+                            "handlerMappings");
+                    Objects.requireNonNull(field).setAccessible(true);
+                    return (List<RequestMappingInfoHandlerMapping>) field.get(bean);
+                }
+                catch (IllegalArgumentException | IllegalAccessException e) {
+                    throw new IllegalStateException(e);
+                }
+            }
+        };
     }
 
 

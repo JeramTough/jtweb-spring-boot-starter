@@ -32,6 +32,11 @@
       <option name="url" value="http://192.168.0.213:3333/repository/nexus-ssd/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="ossrh" />
+      <option name="name" value="OSS Snapshot repository" />
+      <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="rdc-releases" />
       <option name="name" value="rdc-releases" />
       <option name="url" value="https://packages.aliyun.com/maven/repository/2104196-release-lI3GuI/" />
@@ -105,6 +110,11 @@
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="http://192.168.0.213:3333/repository/nexus-ssd/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="AsposeJavaAPI" />
+      <option name="name" value="Aspose Java API" />
+      <option name="url" value="https://repository.aspose.com/repo/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="nexus-ssd-snapshots" />

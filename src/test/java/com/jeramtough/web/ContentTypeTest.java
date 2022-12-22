@@ -2,7 +2,7 @@ package com.jeramtough.web;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.LineHandler;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.jeramtough.jtcomponent.utils.StringUtil;
 import com.jeramtough.jtlog.facade.L;
 import com.jeramtough.jtweb.component.http.HttpContentTypeHandler;
@@ -56,9 +56,10 @@ public class ContentTypeTest {
         }
 
         try {
-            IoUtil.write(new FileOutputStream("/developer/Codes/IdeaCodes/spring-boot-starter" +
-                    "-jtweb2/src/main/resources/content-type.json"),"UTF-8",true,
-                    JSON.toJSONString(map,true));
+            IoUtil.write(
+                    new FileOutputStream("/developer/Codes/IdeaCodes/spring-boot-starter" +
+                            "-jtweb2/src/main/resources/content-type.json"), "UTF-8", true,
+                    JSON.toJSONString(map));
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -68,9 +69,9 @@ public class ContentTypeTest {
     }
 
     @Test
-    public void test2(){
-       String a= HttpContentTypeHandler.getInstance().getContentType("jpg");
-       L.debug(a);
+    public void test2() {
+        String a = HttpContentTypeHandler.getInstance().getContentType("jpg");
+        L.debug(a);
     }
 
 }

@@ -2,7 +2,7 @@ package com.jeramtough.jtweb.component.apiresponse.exception;
 
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

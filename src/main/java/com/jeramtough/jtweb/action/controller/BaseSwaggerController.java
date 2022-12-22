@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.action.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponseFactory;
 import com.jeramtough.jtweb.component.apiresponse.ApiResponsesAnnotationHandler;
@@ -10,13 +10,13 @@ import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.model.error.ErrorS;
 import com.jeramtough.jtweb.model.error.ErrorU;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -25,32 +25,32 @@ import java.io.PrintWriter;
  * by @author WeiBoWen
  */
 @ApiResponses({
-        @ApiResponse(code = ErrorU.CODE_1.C, message = ErrorU.CODE_1.M),
-        @ApiResponse(code = ErrorU.CODE_2.C, message = ErrorU.CODE_2.M),
-        @ApiResponse(code = ErrorU.CODE_3.C, message = ErrorU.CODE_3.M),
-        @ApiResponse(code = ErrorU.CODE_4.C, message = ErrorU.CODE_4.M),
-        @ApiResponse(code = ErrorU.CODE_5.C, message = ErrorU.CODE_5.M),
-        @ApiResponse(code = ErrorU.CODE_6.C, message = ErrorU.CODE_6.M),
-        @ApiResponse(code = ErrorU.CODE_7.C, message = ErrorU.CODE_7.M),
-        @ApiResponse(code = ErrorU.CODE_8.C, message = ErrorU.CODE_8.M),
-        @ApiResponse(code = ErrorU.CODE_9.C, message = ErrorU.CODE_9.M),
-        @ApiResponse(code = ErrorU.CODE_10.C, message = ErrorU.CODE_10.M),
-        @ApiResponse(code = ErrorU.CODE_11.C, message = ErrorU.CODE_11.M),
-        @ApiResponse(code = ErrorU.CODE_12.C, message = ErrorU.CODE_12.M),
-        @ApiResponse(code = ErrorU.CODE_13.C, message = ErrorU.CODE_13.M),
+        @ApiResponse(responseCode = ErrorU.CODE_1.C, description = ErrorU.CODE_1.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_2.C, description = ErrorU.CODE_2.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_3.C, description = ErrorU.CODE_3.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_4.C, description = ErrorU.CODE_4.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_5.C, description = ErrorU.CODE_5.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_6.C, description = ErrorU.CODE_6.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_7.C, description = ErrorU.CODE_7.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_8.C, description = ErrorU.CODE_8.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_9.C, description = ErrorU.CODE_9.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_10.C, description = ErrorU.CODE_10.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_11.C, description = ErrorU.CODE_11.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_12.C, description = ErrorU.CODE_12.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_13.C, description = ErrorU.CODE_13.M),
 
-        @ApiResponse(code = ErrorU.CODE_101.C, message = ErrorU.CODE_101.M),
-        @ApiResponse(code = ErrorU.CODE_102.C, message = ErrorU.CODE_102.M),
-        @ApiResponse(code = ErrorU.CODE_103.C, message = ErrorU.CODE_103.M),
-        @ApiResponse(code = ErrorU.CODE_104.C, message = ErrorU.CODE_104.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_101.C, description = ErrorU.CODE_101.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_102.C, description = ErrorU.CODE_102.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_103.C, description = ErrorU.CODE_103.M),
+        @ApiResponse(responseCode =  ErrorU.CODE_104.C, description = ErrorU.CODE_104.M),
 
-        @ApiResponse(code = ErrorS.CODE_1.C, message = ErrorS.CODE_1.M),
-        @ApiResponse(code = ErrorS.CODE_2.C, message = ErrorS.CODE_2.M),
-        @ApiResponse(code = ErrorS.CODE_3.C, message = ErrorS.CODE_3.M),
-        @ApiResponse(code = ErrorS.CODE_4.C, message = ErrorS.CODE_4.M),
-        @ApiResponse(code = ErrorS.CODE_5.C, message = ErrorS.CODE_5.M),
-        @ApiResponse(code = ErrorS.CODE_6.C, message = ErrorS.CODE_6.M),
-        @ApiResponse(code = ErrorS.CODE_7.C, message = ErrorS.CODE_7.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_1.C, description = ErrorS.CODE_1.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_2.C, description = ErrorS.CODE_2.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_3.C, description = ErrorS.CODE_3.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_4.C, description = ErrorS.CODE_4.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_5.C, description = ErrorS.CODE_5.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_6.C, description = ErrorS.CODE_6.M),
+        @ApiResponse(responseCode =  ErrorS.CODE_7.C, description = ErrorS.CODE_7.M),
 })
 @ControllerAdvice
 public abstract class BaseSwaggerController implements WithLogger {

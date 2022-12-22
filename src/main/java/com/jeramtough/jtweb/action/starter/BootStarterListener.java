@@ -1,11 +1,11 @@
 package com.jeramtough.jtweb.action.starter;
 
 import com.jeramtough.jtlog.facade.L;
+import jakarta.servlet.ServletContext;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
 
-import javax.servlet.ServletContext;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

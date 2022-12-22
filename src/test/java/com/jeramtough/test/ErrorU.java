@@ -2,7 +2,7 @@ package com.jeramtough.test;
 
 import com.jeramtough.jtweb.model.error.ErrorCodePrefix;
 
-import javax.validation.Payload;
+import jakarta.validation.Payload;
 
 /**
  * <pre>

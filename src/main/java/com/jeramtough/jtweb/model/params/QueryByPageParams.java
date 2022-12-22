@@ -2,7 +2,7 @@ package com.jeramtough.jtweb.model.params;
 
 import io.swagger.annotations.ApiParam;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

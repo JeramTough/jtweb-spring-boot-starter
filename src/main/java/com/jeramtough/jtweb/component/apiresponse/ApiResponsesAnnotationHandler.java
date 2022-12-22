@@ -7,7 +7,7 @@ import com.jeramtough.jtweb.exception.CodeNotRegiserException;
 import com.jeramtough.jtweb.model.error.ErrorCodePrefix;
 import io.swagger.annotations.ApiResponses;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;

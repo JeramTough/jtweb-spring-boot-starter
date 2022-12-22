@@ -311,6 +311,22 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
         }
     }
 
+    @Override
+    public boolean remove(Wrapper<T> queryWrapper, boolean enableReturnFalse) {
+
+        boolean isSuccessful = remove(queryWrapper);
+
+        if (!isSuccessful) {
+            if (enableReturnFalse) {
+                return false;
+            }
+            else {
+                throw new ApiResponseException(ErrorS.CODE_2.C, "删除");
+            }
+        }
+        return true;
+    }
+
     public void setCondition(BaseConditionParams params, QueryWrapper<T> queryWrapper) {
         //排序
         if (params.getOrderBy() != null) {
@@ -429,15 +445,6 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     @Override
-    public boolean remove(Wrapper<T> queryWrapper) {
-        boolean isSuccessful = super.remove(queryWrapper);
-        if (!isSuccessful) {
-            throw new ApiResponseException(ErrorS.CODE_2.C, "删除");
-        }
-        return true;
-    }
-
-    @Override
     public boolean removeById(Serializable id) {
         boolean isSuccessful = super.removeById(id);
         if (!isSuccessful) {
@@ -447,7 +454,7 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
     }
 
     @Override
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
+    public boolean removeByIds(Collection<?> idList) {
         boolean isSuccessful = super.removeByIds(idList);
         if (!isSuccessful) {
             throw new ApiResponseException(ErrorS.CODE_2.C, "根据Id批量删除");
@@ -466,11 +473,11 @@ public abstract class JtBaseServiceImpl<M extends BaseMapper<T>, T, D>
 
     @Override
     public T getOne(boolean enableReturnNull, Wrapper<T> queryWrapper) {
-        if (enableReturnNull){
+        if (enableReturnNull) {
             T t = super.getOne(queryWrapper);
             return t;
         }
-        else{
+        else {
             return getOne(queryWrapper);
         }
     }

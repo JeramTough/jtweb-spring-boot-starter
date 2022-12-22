@@ -2,7 +2,7 @@ package com.jeramtough.jtweb.model;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jeramtough.jtweb.model.params.QueryByPageParams;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <pre>
@@ -10,10 +10,10 @@ import io.swagger.annotations.ApiModel;
  * by @author JeramTough
  * </pre>
  */
-@ApiModel("分页查询结果对象")
+@Schema(description = "分页查询结果对象")
 public class QueryPage<T> extends Page<T> {
 
     public QueryPage(QueryByPageParams params) {
-        super(params.getIndex(), params.getSize(),true);
+        super(params.getIndex(), params.getSize(), true);
     }
 }

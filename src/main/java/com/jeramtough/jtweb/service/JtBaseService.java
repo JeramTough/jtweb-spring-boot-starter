@@ -1,6 +1,7 @@
 package com.jeramtough.jtweb.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.jeramtough.jtweb.component.business.ToEntityProcess;
 import com.jeramtough.jtweb.component.business.ToEntityWithBundleProcess;
 import com.jeramtough.jtweb.model.dto.PageDto;
@@ -54,6 +55,7 @@ public interface JtBaseService<T, D> extends BaseDtoService<T, D> {
      */
     String removeByCondition(BaseConditionParams params, boolean enableReturnNull);
 
+     boolean remove(Wrapper<T> queryWrapper ,boolean enableReturnFalse);
     @Override
     T getOne(Wrapper<T> queryWrapper);
 

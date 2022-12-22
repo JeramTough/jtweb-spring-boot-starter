@@ -2,9 +2,9 @@ package com.jeramtough.jtweb.component.filesaver.upload.io;
 
 import cn.hutool.core.io.IoUtil;
 import com.jeramtough.jtcomponent.io.Directory;
+import com.jeramtough.jtcomponent.utils.Base64Util;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 
 /**
@@ -22,7 +22,8 @@ public class Base64JpgImageMultipartFile implements MultipartFile {
 
         FileOutputStream fops = null;
         base64 = base64.replace("data:image/jpeg;base64,", "");
-        byte[] buff = DatatypeConverter.parseBase64Binary(base64);
+
+        byte[] buff =  Base64Util.decodeBytesFromBase64(base64);
         try {
             String systemTempDirStr = System.getProperty("java.io.tmpdir")+File.separator+
                     "qacar_temp";

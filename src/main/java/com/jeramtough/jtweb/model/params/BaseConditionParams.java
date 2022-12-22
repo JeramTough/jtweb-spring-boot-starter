@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.model.params;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.jeramtough.jtweb.component.validation.constraints.NotBlankButNull;
 import com.jeramtough.jtweb.model.error.ErrorU;
 import io.swagger.annotations.ApiModel;

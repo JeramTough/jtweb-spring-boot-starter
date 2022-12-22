@@ -1,15 +1,15 @@
 package com.jeramtough.jtweb.component.validation;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONException;
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 import com.jeramtough.jtweb.component.apiresponse.error.ErrorCode;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiException;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseBeanException;
 import com.jeramtough.jtweb.component.validation.constraints.NotBlankButNull;
 
-import javax.validation.*;
+import jakarta.validation.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

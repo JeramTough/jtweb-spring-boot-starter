@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.component.optlog.bean;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;

@@ -16,7 +16,7 @@ import com.jeramtough.jtweb.service.BaseDtoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

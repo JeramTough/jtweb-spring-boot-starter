@@ -1,17 +1,18 @@
 package com.jeramtough.jtweb.action.controller;
 
 import cn.hutool.core.io.IoUtil;
+import com.jeramtough.jtweb.component.apiinfo.core.ApiInfoRecorder;
 import com.jeramtough.jtweb.component.apiresponse.exception.ApiResponseException;
 import com.jeramtough.jtweb.component.http.HttpContentTypeHandler;
 import com.jeramtough.jtweb.model.error.ErrorS;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,6 +30,10 @@ public class JtBaseController extends BaseSwaggerController {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    public JtBaseController() {
+        //登记api接口信息
+        ApiInfoRecorder.getInstance().registerApiInfo(this.getClass());
+    }
 
     public WebApplicationContext getWC() {
         return webApplicationContext;

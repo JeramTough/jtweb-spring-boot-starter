@@ -1,6 +1,6 @@
 package com.jeramtough.jtweb.component.location;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.jeramtough.jtweb.component.location.apater.ChunZhenLocationAdapter;
 import com.jeramtough.jtweb.component.location.apater.TencentApiLocationAdapter;
 import com.jeramtough.jtweb.component.location.bean.JtLocation;

@@ -1,6 +1,6 @@
 package com.jeramtough.demo.dto;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Created on 2019/7/31 15:24

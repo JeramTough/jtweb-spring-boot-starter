@@ -4,14 +4,12 @@ import com.jeramtough.jtweb.component.optlog.bean.AddHistoryParams;
 import com.jeramtough.jtweb.component.optlog.bean.InterfaceDetail;
 import com.jeramtough.jtweb.component.optlog.config.OptLoggerConfig;
 import com.jeramtough.jtweb.util.IpAddrUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * <pre>

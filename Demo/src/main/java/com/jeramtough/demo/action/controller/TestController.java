@@ -10,8 +10,8 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Created on 2019/7/25 11:36
@@ -41,7 +41,7 @@ public class TestController extends BaseSwaggerController {
 
     @ApiOperation(value = "获取个人信息", notes = "通过名字和日期获取某人信息")
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
-    @ApiResponses(value = {@ApiResponse(code = 999, message = "发生某些异常")})
+    @ApiResponses(value = {@ApiResponse(responseCode =  999, message = "发生某些异常")})
     @ResponseBody
     public CommonApiResponse<String> getInfoByWho(
             @RequestBody Who who) {
@@ -52,7 +52,7 @@ public class TestController extends BaseSwaggerController {
 
     @ApiOperation(value = "登陆", notes = "通过名字和日期获取某人信息")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ApiResponses(value = {@ApiResponse(code = 555, message = "传递参数【%s%s】校验失败，因为【%s】")})
+    @ApiResponses(value = {@ApiResponse(responseCode =  555, message = "传递参数【%s%s】校验失败，因为【%s】")})
     @ResponseBody
     public CommonApiResponse<Who> login(
             @RequestBody LoginDTO loginDTO) {

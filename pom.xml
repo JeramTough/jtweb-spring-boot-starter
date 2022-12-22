@@ -6,7 +6,7 @@
 
     <groupId>com.jeramtough</groupId>
     <artifactId>jtweb-spring-boot-starter</artifactId>
-    <version>2.6.8.1-SNAPSHOT</version>
+    <version>3.0.0.46-RELEASE</version>
     <!--<version>2.3.7.44-SNAPSHOT</version>-->
     <!-- <version>2.1.14.44-LOCAL</version>-->
     <!--<version>2.1.14.38-RELEASE</version>-->
@@ -14,6 +14,8 @@
     <!--<version>1.0.6-SNAPSHOT</version>-->
 
     <properties>
+        <!--JAVA版本-->
+        <java.version>17</java.version>
         <!-- 文件拷贝时的编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -21,21 +23,14 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <fileEncoding>UTF-8</fileEncoding>
 
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--SpringBoot版本-->
-        <SPRING_BOOT_STARTER_VERSION>2.6.8</SPRING_BOOT_STARTER_VERSION>
+        <SPRING_BOOT_STARTER_VERSION>3.0.0</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
-        <FASTJSON_VERSION>1.2.70</FASTJSON_VERSION>
-
-        <!--Bean映射-orika版本-->
-        <ORIKA_VERSION>1.5.4</ORIKA_VERSION>
-        <!--<JAVASSIST.VERSION>3.28.0-GA</JAVASSIST.VERSION>
-        <PARANAMER.VERSION>2.8</PARANAMER.VERSION>-->
+        <FASTJSON2_VERSION>2.0.10</FASTJSON2_VERSION>
 
         <!--Bean校验框架-->
-        <HIBERNATE_VALIDATOR_VERSION>6.1.0.Final</HIBERNATE_VALIDATOR_VERSION>
+        <HIBERNATE_VALIDATOR_VERSION>8.0.0.Final</HIBERNATE_VALIDATOR_VERSION>
 
         <!--google-guava-->
         <GUAVA_VERSION>28.0-jre</GUAVA_VERSION>
@@ -44,10 +39,10 @@
         <JTLOG_VERSION>1.8.4-RELEASE</JTLOG_VERSION>
 
         <!--jtcomponent-->
-        <JTCOMPONENT_VERSION>1.6.6-RELEASE</JTCOMPONENT_VERSION>
+        <JTCOMPONENT_VERSION>1.7.0-RELEASE</JTCOMPONENT_VERSION>
 
         <!--knife4j-spring-boot-starter-->
-        <KNIE4J_BOOT_STARTER_VERSION>3.0.3</KNIE4J_BOOT_STARTER_VERSION>
+        <KNIE4J_BOOT_STARTER_VERSION>4.0.0</KNIE4J_BOOT_STARTER_VERSION>
 
         <!--commons-lang3-->
         <COMMONS_LANG3_VERSION>3.9</COMMONS_LANG3_VERSION>
@@ -55,21 +50,17 @@
         <!--JDBC-->
         <MYSQL_JDBC_VERSION>5.1.48</MYSQL_JDBC_VERSION>
         <!--druid版本-->
-        <DRUID_BOOT_STARTER_VERSION>1.2.8</DRUID_BOOT_STARTER_VERSION>
+        <DRUID_BOOT_STARTER_VERSION>1.2.15</DRUID_BOOT_STARTER_VERSION>
         <!--数据库连接池hikaricp-->
         <HIKARICP_VERSION>5.0.0</HIKARICP_VERSION>
 
         <!--mybatis-plus-boot-starter-->
-        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.4.3.4</MYBATIS_PLUS_BOOT_STARTER_VERSION>
-        <MYBATIS_PLUS_GENERATOR_VERSION>3.5.1</MYBATIS_PLUS_GENERATOR_VERSION>
+        <MYBATIS_PLUS_BOOT_STARTER_VERSION>3.5.2.7-SNAPSHOT</MYBATIS_PLUS_BOOT_STARTER_VERSION>
         <!--p6spy-数据库sql打印-->
         <P6SPY_VERSION>3.9.1</P6SPY_VERSION>
 
         <!--hutool-->
         <HUTOOL_VERSION>5.6.5</HUTOOL_VERSION>
-
-        <!--debezium-->
-        <DEBEZIUM_VERSION>1.6.1.Final</DEBEZIUM_VERSION>
 
         <!--event-bus-->
         <EVENT_BUS_VERSION>3.1.1</EVENT_BUS_VERSION>
@@ -78,6 +69,13 @@
         <HUMBNAILATOR_VERSION>0.4.8</HUMBNAILATOR_VERSION>
 
         <ALIYUN_OSS_VERSION>3.10.2</ALIYUN_OSS_VERSION>
+
+        <!--word和pdf转换-->
+        <ASPOSE-WORDS-VERSION>22.5-jdk16</ASPOSE-WORDS-VERSION>
+        <ASPOSE-PDF-VERSION>21.7-jdk16</ASPOSE-PDF-VERSION>
+
+        <!--HTML解析-->
+        <JSOUP_VERSION>1.15.3</JSOUP_VERSION>
 
     </properties>
 
@@ -193,9 +191,14 @@
 
         <!--ali-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${FASTJSON_VERSION}</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${FASTJSON2_VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2-extension</artifactId>
+            <version>${FASTJSON2_VERSION}</version>
         </dependency>
         <!--DRUID不兼容jdk11以上版本，先不用-->
         <dependency>
@@ -251,25 +254,9 @@
             <version>${COMMONS_LANG3_VERSION}</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-            <version>${ORIKA_VERSION}</version>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>${JAVASSIST.VERSION}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.paranamer</groupId>
-            <artifactId>paranamer</artifactId>
-            <version>${PARANAMER.VERSION}</version>
-        </dependency>-->
-
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索最新版本号-->
             <version>${KNIE4J_BOOT_STARTER_VERSION}</version>
         </dependency>
@@ -278,24 +265,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${HUTOOL_VERSION}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-embedded</artifactId>
-            <version>${DEBEZIUM_VERSION}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-connector-mysql</artifactId>
-            <version>${DEBEZIUM_VERSION}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -317,6 +286,27 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>${ALIYUN_OSS_VERSION}</version>
         </dependency>
+
+        <!--words和pdf转换，
+        官方教程：https://docs.aspose.com/pdf/java/convert-pdf-to-html/-->
+        <dependency>
+            <groupId>com.ssd</groupId>
+            <artifactId>aspose-words</artifactId>
+            <version>${ASPOSE-WORDS-VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ssd</groupId>
+            <artifactId>aspose-pdf</artifactId>
+            <version>${ASPOSE-PDF-VERSION}</version>
+        </dependency>
+
+        <!--html解析-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${JSOUP_VERSION}</version>
+        </dependency>
+
         <!--如果使用的是Java 9及以上的版本，则需要添加jaxb相关依赖。
         添加jaxb相关依赖示例代码如下-->
         <!--<dependency>
@@ -342,6 +332,13 @@
             <id>alimaven</id>
             <name>aliyun maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+
+        <!--aspose的word转换仓库-->
+        <repository>
+            <id>AsposeJavaAPI</id>
+            <name>Aspose Java API</name>
+            <url>https://repository.aspose.com/repo/</url>
         </repository>
 
         <!--阿里云效maven仓库地址-->
@@ -383,17 +380,19 @@
             <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
         </repository>
 
+        <!-- 下载mybatis-plus SNAPSHOT 版本所需仓库 -->
         <repository>
-            <id>nexus-ssd</id>
-            <name>Nexus ssd</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd/</url>
+            <id>ossrh</id>
+            <name>OSS Snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
 
-        <repository>
-            <id>nexus-ssd-snapshots</id>
-            <name>Nexus ssd snapshot</name>
-            <url>http://maven.ssd.vi:3333/repository/nexus-ssd-snapshots/</url>
-        </repository>
     </repositories>
 
 
@@ -424,6 +423,19 @@
 
     <build>
         <plugins>
+
+            <!-- 配置当前项目的jdk版本信息 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
             <!--skip test-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

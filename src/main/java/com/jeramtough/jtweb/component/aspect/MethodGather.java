@@ -2,11 +2,11 @@ package com.jeramtough.jtweb.component.aspect;
 
 import com.jeramtough.jtweb.component.optlog.bean.InterfaceDetail;
 import com.jeramtough.jtweb.component.optlog.bean.InterfaceDetailFactory;
+import jakarta.servlet.ServletContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 
-import javax.servlet.ServletContext;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;

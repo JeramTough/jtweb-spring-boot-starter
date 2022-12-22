@@ -1,8 +1,8 @@
 package com.jeramtough.jtweb.component.optlog.bean;
 
 import com.jeramtough.jtweb.component.optlog.annotation.IgnoreOptLog;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.util.StringUtils;
 
@@ -18,26 +18,33 @@ import java.util.Objects;
  */
 public class InterfaceDetailFactory {
 
-    public static InterfaceDetail getInterfaceDetail(Method aspectMethod, ProceedingJoinPoint joinPoint) {
+    public static InterfaceDetail getInterfaceDetail(Method aspectMethod,
+                                                     ProceedingJoinPoint joinPoint) {
         InterfaceDetail interfaceDetail = new InterfaceDetail();
 
-        ApiOperation apiOperationAnnotation = Objects.requireNonNull(aspectMethod).getDeclaredAnnotation(
-                ApiOperation.class);
+        Operation apiOperationAnnotation = Objects.requireNonNull(
+                aspectMethod).getDeclaredAnnotation(
+                Operation.class);
 
         String apiDescription = null;
         if (apiOperationAnnotation != null) {
-            apiDescription = apiOperationAnnotation.notes();
+            apiDescription = apiOperationAnnotation.description();
             if (!StringUtils.isEmpty(apiDescription)) {
-                apiDescription=apiOperationAnnotation.value();
+                apiDescription = apiOperationAnnotation.description();
+            }
+            else {
+                if (StringUtils.hasText(apiOperationAnnotation.summary())) {
+                    apiDescription = apiOperationAnnotation.summary();
+                }
             }
         }
         interfaceDetail.setApiDescription(apiDescription);
 
-        Api apiAnnotation = joinPoint.getTarget().getClass().getDeclaredAnnotation(Api.class);
+        Tag apiAnnotation = joinPoint.getTarget().getClass().getDeclaredAnnotation(Tag.class);
         String apiModuleTag = null;
         if (apiAnnotation != null) {
-            if (apiAnnotation.tags().length > 0) {
-                apiModuleTag = apiAnnotation.tags()[0];
+            if (StringUtils.hasText(apiAnnotation.name())) {
+                apiModuleTag = apiAnnotation.name();
             }
         }
         interfaceDetail.setApiModuleTag(apiModuleTag);
@@ -79,7 +86,8 @@ public class InterfaceDetailFactory {
 
         ApiTypeEnum apiTypeEnum = ApiTypeEnum.OTHER;
         if (longJavaMethodName.contains("get") || longJavaMethodName.contains("search")
-                || longJavaMethodName.contains("index") || longJavaMethodName.contains("Get")) {
+                || longJavaMethodName.contains("index") || longJavaMethodName.contains(
+                "Get")) {
             apiTypeEnum = ApiTypeEnum.SELECT;
         }
         else if (longJavaMethodName.contains("addByParams") || longJavaMethodName.contains(

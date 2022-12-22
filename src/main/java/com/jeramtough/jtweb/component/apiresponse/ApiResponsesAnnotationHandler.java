@@ -5,8 +5,9 @@ import com.jeramtough.jtlog.level.LogLevel;
 import com.jeramtough.jtlog.with.WithLogger;
 import com.jeramtough.jtweb.exception.CodeNotRegiserException;
 import com.jeramtough.jtweb.model.error.ErrorCodePrefix;
-import io.swagger.annotations.ApiResponses;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.constraints.NotNull;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
             "error, " +
             "please contact the administrator.\n 系统发生不可预测的错误，请联系专门的系统管理人员";
 
-    private final Map<Integer, String> failedResponseMessageTemplateMap;
+    private final Map<String, String> failedResponseMessageTemplateMap;
 
     public static ApiResponsesAnnotationHandler getInstance() {
         return OUR_INSTANCE;
@@ -37,7 +38,7 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
     private ApiResponsesAnnotationHandler() {
         failedResponseMessageTemplateMap = new HashMap<>(20);
 
-        failedResponseMessageTemplateMap.put(DEFAULT_FAILED_CODE, DEFAULT_FAILED_MESSAGE);
+        failedResponseMessageTemplateMap.put(DEFAULT_FAILED_CODE+"", DEFAULT_FAILED_MESSAGE);
     }
 
     public void parsingApiResponseAnnotations(Class<?> clazz) {
@@ -76,17 +77,17 @@ public class ApiResponsesAnnotationHandler implements WithLogger {
 
     private void parseApiResponsesAnnotation(ApiResponses apiResponsesAnnotation) {
         if (apiResponsesAnnotation != null) {
-            for (io.swagger.annotations.ApiResponse apiResponseAnnotation :
+            for (ApiResponse apiResponseAnnotation :
                     apiResponsesAnnotation.value()) {
-                this.addFailedResponse(apiResponseAnnotation.code(),
-                        apiResponseAnnotation.message());
+                this.addFailedResponse(apiResponseAnnotation.responseCode(),
+                        apiResponseAnnotation.description());
 
             }
         }
     }
 
 
-    private void addFailedResponse(int code, String failedMessage) {
+    private void addFailedResponse(String code, String failedMessage) {
         if (!failedResponseMessageTemplateMap.containsKey(code)) {
             failedResponseMessageTemplateMap.put(code, failedMessage);
             getLogger().debug(

@@ -70,7 +70,7 @@ public class JtBaseController extends BaseSwaggerController {
         }
         catch (IOException e) {
             e.printStackTrace();
-            throw new ApiResponseException(ErrorS.CODE_2.C, "读取资源文件");
+            throw new ApiResponseException(Integer.parseInt(ErrorS.CODE_2.C), "读取资源文件");
         }
     }
 }

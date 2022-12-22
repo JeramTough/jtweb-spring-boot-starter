@@ -3,6 +3,7 @@ package com.jeramtough.jtweb.component.apiresponse.exception;
 import com.jeramtough.jtweb.component.apiresponse.bean.FailureReason;
 
 import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,18 @@ public class ApiResponseException extends RuntimeException implements Serializab
 
     public ApiResponseException(Integer code, String... placeholders) {
         this(new FailureReason(code, Arrays.asList(placeholders)));
+    }
+
+    public ApiResponseException(String code) {
+        this(new FailureReason(Integer.parseInt(code)));
+    }
+
+    public ApiResponseException(String code, Exception exception) {
+        this(new FailureReason(Integer.parseInt(code), exception));
+    }
+
+    public ApiResponseException(String code, String... placeholders) {
+        this(new FailureReason(Integer.parseInt(code), Arrays.asList(placeholders)));
     }
 
     public ApiResponseException(FailureReason failureReason) {

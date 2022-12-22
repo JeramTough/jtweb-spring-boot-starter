@@ -25,6 +25,11 @@ public class ApiResponseBeanException extends ApiResponseException implements Se
         this.fieldName = fieldName;
     }
 
+    public ApiResponseBeanException(String code, String fieldName, String... placeholders) {
+        super(new FailureReason(Integer.parseInt(code), Arrays.asList(placeholders)));
+        this.fieldName = fieldName;
+    }
+
     public String getFieldName() {
         return fieldName;
     }

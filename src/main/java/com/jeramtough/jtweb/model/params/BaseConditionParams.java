@@ -3,8 +3,7 @@ package com.jeramtough.jtweb.model.params;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.jeramtough.jtweb.component.validation.constraints.NotBlankButNull;
 import com.jeramtough.jtweb.model.error.ErrorU;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -16,43 +15,43 @@ import java.time.LocalDateTime;
  * by @author WeiBoWen
  * </pre>
  */
-@ApiModel
+@Schema
 public class BaseConditionParams {
 
 
-    @ApiModelProperty(value = "关键词", example = "某某", required = false)
+    @Schema(description = "关键词", example = "某某", required = false)
     @NotBlankButNull(payload = ErrorU.CODE_2.class, isSetNullAuto = true)
     private String keyword;
 
     @JSONField(format = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(value = "时间环查询的开始日期", example = "1996-02-23", required = false)
+    @Schema(description = "时间环查询的开始日期", example = "1996-02-23", required = false)
     private LocalDate startDate;
 
     @JSONField(format = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(value = "时间环查询的结束日期", example = "2021-02-23", required = false)
+    @Schema(description = "时间环查询的结束日期", example = "2021-02-23", required = false)
     private LocalDate endDate;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "时间环查询的开始时间", example = "1996-02-23 00:00:00", required = false)
+    @Schema(description = "时间环查询的开始时间", example = "1996-02-23 00:00:00", required = false)
     private LocalDateTime startTime;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "时间环查询的结束时间", example = "2021-02-23 23:59:59", required = false)
+    @Schema(description = "时间环查询的结束时间", example = "2021-02-23 23:59:59", required = false)
     private LocalDateTime endTime;
 
-    @ApiModelProperty(value = "根据什么字段排序，或者时间环的key,可以用逗号排序多个", example = "fid,id", required =
+    @Schema(description = "根据什么字段排序，或者时间环的key,可以用逗号排序多个", example = "fid,id", required =
             false)
     private String orderBy;
 
-    @ApiModelProperty(value = "根据什么字段时间环的key,可以用逗号排序多个", example = "fid,id", required =
+    @Schema(description = "根据什么字段时间环的key,可以用逗号排序多个", example = "fid,id", required =
             false)
     private String timeBy;
 
-    @ApiModelProperty(value = "是否升序", example = "true", required = false)
+    @Schema(description = "是否升序", example = "true", required = false)
     private Boolean isAsc = true;
 
 

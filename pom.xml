@@ -71,8 +71,8 @@
         <ALIYUN_OSS_VERSION>3.10.2</ALIYUN_OSS_VERSION>
 
         <!--word和pdf转换-->
-        <ASPOSE-WORDS-VERSION>22.5-jdk16</ASPOSE-WORDS-VERSION>
-        <ASPOSE-PDF-VERSION>21.7-jdk16</ASPOSE-PDF-VERSION>
+        <ASPOSE-WORDS-VERSION>22.5</ASPOSE-WORDS-VERSION>
+        <ASPOSE-PDF-VERSION>21.7</ASPOSE-PDF-VERSION>
 
         <!--HTML解析-->
         <JSOUP_VERSION>1.15.3</JSOUP_VERSION>
@@ -290,14 +290,16 @@
         <!--words和pdf转换，
         官方教程：https://docs.aspose.com/pdf/java/convert-pdf-to-html/-->
         <dependency>
-            <groupId>com.ssd</groupId>
+            <groupId>com.aspose</groupId>
             <artifactId>aspose-words</artifactId>
             <version>${ASPOSE-WORDS-VERSION}</version>
+            <classifier>jdk17</classifier>
         </dependency>
         <dependency>
-            <groupId>com.ssd</groupId>
+            <groupId>com.aspose</groupId>
             <artifactId>aspose-pdf</artifactId>
             <version>${ASPOSE-PDF-VERSION}</version>
+            <classifier>jdk17</classifier>
         </dependency>
 
         <!--html解析-->
@@ -307,27 +309,11 @@
             <version>${JSOUP_VERSION}</version>
         </dependency>
 
-        <!--如果使用的是Java 9及以上的版本，则需要添加jaxb相关依赖。
-        添加jaxb相关依赖示例代码如下-->
-        <!--<dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.3</version>
-        </dependency>-->
 
     </dependencies>
 
     <repositories>
+
         <repository>
             <id>alimaven</id>
             <name>aliyun maven</name>
@@ -361,23 +347,6 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
-
-        <repository>
-            <id>sonatype</id>
-            <name>sonatype maven</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jcenter-snapshots</id>
-            <name>jcenter</name>
-            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
         </repository>
 
         <!-- 下载mybatis-plus SNAPSHOT 版本所需仓库 -->

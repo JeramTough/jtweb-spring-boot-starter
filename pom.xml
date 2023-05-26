@@ -25,7 +25,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--SpringBoot版本-->
-        <SPRING_BOOT_STARTER_VERSION>3.0.0</SPRING_BOOT_STARTER_VERSION>
+        <SPRING_BOOT_STARTER_VERSION>3.0.7</SPRING_BOOT_STARTER_VERSION>
         <!--JSON解析-fastjson版本-->
         <FASTJSON2_VERSION>2.0.10</FASTJSON2_VERSION>
 
